@@ -15,7 +15,6 @@ resource "aws_instance" "bastion" {
 
   tags = {
     Name = "bastion-server"
-    consul_server = var.consul_server
     Owner                 = local.eran_tags.owner
     Environment_Name      = local.eran_tags.environment_name
     Project_Name          = local.eran_tags.project_name
