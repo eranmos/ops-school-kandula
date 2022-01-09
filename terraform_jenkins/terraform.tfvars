@@ -8,13 +8,13 @@ aws_region      = "us-east-1"
 jenkins_master_name   = "jenkins-master"
 key_name              = "eran_ops_school_keys"
 jenkins_instance_type = "t3.small"
-jenkins_master_ami    = "ami-0d00f21f2762d223e"
+jenkins_master_ami    = "ami-0251d3dff6fb31ebc"
 consul_server         = "false"
 
 #############  Jenkins Slave  ##############
 jenkins_slave_name           = "jenkins-slave"
 jenkins_slave_instances_count = "1"
-jenkins_slave_ami             = "ami-08593e767ae130cbd"
+jenkins_slave_ami             = "ami-0988936315f0207b1"
 ubuntu_account_number         = "099720109477"
 
 #############  Route53  #####################
