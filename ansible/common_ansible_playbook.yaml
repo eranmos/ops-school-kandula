@@ -1,5 +1,5 @@
 - name: apply common server installation on all servers
-  hosts: tag_Project_kandula
+  hosts: tag_Project_Name_kandula
   remote_user: ubuntu
   become: yes
   become_user: root

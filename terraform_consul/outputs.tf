@@ -4,7 +4,7 @@
 
 #Network VPC Info
 output "ops-school-prod-vpc-id" {
-  value = data.aws_vpc.ops-school-prod-vpc.id
+  value = data.aws_vpc.ops-school-vpc.id
 }
 
 #Network subnet Info

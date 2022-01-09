@@ -3,7 +3,7 @@
 #################
 
 resource "aws_lb" "consul" {
-  name                       = "consul-alb-${local.env_name}"
+  name                       = "consul-alb-${local.eran_tags.environment_name}"
   internal                   = false
   load_balancer_type         = "application"
   subnets                    = [data.aws_subnet.public-us-east-1a.id, data.aws_subnet.public-us-east-1b.id]
@@ -29,7 +29,7 @@ resource "aws_lb_target_group" "consul-server" {
   name      = "consul-server-group"
   port      = 8500
   protocol  = "HTTP"
-  vpc_id    = data.aws_vpc.ops-school-prod-vpc.id
+  vpc_id    = data.aws_vpc.ops-school-vpc.id
 
   health_check {
     enabled = true
@@ -41,9 +41,13 @@ resource "aws_lb_target_group" "consul-server" {
     port                = 8500
   }
   tags = {
-     Name = "consul-target-group"
-     Owner = local.owner
-     Environment = local.env_name
+    Name = "consul-target-group"
+    Owner                 = local.eran_tags.owner
+    Environment_Name      = local.eran_tags.environment_name
+    Project_Name          = local.eran_tags.project_name
+    "tr:resource-owner"   = var.asset_owner
+    "tr:environment-type" = var.environment
+    "tr:application-asset-insight-id" = var.asset_id
   }
 }
 

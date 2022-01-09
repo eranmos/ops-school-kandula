@@ -2,7 +2,7 @@ locals {
   bastion-server-instance-userdata = <<USERDATA
 #!/bin/bash
 sudo apt update -y
-sudo apt install python3-pip
+sudo apt install python3-pip -y
 sudo apt install awscli -y
 aws s3 cp s3://${var.default_s3_bucket}/ansible_keys/id_rsa /home/ubuntu/
 sudo mv /home/ubuntu/id_rsa /home/ubuntu/.ssh/id_rsa

@@ -18,10 +18,13 @@ resource "aws_instance" "consul-server" {
 
   tags = {
     Name = "consul-server${count.index+1}"
-    consul_server = "true"
-    Owner = local.owner
-    Environment = local.env_name
-    Project     = local.project
+    consul_server = var.consul_server
+    Owner                 = local.eran_tags.owner
+    Environment_Name      = local.eran_tags.environment_name
+    Project_Name          = local.eran_tags.project_name
+    "tr:resource-owner"   = var.asset_owner
+    "tr:environment-type" = var.environment
+    "tr:application-asset-insight-id" = var.asset_id
   }
 
 }
