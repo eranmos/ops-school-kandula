@@ -17,11 +17,14 @@ resource "aws_instance" "jenkins-slave" {
 
 
   tags = {
-    Name = "jenkins-slave"
-    consul_server = "false"
-    Owner = local.owner
-    Environment = local.env_name
-    Project     = local.project
+    Name = var.jenkins_slave_name
+    consul_server = var.consul_server
+    Owner                 = local.eran_tags.owner
+    Environment_Name      = local.eran_tags.environment_name
+    Project_Name          = local.eran_tags.project_name
+    "tr:resource-owner"   = var.asset_owner
+    "tr:environment-type" = var.environment
+    "tr:application-asset-insight-id" = var.asset_id
   }
 
 }

@@ -16,11 +16,11 @@ terraform {
     }
   }
   backend "s3" {
-    bucket  = "eran-terraform-state-bucket"
+    bucket  = "eran-terraform-provisioning-bucket"
     key     = "ops-school-prod/vpc/terraform.tfstate"
     region  = "us-east-1"
     encrypt = true
-    profile = "ops-school"
+    profile = "tr-tms"
     #    dynamodb_table = "terraform-state-lock"
   }
 }

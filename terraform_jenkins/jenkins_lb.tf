@@ -3,7 +3,7 @@
 #################
 
 resource "aws_lb" "jenkins" {
-  name                       = "jenkins-alb-${local.env_name}"
+  name                       = "jenkins-alb-${local.common_tags.Environment_Name}"
   internal                   = false
   load_balancer_type         = "application"
   subnets                    = [data.aws_subnet.public-us-east-1a.id, data.aws_subnet.public-us-east-1b.id]
@@ -41,9 +41,14 @@ resource "aws_lb_target_group" "jenkins-server" {
     port                = 8080
   }
   tags = {
-     Name = "jenkins-target-group"
-     Owner = local.owner
-     Environment = local.env_name
+    Name = "jenkins-target-group"
+    Owner                 = local.eran_tags.owner
+    Environment_Name      = local.eran_tags.environment_name
+    Project_Name          = local.eran_tags.project_name
+    "tr:resource-owner"   = var.asset_owner
+    "tr:environment-type" = var.environment
+    "tr:application-asset-insight-id" = var.asset_id
+
   }
 }
 
