@@ -1,0 +1,27 @@
+#############
+# LOCALS
+#############
+locals {
+  refinitiv_tags = {
+    "tr:resource-owner"               = var.asset_owner
+    "tr:environment-type"             = var.environment
+    "tr:application-asset-insight-id" = var.asset_id
+  }
+
+  eran_tags = {
+    "environment_name"  = var.environment_name
+    "owner"             = var.owner
+    "project_name"      = var.project_name
+
+  }
+
+  common_tags = {
+    bastion_default_name  = var.bastion_instance_name
+    Owner                 = local.eran_tags.owner
+    Environment_Name      = local.eran_tags.environment_name
+    Project_Name          = local.eran_tags.project_name
+    "tr:resource-owner"   = var.asset_owner
+    "tr:environment-type" = var.environment
+    "tr:application-asset-insight-id" = var.asset_id
+  }
+}
