@@ -4,6 +4,7 @@ properties([
         name: 'IMAGE_NAME',
         defaultValue: '',
         choices: ['jenkins-slave-ubuntu-18.4',
+                  'jenkins-slave-ubuntu-latest',
                   'jenkins-slave-docker-ansible',
                   'jenkins-slave-docker-centos7'],
         description: 'Please select the Jenkins docker Image that you would like to build'
