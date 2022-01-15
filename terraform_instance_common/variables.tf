@@ -13,9 +13,29 @@ variable "aws_region" {
   type        = string
 }
 
-#############  Jenkins Server  #############
-variable "jenkins_master_name" {
-  description = "The of the Jenkins-master instance"
+#############  Jenkins Slave  #######
+variable "jenkins_slave_name" {
+  description = "The of the Jenkins-slave instance"
+  type        = string
+}
+
+variable "jenkins_slave_instances_count" {
+  description = "numbers of Jenkins-slaves servers"
+  type        = string
+}
+
+variable "jenkins_slave_ami" {
+  description = "The ami of the jenkins-slave server"
+  type        = string
+}
+
+variable "ubuntu_account_number" {
+  description = "The AMI OS type of Jenkins-slave"
+  type        = string
+}
+
+variable "consul_server" {
+  description = "The true of false value, if consul server need to be install value should be true"
   type        = string
 }
 
@@ -26,16 +46,6 @@ variable "key_name" {
 
 variable "jenkins_instance_type" {
   description = "The type of the ec2, for example - t2.medium"
-  type        = string
-}
-
-variable "jenkins_master_ami" {
-  description = "The ami of the jenkins-master server"
-  type        = string
-}
-
-variable "consul_server" {
-  description = "The true of false value, if consul server need to be install value should be true"
   type        = string
 }
 
@@ -67,32 +77,6 @@ variable "ebs_jenkis_master_volume_id" {
 
 variable "ebs_device_name" {
   description = "Name of the device to mount."
-  type        = string
-}
-
-#############  Jenkins Slave  #######
-variable "jenkins_slave_name" {
-  description = "The of the Jenkins-slave instance"
-  type        = string
-}
-
-variable "jenkins_slave_instances_count" {
-  description = "numbers of Jenkins-slaves servers"
-  type        = string
-}
-
-variable "jenkins_slave_ami" {
-  description = "The ami of the jenkins-slave server"
-  type        = string
-}
-
-variable "ubuntu_account_number" {
-  description = "The AMI OS type of Jenkins-slave"
-  type        = string
-}
-
-variable "ebs_root_volume_size_jenkins_slave" {
-  description = "EBS root volume size in G"
   type        = string
 }
 

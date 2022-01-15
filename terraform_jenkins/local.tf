@@ -5,10 +5,10 @@ locals {
 
   jenkins_server = {
     jenkins_default_name = "jenkins"
-    jenkins_home = "/home/ubuntu/jenkins_home"
-    jenkins_home_mount = "/home/ubuntu/jenkins_home:/var/jenkins_home"
-    docker_sock_mount = "/var/run/docker.sock:/var/run/docker.sock"
-    java_opts = "JAVA_OPTS='-Djenkins.install.runSetupWizard=false'"
+    jenkins_home         = "/home/ubuntu/jenkins_home"
+    jenkins_home_mount   = "/data/jenkins_home:/var/jenkins_home"
+    docker_sock_mount    = "/var/run/docker.sock:/var/run/docker.sock"
+    java_opts            = "JAVA_OPTS='-Djenkins.install.runSetupWizard=false'"
   }
 
   refinitiv_tags = {
@@ -25,11 +25,11 @@ locals {
   }
 
   common_tags = {
-    Owner                 = local.eran_tags.owner
-    Environment_Name      = local.eran_tags.environment_name
-    Project_Name          = local.eran_tags.project_name
-    "tr:resource-owner"   = var.asset_owner
-    "tr:environment-type" = var.environment
+    Owner                             = local.eran_tags.owner
+    Environment_Name                  = local.eran_tags.environment_name
+    Project_Name                      = local.eran_tags.project_name
+    "tr:resource-owner"               = var.asset_owner
+    "tr:environment-type"             = var.environment
     "tr:application-asset-insight-id" = var.asset_id
   }
 }
