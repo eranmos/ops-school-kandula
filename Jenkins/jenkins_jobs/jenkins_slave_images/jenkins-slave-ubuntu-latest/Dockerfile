@@ -29,9 +29,10 @@ RUN \
     curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
     apt-get install -y --no-install-recommends git-lfs && \
     git lfs install && \
-## Install setuptools and aws-cli
+## Install setuptools ansible & aws-cli
     apt-get install -y python3-setuptools && \
     pip3 install setuptools wheel && pip3 install awscli ansible docker docker-compose boto boto3 botocore && \
+    ansible-galaxy collection install amazon.aws && \
 ## Install kubectl
     curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.18.0/bin/linux/amd64/kubectl && \
     chmod +x kubectl && \
@@ -58,6 +59,9 @@ RUN \
 ## Create ssh directories
     mkdir -p /var/run/sshd && \
     mkdir -p "$JENKINS_HOME"/.ssh && \
+## Create Anible directories
+    mkdir -p /etc/ansible/inventory/ && \
+    mkdir -p /etc/ansible/inventory/group_vars/ && \
     sed -i 's|session    required     pam_loginuid.so|session    optional     pam_loginuid.so|g' /etc/pam.d/sshd
 #Set Encoding
 ENV LANG C.UTF-8
@@ -65,6 +69,12 @@ ENV LC_ALL C.UTF-8
 ENV LANGUAGE C.UTF-8
 ## Add .gitconfig file & docker login repo credentials & .ssh keys
 ADD --chown=jenkins:jenkins ./conf/. /home/${user}
+## Add Ansible config files
+ADD --chown=jenkins:jenkins ./conf/.ansible/ansible.cfg /etc/ansible/
+## Add inventory  files
+ADD --chown=jenkins:jenkins ./conf/.ansible/aws_ec2.yaml /etc/ansible/inventory/
+## Add Ansible config files
+ADD --chown=jenkins:jenkins ./conf/.ansible/all.yaml /etc/ansible/inventory/group_vars/
 ## Set appropriate permissons for .ssh
 RUN chown -R ${user}:${group} /home/jenkins/.ssh && chmod 700 /home/jenkins/.ssh && chmod 600 /home/jenkins/.ssh/*
 ## Appropriate permissions
