@@ -1,7 +1,7 @@
 ---
 # my web server configurations
 - name: apply docker eng installation on my jenkins-master & jenkins-slave
-  hosts: tag_Name_jenkins_slave
+  hosts: tag_Name
   become: yes
 
 
