@@ -5,7 +5,8 @@ MAINTAINER Eran Moshayov | DevOps Team | <eran.ops.school@gmail.com>
 ENV DEBIAN_FRONTEND "noninteractive"
 ENV HELMFILE_VERSION "0.125.5"
 ENV TERRAFORM_VERSION "0.13.5"
-ENV APT_PACKAGES="unzip curl vim libltdl7 openjdk-8-jre openssh-server sshpass tree git bzip2 build-essential python3 python3-pip python locales gnupg rsync iputils-ping netcat-openbsd jq groff less"
+ENV TZ='Asia/Jerusalem' \
+    APT_PACKAGES="unzip curl vim libltdl7 openjdk-8-jre openssh-server sshpass tree git bzip2 build-essential python3 python3-pip python locales gnupg rsync iputils-ping netcat-openbsd jq groff less"
 
 # Make sure the package repository is up to date.
 RUN apt-get update && \
@@ -38,6 +39,11 @@ RUN apt-get update && \
     adduser --quiet jenkins && \
 # Set password for the jenkins user (you may want to alter this).
     echo "jenkins:jenkins" | chpasswd
+
+#Set Encoding
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+ENV LANGUAGE C.UTF-8
 
 # Copy authorized keys
 COPY .ssh/authorized_keys /home/jenkins/.ssh/authorized_keys
