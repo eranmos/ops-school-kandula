@@ -1,20 +1,17 @@
 ---
-# my web server configurations
-- name: apply docker eng installation on my jenkins-master & jenkins-slave
+- name: apply consul_registrator on my jenkins-master & jenkins-slave servers
   hosts: tag_Name_jenkins_slave
   become: yes
-  vars:
-    default_container_name: consul_registrator
-    default_container_image: gliderlabs/registrator:latest
-    default_container_command: consul://localhost:8500
 
   tasks:
-    - name: Create default containers
+    - name: consul_registrator
       docker_container:
-        name: "{{ default_container_name }}{{ item }}"
-        image: "{{ default_container_image }}"
+        name: consul_registrator
+        image: gliderlabs/registrator
         pull: true
-        command: "{{ default_container_command }}"
-        volumes: /var/run/docker.sock:/tmp/docker.sock
-        net: host
-        state: started
+        volumes:
+          - /var/run/docker.sock:/tmp/docker.sock
+        command: "consul://localhost:8500"
+        privileged: true
+
+
