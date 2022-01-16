@@ -6,7 +6,7 @@
   vars:
     default_container_name: consul_registrator
     default_container_image: gliderlabs/registrator:latest
-    default_container_command: --net=host --volume=/var/run/docker.sock:/tmp/docker.sock consul://localhost:8500
+    default_container_command: consul://localhost:8500
 
   tasks:
     - name: Create default containers
@@ -15,4 +15,6 @@
         image: "{{ default_container_image }}"
         pull: true
         command: "{{ default_container_command }}"
+        volumes: /var/run/docker.sock:/tmp/docker.sock
+        net: host
         state: started
