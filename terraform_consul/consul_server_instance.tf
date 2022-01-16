@@ -15,29 +15,31 @@ resource "aws_instance" "consul-server" {
   vpc_security_group_ids      = [aws_security_group.consul-server.id]
   user_data                   = local.consul-server-instance-userdata
 
-  ebs_block_device {
-    device_name = "/dev/sda1"
-    delete_on_termination = true
+  root_block_device {
+    encrypted                 = var.ebs_root_encrypted
+    volume_type               = var.ebs_root_volume_type
+    volume_size               = var.ebs_root_volume_size
+    delete_on_termination     = var.ebs_root_delete_on_termination
+
     tags = {
-      Name = "consul-server${count.index+1}"
-      consul_server = var.consul_server
-      Owner                 = local.eran_tags.owner
-      Environment_Name      = local.eran_tags.environment_name
-      Project_Name          = local.eran_tags.project_name
-      "tr:resource-owner"   = var.asset_owner
-      "tr:environment-type" = var.environment
+      Name                              = "consul-server${count.index+1}"
+      Owner                             = local.eran_tags.owner
+      Environment_Name                  = local.eran_tags.environment_name
+      Project_Name                      = local.eran_tags.project_name
+      "tr:resource-owner"               = var.asset_owner
+      "tr:environment-type"             = var.environment
       "tr:application-asset-insight-id" = var.asset_id
     }
   }
 
   tags = {
-    Name = "consul-server${count.index+1}"
-    consul_server = var.consul_server
-    Owner                 = local.eran_tags.owner
-    Environment_Name      = local.eran_tags.environment_name
-    Project_Name          = local.eran_tags.project_name
-    "tr:resource-owner"   = var.asset_owner
-    "tr:environment-type" = var.environment
+    Name                              = "consul-server${count.index+1}"
+    consul_server                     = var.consul_server
+    Owner                             = local.eran_tags.owner
+    Environment_Name                  = local.eran_tags.environment_name
+    Project_Name                      = local.eran_tags.project_name
+    "tr:resource-owner"               = var.asset_owner
+    "tr:environment-type"             = var.environment
     "tr:application-asset-insight-id" = var.asset_id
   }
 

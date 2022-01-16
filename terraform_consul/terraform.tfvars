@@ -11,6 +11,12 @@ consul_instances_count = "3"
 consul_server          = "true"
 ami                    = "ami-00ddb0e5626798373"
 
+#EBS ROOT Volume config
+ebs_root_delete_on_termination = "true"
+ebs_root_encrypted             = "true"
+ebs_root_volume_type           = "gp2"
+ebs_root_volume_size           = "8"
+
 #############  Route53  #####################
 aws_registered_domains = "kandula.click"
 consul_dns            = "consul.kandula.click"

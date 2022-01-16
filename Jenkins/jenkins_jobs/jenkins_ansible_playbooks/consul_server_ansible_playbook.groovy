@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'jankins-slave-ec2'
+        label 'docker-ubuntu'
     }
 
     options {

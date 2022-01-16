@@ -38,6 +38,27 @@ variable "consul_server" {
   type        = string
 }
 
+#############  EBS ROOT Storage  #############
+variable "ebs_root_encrypted" {
+  description = "if ebs should be encrypted true or false values"
+  type        = string
+}
+
+variable "ebs_root_volume_type" {
+  description = "EBS volume type like gp2..."
+  type        = string
+}
+
+variable "ebs_root_volume_size" {
+  description = "EBS volume size in G"
+  type        = string
+}
+
+variable "ebs_root_delete_on_termination" {
+  description = "if need to delete this EBS device with terminating instance true or false values"
+  type        = string
+}
+
 #############  Route53  #############
 variable "aws_registered_domains" {
   description = "my aws registered domains "
