@@ -4,21 +4,21 @@
   hosts: tag_Name_jenkins_slave
   become: yes
 
-  vars:
-    create_containers: 1
-    default_container_name: consul_registrator
-    default_container_image: gliderlabs/registrator:latest
-    default_container_command: --net=host --volume=/var/run/docker.sock:/tmp/docker.sock consul://localhost:8500
+vars:
+  create_containers: 1
+  default_container_name: consul_registrator
+  default_container_image: gliderlabs/registrator:latest
+  default_container_command: --net=host --volume=/var/run/docker.sock:/tmp/docker.sock consul://localhost:8500
 
-  - name: Pull default Docker image
-    docker_image:
-      name: "{{ default_container_image }}"
-      source: pull
+- name: Pull default Docker image
+  docker_image:
+    name: "{{ default_container_image }}"
+    source: pull
 
-  - name: Create default containers
-    docker_container:
-      name: "{{ default_container_name }}{{ item }}"
-      image: "{{ default_container_image }}"
-      command: "{{ default_container_command }}"
-      state: present
-      with_sequence: count={{ create_containers }}
+- name: Create default containers
+  docker_container:
+    name: "{{ default_container_name }}{{ item }}"
+    image: "{{ default_container_image }}"
+    command: "{{ default_container_command }}"
+    state: present
+    with_sequence: count={{ create_containers }}
