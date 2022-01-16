@@ -20,7 +20,7 @@ RUN apt-get update && \
     apt-get install -y python && \
 ## Install setuptools and aws-cli
     apt-get install -y python3-setuptools && \
-    pip3 install setuptools wheel && pip3 install awscli ansible docker docker-compose boto boto3 botocore && \
+    pip3 install setuptools wheel && pip3 install awscli docker docker-compose boto boto3 botocore && \
 # Cleanup old packages
     apt-get -qy autoremove && \
 # Add user jenkins to the image
