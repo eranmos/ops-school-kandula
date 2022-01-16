@@ -1,4 +1,6 @@
 # This Dockerfile is used to build an image containing basic stuff to be used as a Jenkins slave build node.
+## Image contains:
+## unzip curl vim openjdk-8-jdk git bzip2 python python-pip python3 python3-pip awscli helm3 ansible
 FROM ubuntu:18.04
 MAINTAINER Eran Moshayov | DevOps Team | <eran.ops.school@gmail.com>
 
