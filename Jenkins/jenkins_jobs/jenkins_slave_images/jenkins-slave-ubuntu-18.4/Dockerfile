@@ -1,18 +1,10 @@
-# This Dockerfile is used to build an image containing basic stuff to be used as a Jenkins slave build node.
 FROM ubuntu:18.04
-MAINTAINER Eran Moshayov | DevOps Team | <eran.ops.school@gmail.com>
 
-ENV DEBIAN_FRONTEND "noninteractive"
-ENV HELMFILE_VERSION "0.125.5"
-ENV TERRAFORM_VERSION "0.13.5"
-ENV TZ='Asia/Jerusalem' \
-    APT_PACKAGES="unzip curl vim libltdl7 openjdk-8-jre openssh-server sshpass tree git bzip2 build-essential python3 python3-pip python locales gnupg rsync iputils-ping netcat-openbsd jq groff less"
+LABEL maintainer="Bibin Wilson <bibinwilsonn@gmail.com>"
 
 # Make sure the package repository is up to date.
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends apt-utils &&  \
-    apt-get -q upgrade -y -o Dpkg::Options::="--force-confnew" --no-install-recommends && \
-    apt-get -q install -y -o Dpkg::Options::="--force-confnew" --no-install-recommends ${APT_PACKAGES} && locale-gen en_US en_US.UTF-8 && dpkg-reconfigure locales && \
+    apt-get -qy full-upgrade && \
     apt-get install -qy git && \
 # Install a basic SSH server
     apt-get install -qy openssh-server && \
@@ -22,28 +14,20 @@ RUN apt-get update && \
     apt-get install -qy openjdk-8-jdk && \
 # Install maven
     apt-get install -qy maven && \
+# Install Python
+    apt-get install -y python3 && \
+    apt-get install -y python3-pip && \
+    apt-get install -y python && \
 ## Install setuptools and aws-cli
     apt-get install -y python3-setuptools && \
     pip3 install setuptools wheel && pip3 install awscli ansible docker docker-compose boto boto3 botocore && \
-## Install kubectl
-    curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.18.0/bin/linux/amd64/kubectl && \
-    chmod +x kubectl && \
-    mv kubectl /usr/local/bin/kubectl && \
-## Install helm2 and helm3
-    curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash && mv /usr/local/bin/helm /usr/local/bin/helm3 && \
-## Install aws-iam-authenticator
-    curl -o /usr/local/bin/aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/darwin/amd64/aws-iam-authenticator && chmod +x /usr/local/bin/aws-iam-authenticator && \
-# Clean apt cache
+# Cleanup old packages
     apt-get -qy autoremove && \
 # Add user jenkins to the image
     adduser --quiet jenkins && \
 # Set password for the jenkins user (you may want to alter this).
     echo "jenkins:jenkins" | chpasswd
 
-#Set Encoding
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
-ENV LANGUAGE C.UTF-8
 
 # Copy authorized keys
 COPY .ssh/authorized_keys /home/jenkins/.ssh/authorized_keys
