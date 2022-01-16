@@ -2,6 +2,11 @@
 FROM ubuntu:18.04
 MAINTAINER Eran Moshayov | DevOps Team | <eran.ops.school@gmail.com>
 
+ENV DEBIAN_FRONTEND "noninteractive"
+ENV HELMFILE_VERSION "0.125.5"
+ENV TERRAFORM_VERSION "0.13.5"
+
+
 # Make sure the package repository is up to date.
 RUN apt-get update && \
     apt-get -qy full-upgrade && \
@@ -14,15 +19,26 @@ RUN apt-get update && \
     apt-get install -qy openjdk-8-jdk && \
 # Install maven
     apt-get install -qy maven && \
-# Cleanup old packages
+## Install setuptools and aws-cli
+    apt-get install -y python3-setuptools && \
+    pip3 install setuptools wheel && pip3 install awscli ansible docker docker-compose boto boto3 botocore && \
+## Install kubectl
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.18.0/bin/linux/amd64/kubectl && \
+    chmod +x kubectl && \
+    mv kubectl /usr/local/bin/kubectl && \
+## Install helm2 and helm3
+    curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash && mv /usr/local/bin/helm /usr/local/bin/helm3 && \
+## Install aws-iam-authenticator
+    curl -o /usr/local/bin/aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/darwin/amd64/aws-iam-authenticator && chmod +x
+# Clean apt cache
     apt-get -qy autoremove && \
+    apt-get -q clean -y && rm -rf /var/lib/apt/lists/* && rm -f /var/cache/apt/*.bin && \
 # Add user jenkins to the image
     adduser --quiet jenkins && \
 # Set password for the jenkins user (you may want to alter this).
     echo "jenkins:jenkins" | chpasswd && \
     mkdir /home/jenkins/.m2
 
-#ADD settings.xml /home/jenkins/.m2/
 # Copy authorized keys
 COPY .ssh/authorized_keys /home/jenkins/.ssh/authorized_keys
 
