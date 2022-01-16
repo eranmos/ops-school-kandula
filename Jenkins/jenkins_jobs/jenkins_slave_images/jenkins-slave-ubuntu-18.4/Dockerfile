@@ -41,6 +41,7 @@ RUN apt-get update && \
     add-apt-repository --yes --update ppa:ansible/ansible && \
     apt-get install -y ansible && \
     ansible-galaxy collection install amazon.aws && \
+    ansible-galaxy collection install community.docker && \
 # Cleanup old packages
     apt-get -qy autoremove && \
 # Add user jenkins to the image
