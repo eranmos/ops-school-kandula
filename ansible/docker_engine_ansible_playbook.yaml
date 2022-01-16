@@ -1,0 +1,9 @@
+---
+# my web server configurations
+- name: apply docker eng installation on my jenkins-master & jenkins-slave
+  hosts: tag_Name_jenkins-slave
+  become: yes
+
+
+  roles:
+    - docker_engine
