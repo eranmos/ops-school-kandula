@@ -21,6 +21,14 @@ RUN apt-get update && \
 ## Install setuptools and aws-cli
     apt-get install -y python3-setuptools && \
     pip3 install setuptools wheel && pip3 install awscli docker docker-compose boto boto3 botocore && \
+## Install kubectl
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.18.0/bin/linux/amd64/kubectl && \
+    chmod +x kubectl && \
+    mv kubectl /usr/local/bin/kubectl && \
+## Install and helm3
+    curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash && mv /usr/local/bin/helm /usr/local/bin/helm && \
+## Install aws-iam-authenticator
+    curl -o /usr/local/bin/aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/darwin/amd64/aws-iam-authenticator && chmod +x /usr/local/bin/aws-iam-authenticator && \
 # Cleanup old packages
     apt-get -qy autoremove && \
 # Add user jenkins to the image
