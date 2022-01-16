@@ -9,6 +9,15 @@ pipeline {
     }
 
     stages {
+        stage("Adding Ansible SSH keys") {
+            steps {
+                script {
+                   withCredentials([file(credentialsId: 'ansible-ssh-keys', variable: 'CREDENTIALSFILE')]) {
+                       sh 'cp \$CREDENTIALSFILE /home/jenkins/.ssh/id_rsa && chmod 400 /home/jenkins/.ssh/id_rsa'
+                   }
+                }
+            }
+        }
         stage("Installing consul server") {
             steps {
                 dir ("ansible/") {
