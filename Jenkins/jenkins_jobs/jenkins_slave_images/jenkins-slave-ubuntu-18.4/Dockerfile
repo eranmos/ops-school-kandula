@@ -25,7 +25,7 @@ RUN apt-get update && \
 ## Install setuptools and aws-cli
     apt-get install -y python3-setuptools && \
     pip3 install setuptools wheel && pip3 install awscli docker docker-compose boto boto3 botocore && \
-    pip install boto3 botocore \
+    pip install boto3 botocore && \
 ## Install kubectl
     curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.18.0/bin/linux/amd64/kubectl && \
     chmod +x kubectl && \
