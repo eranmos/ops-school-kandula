@@ -6,6 +6,7 @@ LABEL maintainer="Bibin Wilson <bibinwilsonn@gmail.com>"
 RUN apt-get update && \
     apt-get -qy full-upgrade && \
     apt-get install -qy git && \
+    apt-get install -y curl && \
 # Install a basic SSH server
     apt-get install -qy openssh-server && \
     sed -i 's|session    required     pam_loginuid.so|session    optional     pam_loginuid.so|g' /etc/pam.d/sshd && \
