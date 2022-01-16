@@ -5,11 +5,13 @@ MAINTAINER Eran Moshayov | DevOps Team | <eran.ops.school@gmail.com>
 ENV DEBIAN_FRONTEND "noninteractive"
 ENV HELMFILE_VERSION "0.125.5"
 ENV TERRAFORM_VERSION "0.13.5"
-
+ENV APT_PACKAGES="unzip curl vim libltdl7 openjdk-8-jre openssh-server sshpass tree git bzip2 build-essential python3 python3-pip python locales gnupg rsync iputils-ping netcat-openbsd jq groff less"
 
 # Make sure the package repository is up to date.
 RUN apt-get update && \
-    apt-get -qy full-upgrade && \
+    apt-get install -y --no-install-recommends apt-utils &&  \
+    apt-get -q upgrade -y -o Dpkg::Options::="--force-confnew" --no-install-recommends && \
+    apt-get -q install -y -o Dpkg::Options::="--force-confnew" --no-install-recommends ${APT_PACKAGES} && locale-gen en_US en_US.UTF-8 && dpkg-reconfigure locales && \
     apt-get install -qy git && \
 # Install a basic SSH server
     apt-get install -qy openssh-server && \
@@ -21,7 +23,6 @@ RUN apt-get update && \
     apt-get install -qy maven && \
 ## Install setuptools and aws-cli
     apt-get install -y python3-setuptools && \
-    apt-get python3-pip -y && \
     pip3 install setuptools wheel && pip3 install awscli ansible docker docker-compose boto boto3 botocore && \
 ## Install kubectl
     curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.18.0/bin/linux/amd64/kubectl && \
