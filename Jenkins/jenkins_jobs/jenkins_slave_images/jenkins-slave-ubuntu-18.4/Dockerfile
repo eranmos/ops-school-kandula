@@ -43,11 +43,19 @@ RUN apt-get update && \
     adduser --quiet jenkins && \
 # Set password for the jenkins user (you may want to alter this).
     echo "jenkins:jenkins" | chpasswd && \
-    mkdir /home/jenkins/.m2
+    mkdir /home/jenkins/.m2 && \
+    mkdir -p /etc/ansible/inventory/ && \
+    mkdir -p /etc/ansible/inventory/group_vars/
 
 
 # Copy authorized keys
 COPY .ssh/authorized_keys /home/jenkins/.ssh/authorized_keys
+## Add Ansible config files
+ADD --chown=jenkins:jenkins ./conf/.ansible/ansible.cfg /etc/ansible/
+## Add inventory  files
+ADD --chown=jenkins:jenkins ./conf/.ansible/aws_ec2.yaml /etc/ansible/inventory/
+## Add Ansible config files
+ADD --chown=jenkins:jenkins ./conf/.ansible/all.yaml /etc/ansible/inventory/group_vars/
 
 RUN chown -R jenkins:jenkins /home/jenkins/.m2/ && \
     chown -R jenkins:jenkins /home/jenkins/.ssh/
