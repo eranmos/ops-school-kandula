@@ -7,6 +7,8 @@ RUN apt-get update && \
     apt-get -qy full-upgrade && \
     apt-get install -qy git && \
     apt-get install -y curl && \
+    apt-get install -y vim && \
+    apt-get install -y unzip && \
 # Install a basic SSH server
     apt-get install -qy openssh-server && \
     sed -i 's|session    required     pam_loginuid.so|session    optional     pam_loginuid.so|g' /etc/pam.d/sshd && \
@@ -27,7 +29,7 @@ RUN apt-get update && \
     chmod +x kubectl && \
     mv kubectl /usr/local/bin/kubectl && \
 ## Install and helm3
-    curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash && mv /usr/local/bin/helm /usr/local/bin/helm && \
+    curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash && \
 ## Install aws-iam-authenticator
     curl -o /usr/local/bin/aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/darwin/amd64/aws-iam-authenticator && chmod +x /usr/local/bin/aws-iam-authenticator && \
 # Cleanup old packages
