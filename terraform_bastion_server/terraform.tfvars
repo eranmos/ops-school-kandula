@@ -9,7 +9,8 @@ bastion_instance_name  = "Bastion-Server"
 key_name               = "eran_ops_school_keys"
 bastion_instance_type  = "t2.micro"
 consul_server          = "false"
-ami                    = "ami-00ddb0e5626798373"
+#ami                   = "ami-00ddb0e5626798373"   --> this is the Ubuntu clean AMI
+ami                    = "ami-0240084233d73a385"  # -->This is my Ubuntu with OpenVpn configuration
 
 #EBS ROOT Volume config
 ebs_root_delete_on_termination = "true"

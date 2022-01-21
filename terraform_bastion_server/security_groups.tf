@@ -10,23 +10,36 @@ resource "aws_security_group" "bastion-server" {
   description = "Allow bastion inbound traffic"
 
   ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = [
-      "0.0.0.0/0"
-    ]
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "OPEN_VPN_TCP"
+    from_port   = 1194
+    to_port     = 1194
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "OPEN_VPN_UDP"
+    from_port   = 1194
+    to_port     = 1194
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
     description = "Allow all outgoing traffic"
-    from_port = 0
-    to_port = 0
+    from_port   = 0
+    to_port     = 0
     // -1 means all
-    protocol = "-1"
-    cidr_blocks = [
-      "0.0.0.0/0"
-    ]
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
