@@ -12,6 +12,7 @@
 - [Prerequisites](#prerequisites)
 - [Deployment Instructions](#Deployment-Instructions)
 - [Application Connections](#Application-Connections)
+- [Vulnerability Check](#Vulnerability Check)
 - [Links to dockerhub related images](#Links-to-dockerhub-related-images)
 - [Links to GitHub related repository](#Links-to-GitHub-related-repository)
 - [Improvement Points For The Future](#Improvement-points-for-the-future)
@@ -110,6 +111,12 @@ Jenkins UI : https://jenkins.eran.website/
 | tcp      | 22          | ingress        | Allow ssh                                                      |
 | all      | all         | egress         | Allow all outgoing traffic                                     |
 
+## Vulnerability Check
+### Terraform Vulnerability Check
++ I need to update the vulnerabilities with Trivy
+
+### Docker Image Vulnerability Check
++ I need to update the vulnerabilities with Trivy
 
 ### Links to dockerhub related images
 - [Kandula](https://hub.docker.com/repository/docker/erandocker/ops-school-kandula) - docker pull erandocker/ops-school-kandula:tagname
