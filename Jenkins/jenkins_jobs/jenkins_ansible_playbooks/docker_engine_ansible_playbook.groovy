@@ -23,7 +23,7 @@ pipeline {
                 dir ("ansible/") {
                     sh "pwd"
                     sh "ls -lhta"
-                    sh "ansible-playbook common_ansible_playbook.yaml"
+                    sh "ansible-playbook docker_engine_ansible_playbook.yaml"
                 }
             }
         }

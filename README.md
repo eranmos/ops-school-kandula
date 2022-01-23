@@ -56,7 +56,7 @@ Jenkins UI : https://jenkins.eran.website/
 
 3. Installing Consul-server on three ec2 instances & Consul-agent on Jenkins-master & Jenkins-slave.
    + please run Jenkins job:
-   + [jenkins file location](/Jenkins/jenkins_jobs/jenkins_ansible_playbooks/common_ansible_playbook.groovy)
+   + [jenkins file location](/Jenkins/jenkins_jobs/jenkins_ansible_playbooks/consul_agent_ansible_playbook.groovy)
    + [Ansible Playbooks & roles](/ansible)
    + when done you can access consul GUI and see all consul servers, agents and services, link: https://consul.eran.website/
 
