@@ -1,8 +1,7 @@
 name: Trivy Scanner for vulnerabilities Pull request flow
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
   pull_request:
 jobs:
   build:
