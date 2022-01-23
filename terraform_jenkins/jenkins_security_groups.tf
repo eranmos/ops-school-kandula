@@ -69,12 +69,12 @@ resource "aws_security_group" "jenkins" {
   }
 
   tags = {
-    Name = local.jenkins_server.jenkins_default_name
-    Owner                 = local.eran_tags.owner
-    Environment_Name      = local.eran_tags.environment_name
-    Project_Name          = local.eran_tags.project_name
-    "tr:resource-owner"   = var.asset_owner
-    "tr:environment-type" = var.environment
+    Name                              = local.jenkins_server.jenkins_default_name
+    Owner                             = local.eran_tags.owner
+    Environment_Name                  = local.eran_tags.environment_name
+    Project_Name                      = local.eran_tags.project_name
+    "tr:resource-owner"               = var.asset_owner
+    "tr:environment-type"             = var.environment
     "tr:application-asset-insight-id" = var.asset_id
   }
 }
