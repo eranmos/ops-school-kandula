@@ -44,11 +44,9 @@ RUN apt-get update && \
     ansible-galaxy collection install community.docker && \
 ## Install Trivy (Vulnerability Tool)
     sudo apt-get install wget apt-transport-https gnupg lsb-release \
-    wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add - \
-    echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list \
-    sudo apt-get update \
+    sudo wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add - \
+    sudo echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list \
     sudo apt-get install trivy \
-
 # Cleanup old packages
     apt-get -qy autoremove && \
 # Add user jenkins to the image
