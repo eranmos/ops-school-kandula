@@ -11,6 +11,7 @@ RUN apt-get update && \
     apt-get install -y curl && \
     apt-get install -y vim && \
     apt-get install -y unzip && \
+    apt install docker.io -y && \
 # Install a basic SSH server
     apt-get install -qy openssh-server && \
     sed -i 's|session    required     pam_loginuid.so|session    optional     pam_loginuid.so|g' /etc/pam.d/sshd && \
