@@ -47,7 +47,7 @@ Infrastructure deployment will be performed via Terraform locally.
 + [Terraform-VPC](/terraform_vpc) - Creating VPC
 + [Terraform-Jenkins](/terraform_jenkins) - Creating Jenkins Master & Jenkins Slave (EC2 instance slave & cloud slaves)
 + [Terraform-Consul](/terraform_consul) - Creating Consul cluster without application (application will be installed via ansible playbook)
-+ [Terraform-EKS](/terraform_eks) - Creating Kubernetes cluster with one worker group
++ [Terraform-EKS](/terraform_eks_orig_bk) - Creating Kubernetes cluster with one worker group
 + [Terraform Bastion Server](/terraform_bastion_server) - Creating Bastion server for debugging & maintenance
 > note: Bastion server - In order to avoid security issues we're recommending to destroy the machine or turn it off when not needed
 

@@ -10,9 +10,9 @@ data:
       groups:
         - system:bootstrappers
         - system:nodes
-    - rolearn: arn:aws:iam::031034181336:role/aws_cli
+    - rolearn: arn:aws:iam::031034181336:role/aws_cli 
       username: aws_cli
-      groups:
+      groups: 
         - system:masters
   # mapUsers: |
   #   - userarn: <arn:aws:iam::111122223333:user/admin>

@@ -15,10 +15,9 @@ terraform {
       version = "~> 3.0"
     }
   }
-
   backend "s3" {
     bucket  = "eran-terraform-provisioning-bucket"
-    key     = "ops-school-prod/eks/terraform.tfstate"
+    key     = "ops-school-prod/postgres/terraform.tfstate"
     region  = "us-east-1"
     encrypt = true
     profile = "tr-tms"

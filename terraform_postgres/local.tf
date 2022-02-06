@@ -3,8 +3,6 @@
 #############
 locals {
 
-  eks_cluster_name = "${var.asset_id}-eks-${var.project_name}-${var.environment}"
-
   refinitiv_tags = {
     "tr:resource-owner"               = var.asset_owner
     "tr:environment-type"             = var.environment

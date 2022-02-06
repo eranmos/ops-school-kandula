@@ -4,6 +4,8 @@
 locals {
 
   eks_cluster_name = "${var.asset_id}-eks-${var.project_name}-${var.environment}"
+  k8s_service_account_namespace = "default"
+  k8s_service_account_name      = "opsschool-sa"
 
   refinitiv_tags = {
     "tr:resource-owner"               = var.asset_owner
@@ -27,5 +29,3 @@ locals {
     "tr:application-asset-insight-id" = var.asset_id
   }
 }
-
-
