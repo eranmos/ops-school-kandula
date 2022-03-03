@@ -45,19 +45,21 @@ pipeline {
                     withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: "${KUBECONFIG_VAR}", variable: 'KUBECONFIG')]) {
                         sh 'mkdir /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
                         configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
-                            if (params.Helm == 'upgrade') {
-                                echo 'Going to Install Upgrade helm chart'
-                                sh """helm upgrade ${DEPLOYMENT_NAME} ./kube-prometheus-stack --install --atomic --namespace=${NAMESPACE}"""
-                                sh "kubectl get pods -n ${NAMESPACE}"
-                                sh "kubectl rollout status deployment ${DEPLOYMENT_NAME} -n ${NAMESPACE}"
-                                echo "Yoy successfully deployed kube-prometheus-stack on your Env"
+                            when {
+                                expression {params.Helm == 'upgrade'}
+                                    echo 'Going to Install Upgrade helm chart'
+                                    sh """helm upgrade ${DEPLOYMENT_NAME} ./kube-prometheus-stack --install --atomic --namespace=${NAMESPACE}"""
+                                    sh "kubectl get pods -n ${NAMESPACE}"
+                                    sh "kubectl rollout status deployment ${DEPLOYMENT_NAME} -n ${NAMESPACE}"
+                                    echo "Yoy successfully deployed kube-prometheus-stack on your Env"
                             }
-                            if (params.Helm == 'upgrade') {
-                                echo 'Going to uninstall helm chart'
-                                sh """helm uninstall ${DEPLOYMENT_NAME} --namespace=${NAMESPACE}"""
-                                sh "kubectl get pods -n ${NAMESPACE}"
-                                sh "kubectl rollout status deployment ${DEPLOYMENT_NAME} -n ${NAMESPACE}"
-                                echo "Yoy successfully uninstall kube-prometheus-stack on your Env"
+                            when {
+                                expression {params.Helm == 'upgrade'}
+                                    echo 'Going to uninstall helm chart'
+                                    sh """helm uninstall ${DEPLOYMENT_NAME} --namespace=${NAMESPACE}"""
+                                    sh "kubectl get pods -n ${NAMESPACE}"
+                                    sh "kubectl rollout status deployment ${DEPLOYMENT_NAME} -n ${NAMESPACE}"
+                                    echo "Yoy successfully uninstall kube-prometheus-stack on your Env"
                             }
                         }
                     }
