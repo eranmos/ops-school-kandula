@@ -1,4 +1,4 @@
-{{- if and .Values.kubeEtcd.enabled .Values.kubeEtcd.serviceMonitor.enabled }}
+{{- if .Values.kubeEtcd.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -22,9 +22,6 @@ spec:
     interval: {{ .Values.kubeEtcd.serviceMonitor.interval }}
     {{- end }}
     bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-    {{- if .Values.kubeEtcd.serviceMonitor.proxyUrl }}
-    proxyUrl: {{ .Values.kubeEtcd.serviceMonitor.proxyUrl}}
-    {{- end }}
     {{- if eq .Values.kubeEtcd.serviceMonitor.scheme "https" }}
     scheme: https
     tlsConfig:
@@ -48,6 +45,6 @@ spec:
 {{- end }}
 {{- if .Values.kubeEtcd.serviceMonitor.relabelings }}
     relabelings:
-{{ tpl (toYaml .Values.kubeEtcd.serviceMonitor.relabelings | indent 4) . }}
+{{ toYaml .Values.kubeEtcd.serviceMonitor.relabelings | indent 4 }}
 {{- end }}
 {{- end }}

@@ -28,4 +28,21 @@ locals {
     "tr:environment-type" = var.environment
     "tr:application-asset-insight-id" = var.asset_id
   }
+  helm_defaults = {
+    atomic                = false
+    cleanup_on_fail       = false
+    dependency_update     = false
+    disable_crd_hooks     = false
+    disable_webhooks      = false
+    force_update          = false
+    recreate_pods         = true
+    render_subchart_notes = true
+    replace               = true
+    reset_values          = true
+    reuse_values          = false
+    skip_crds             = false
+    timeout               = 3600
+    verify                = false
+    wait                  = true
+  }
 }

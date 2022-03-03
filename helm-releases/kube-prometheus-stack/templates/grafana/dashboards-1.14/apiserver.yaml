@@ -1,14 +1,14 @@
 {{- /*
-Generated from 'apiserver' from https://raw.githubusercontent.com/prometheus-operator/kube-prometheus/main/manifests/grafana-dashboardDefinitions.yaml
+Generated from 'apiserver' from https://raw.githubusercontent.com/prometheus-operator/kube-prometheus/master/manifests/grafana-dashboardDefinitions.yaml
 Do not change in-place! In order to change this file first read following link:
 https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack/hack
 */ -}}
 {{- $kubeTargetVersion := default .Capabilities.KubeVersion.GitVersion .Values.kubeTargetVersionOverride }}
-{{- if and (or .Values.grafana.enabled .Values.grafana.forceDeployDashboards) (semverCompare ">=1.14.0-0" $kubeTargetVersion) (semverCompare "<9.9.9-9" $kubeTargetVersion) .Values.grafana.defaultDashboardsEnabled .Values.kubeApiServer.enabled }}
+{{- if and (semverCompare ">=1.14.0-0" $kubeTargetVersion) (semverCompare "<9.9.9-9" $kubeTargetVersion) .Values.grafana.enabled .Values.grafana.defaultDashboardsEnabled .Values.kubeApiServer.enabled .Values.defaultRules.rules.kubeApiserver }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  namespace: {{ template "kube-prometheus-stack-grafana.namespace" . }}
+  namespace: {{ template "kube-prometheus-stack.namespace" . }}
   name: {{ printf "%s-%s" (include "kube-prometheus-stack.fullname" $) "apiserver" | trunc 63 | trimSuffix "-" }}
   annotations:
 {{ toYaml .Values.grafana.sidecar.dashboards.annotations | indent 4 }}
@@ -88,11 +88,7 @@ data:
 
                         },
                         "id": 3,
-                        "interval": "1m",
-                        "legend": {
-                            "alignAsTable": true,
-                            "rightSide": true
-                        },
+                        "interval": null,
                         "links": [
 
                         ],
@@ -170,14 +166,13 @@ data:
 
                         },
                         "id": 4,
-                        "interval": "1m",
                         "legend": {
-                            "alignAsTable": true,
+                            "alignAsTable": false,
                             "avg": false,
                             "current": false,
                             "max": false,
                             "min": false,
-                            "rightSide": true,
+                            "rightSide": false,
                             "show": true,
                             "sideWidth": null,
                             "total": false,
@@ -289,11 +284,7 @@ data:
 
                         },
                         "id": 5,
-                        "interval": "1m",
-                        "legend": {
-                            "alignAsTable": true,
-                            "rightSide": true
-                        },
+                        "interval": null,
                         "links": [
 
                         ],
@@ -370,14 +361,13 @@ data:
 
                         },
                         "id": 6,
-                        "interval": "1m",
                         "legend": {
-                            "alignAsTable": true,
+                            "alignAsTable": false,
                             "avg": false,
                             "current": false,
                             "max": false,
                             "min": false,
-                            "rightSide": true,
+                            "rightSide": false,
                             "show": true,
                             "sideWidth": null,
                             "total": false,
@@ -480,14 +470,13 @@ data:
 
                         },
                         "id": 7,
-                        "interval": "1m",
                         "legend": {
-                            "alignAsTable": true,
+                            "alignAsTable": false,
                             "avg": false,
                             "current": false,
                             "max": false,
                             "min": false,
-                            "rightSide": true,
+                            "rightSide": false,
                             "show": true,
                             "sideWidth": null,
                             "total": false,
@@ -575,14 +564,13 @@ data:
 
                         },
                         "id": 8,
-                        "interval": "1m",
                         "legend": {
-                            "alignAsTable": true,
+                            "alignAsTable": false,
                             "avg": false,
                             "current": false,
                             "max": false,
                             "min": false,
-                            "rightSide": true,
+                            "rightSide": false,
                             "show": true,
                             "sideWidth": null,
                             "total": false,
@@ -692,11 +680,7 @@ data:
 
                         },
                         "id": 9,
-                        "interval": "1m",
-                        "legend": {
-                            "alignAsTable": true,
-                            "rightSide": true
-                        },
+                        "interval": null,
                         "links": [
 
                         ],
@@ -773,14 +757,13 @@ data:
 
                         },
                         "id": 10,
-                        "interval": "1m",
                         "legend": {
-                            "alignAsTable": true,
+                            "alignAsTable": false,
                             "avg": false,
                             "current": false,
                             "max": false,
                             "min": false,
-                            "rightSide": true,
+                            "rightSide": false,
                             "show": true,
                             "sideWidth": null,
                             "total": false,
@@ -883,14 +866,13 @@ data:
 
                         },
                         "id": 11,
-                        "interval": "1m",
                         "legend": {
-                            "alignAsTable": true,
+                            "alignAsTable": false,
                             "avg": false,
                             "current": false,
                             "max": false,
                             "min": false,
-                            "rightSide": true,
+                            "rightSide": false,
                             "show": true,
                             "sideWidth": null,
                             "total": false,
@@ -978,14 +960,13 @@ data:
 
                         },
                         "id": 12,
-                        "interval": "1m",
                         "legend": {
-                            "alignAsTable": true,
+                            "alignAsTable": false,
                             "avg": false,
                             "current": false,
                             "max": false,
                             "min": false,
-                            "rightSide": true,
+                            "rightSide": false,
                             "show": true,
                             "sideWidth": null,
                             "total": false,
@@ -1085,14 +1066,13 @@ data:
 
                         },
                         "id": 13,
-                        "interval": "1m",
                         "legend": {
-                            "alignAsTable": true,
+                            "alignAsTable": false,
                             "avg": false,
                             "current": false,
                             "max": false,
                             "min": false,
-                            "rightSide": true,
+                            "rightSide": false,
                             "show": false,
                             "sideWidth": null,
                             "total": false,
@@ -1118,7 +1098,7 @@ data:
                         "steppedLine": false,
                         "targets": [
                             {
-                                "expr": "sum(rate(workqueue_adds_total{job=\"apiserver\", instance=~\"$instance\", cluster=\"$cluster\"}[$__rate_interval])) by (instance, name)",
+                                "expr": "sum(rate(workqueue_adds_total{job=\"apiserver\", instance=~\"$instance\", cluster=\"$cluster\"}[5m])) by (instance, name)",
                                 "format": "time_series",
                                 "intervalFactor": 2,
                                 "legendFormat": "{{`{{`}}instance{{`}}`}} {{`{{`}}name{{`}}`}}",
@@ -1179,14 +1159,13 @@ data:
 
                         },
                         "id": 14,
-                        "interval": "1m",
                         "legend": {
-                            "alignAsTable": true,
+                            "alignAsTable": false,
                             "avg": false,
                             "current": false,
                             "max": false,
                             "min": false,
-                            "rightSide": true,
+                            "rightSide": false,
                             "show": false,
                             "sideWidth": null,
                             "total": false,
@@ -1212,7 +1191,7 @@ data:
                         "steppedLine": false,
                         "targets": [
                             {
-                                "expr": "sum(rate(workqueue_depth{job=\"apiserver\", instance=~\"$instance\", cluster=\"$cluster\"}[$__rate_interval])) by (instance, name)",
+                                "expr": "sum(rate(workqueue_depth{job=\"apiserver\", instance=~\"$instance\", cluster=\"$cluster\"}[5m])) by (instance, name)",
                                 "format": "time_series",
                                 "intervalFactor": 2,
                                 "legendFormat": "{{`{{`}}instance{{`}}`}} {{`{{`}}name{{`}}`}}",
@@ -1273,7 +1252,6 @@ data:
 
                         },
                         "id": 15,
-                        "interval": "1m",
                         "legend": {
                             "alignAsTable": true,
                             "avg": false,
@@ -1306,7 +1284,7 @@ data:
                         "steppedLine": false,
                         "targets": [
                             {
-                                "expr": "histogram_quantile(0.99, sum(rate(workqueue_queue_duration_seconds_bucket{job=\"apiserver\", instance=~\"$instance\", cluster=\"$cluster\"}[$__rate_interval])) by (instance, name, le))",
+                                "expr": "histogram_quantile(0.99, sum(rate(workqueue_queue_duration_seconds_bucket{job=\"apiserver\", instance=~\"$instance\", cluster=\"$cluster\"}[5m])) by (instance, name, le))",
                                 "format": "time_series",
                                 "intervalFactor": 2,
                                 "legendFormat": "{{`{{`}}instance{{`}}`}} {{`{{`}}name{{`}}`}}",
@@ -1380,14 +1358,13 @@ data:
 
                         },
                         "id": 16,
-                        "interval": "1m",
                         "legend": {
-                            "alignAsTable": true,
+                            "alignAsTable": false,
                             "avg": false,
                             "current": false,
                             "max": false,
                             "min": false,
-                            "rightSide": true,
+                            "rightSide": false,
                             "show": true,
                             "sideWidth": null,
                             "total": false,
@@ -1474,14 +1451,13 @@ data:
 
                         },
                         "id": 17,
-                        "interval": "1m",
                         "legend": {
-                            "alignAsTable": true,
+                            "alignAsTable": false,
                             "avg": false,
                             "current": false,
                             "max": false,
                             "min": false,
-                            "rightSide": true,
+                            "rightSide": false,
                             "show": true,
                             "sideWidth": null,
                             "total": false,
@@ -1507,7 +1483,7 @@ data:
                         "steppedLine": false,
                         "targets": [
                             {
-                                "expr": "rate(process_cpu_seconds_total{job=\"apiserver\",instance=~\"$instance\", cluster=\"$cluster\"}[$__rate_interval])",
+                                "expr": "rate(process_cpu_seconds_total{job=\"apiserver\",instance=~\"$instance\", cluster=\"$cluster\"}[5m])",
                                 "format": "time_series",
                                 "intervalFactor": 2,
                                 "legendFormat": "{{`{{`}}instance{{`}}`}}",
@@ -1568,14 +1544,13 @@ data:
 
                         },
                         "id": 18,
-                        "interval": "1m",
                         "legend": {
-                            "alignAsTable": true,
+                            "alignAsTable": false,
                             "avg": false,
                             "current": false,
                             "max": false,
                             "min": false,
-                            "rightSide": true,
+                            "rightSide": false,
                             "show": true,
                             "sideWidth": null,
                             "total": false,
@@ -1671,7 +1646,7 @@ data:
                         "value": "default"
                     },
                     "hide": 0,
-                    "label": "Data Source",
+                    "label": null,
                     "name": "datasource",
                     "options": [
 
@@ -1687,7 +1662,7 @@ data:
 
                     },
                     "datasource": "$datasource",
-                    "hide": {{ if .Values.grafana.sidecar.dashboards.multicluster.global.enabled }}0{{ else }}2{{ end }},
+                    "hide": {{ if .Values.grafana.sidecar.dashboards.multicluster }}0{{ else }}2{{ end }},
                     "includeAll": false,
                     "label": "cluster",
                     "multi": false,
@@ -1695,7 +1670,7 @@ data:
                     "options": [
 
                     ],
-                    "query": "label_values(up{job=\"apiserver\"}, cluster)",
+                    "query": "label_values(apiserver_request_total, cluster)",
                     "refresh": 2,
                     "regex": "",
                     "sort": 1,
@@ -1721,7 +1696,7 @@ data:
                     "options": [
 
                     ],
-                    "query": "label_values(up{job=\"apiserver\", cluster=\"$cluster\"}, instance)",
+                    "query": "label_values(apiserver_request_total{job=\"apiserver\", cluster=\"$cluster\"}, instance)",
                     "refresh": 2,
                     "regex": "",
                     "sort": 1,
@@ -1764,7 +1739,7 @@ data:
                 "30d"
             ]
         },
-        "timezone": "{{ .Values.grafana.defaultDashboardsTimezone }}",
+        "timezone": "UTC",
         "title": "Kubernetes / API server",
         "uid": "09ec8aa1e996d6ffcd6817bbaff4db1b",
         "version": 0

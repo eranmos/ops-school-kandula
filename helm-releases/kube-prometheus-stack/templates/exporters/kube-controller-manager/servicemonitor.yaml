@@ -1,4 +1,4 @@
-{{- if and .Values.kubeControllerManager.enabled .Values.kubeControllerManager.serviceMonitor.enabled }}
+{{- if .Values.kubeControllerManager.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -22,15 +22,12 @@ spec:
     interval: {{ .Values.kubeControllerManager.serviceMonitor.interval }}
     {{- end }}
     bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-    {{- if .Values.kubeControllerManager.serviceMonitor.proxyUrl }}
-    proxyUrl: {{ .Values.kubeControllerManager.serviceMonitor.proxyUrl}}
-    {{- end }}
-    {{- if eq (include "kube-prometheus-stack.kubeControllerManager.insecureScrape" (list . false true .Values.kubeControllerManager.serviceMonitor.https )) "true" }}
+    {{- if .Values.kubeControllerManager.serviceMonitor.https }}
     scheme: https
     tlsConfig:
       caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-      {{- if eq (include "kube-prometheus-stack.kubeControllerManager.insecureScrape" (list . nil true .Values.kubeControllerManager.serviceMonitor.insecureSkipVerify)) "true" }}
-      insecureSkipVerify: true
+      {{- if .Values.kubeControllerManager.serviceMonitor.insecureSkipVerify }}
+      insecureSkipVerify: {{ .Values.kubeControllerManager.serviceMonitor.insecureSkipVerify }}
       {{- end }}
       {{- if .Values.kubeControllerManager.serviceMonitor.serverName }}
       serverName: {{ .Values.kubeControllerManager.serviceMonitor.serverName }}
@@ -42,6 +39,6 @@ spec:
 {{- end }}
 {{- if .Values.kubeControllerManager.serviceMonitor.relabelings }}
     relabelings:
-{{ tpl (toYaml .Values.kubeControllerManager.serviceMonitor.relabelings | indent 4) . }}
+{{ toYaml .Values.kubeControllerManager.serviceMonitor.relabelings | indent 4 }}
 {{- end }}
 {{- end }}

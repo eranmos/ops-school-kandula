@@ -50,9 +50,8 @@ spec:
 {{- if .Values.prometheus.service.additionalPorts }}
 {{ toYaml .Values.prometheus.service.additionalPorts | indent 2 }}
 {{- end }}
-  publishNotReadyAddresses: {{ .Values.prometheus.service.publishNotReadyAddresses }}
   selector:
-    app.kubernetes.io/name: prometheus
+    app: prometheus
     prometheus: {{ template "kube-prometheus-stack.fullname" . }}-prometheus
 {{- if .Values.prometheus.service.sessionAffinity }}
   sessionAffinity: {{ .Values.prometheus.service.sessionAffinity }}
