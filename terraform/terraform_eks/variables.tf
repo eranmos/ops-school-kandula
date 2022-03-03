@@ -7,6 +7,11 @@ variable "aws_cli_profile" {
   type        = string
 }
 
+variable "account_id" {
+  description = "Account id of AWS account"
+  type        = string
+}
+
 #############  VPC Related  #############
 variable "aws_region" {
   description = "AWS region"
@@ -63,6 +68,42 @@ variable "root_volume_size" {
   description = "Root volume size of workers instances"
   type        = number
 }
+
+variable "ebs_driver" {
+  description = "Indicate installation for AWS EBS Driver"
+  type        = bool
+}
+
+variable "aws_load_balancer_controller" {
+  description = "Indicate installation for AWS LB"
+  type = bool
+}
+
+variable "ingress_namespace" {
+  description = "Namespace name for Ingress Controller"
+  type        = string
+}
+
+variable "logging_namespace" {
+  description = "Namespace name for Logging Namespace"
+  type        = string
+}
+
+variable "monitoring_namespace" {
+  description = "Namespace name for Monitoring System"
+  type        = string
+}
+
+variable "external_dns_namespace" {
+  description = "Namespace name for External DNS"
+  type        = string
+}
+
+variable "external_dns" {
+  description = "Indicate installation External-DNS solution"
+  type        = bool
+}
+
 
 
 #############  Route53  #############

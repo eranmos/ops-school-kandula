@@ -1,4 +1,4 @@
-{{- if and .Values.kubeScheduler.enabled .Values.kubeScheduler.service.enabled }}
+{{- if .Values.kubeScheduler.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -12,11 +12,9 @@ spec:
   clusterIP: None
   ports:
     - name: http-metrics
-      {{- $kubeSchedulerDefaultInsecurePort := 10251 }}
-      {{- $kubeSchedulerDefaultSecurePort := 10259 }}
-      port: {{ include "kube-prometheus-stack.kubeScheduler.insecureScrape" (list . $kubeSchedulerDefaultInsecurePort $kubeSchedulerDefaultSecurePort .Values.kubeScheduler.service.port)  }}
+      port: {{ .Values.kubeScheduler.service.port}}
       protocol: TCP
-      targetPort: {{ include "kube-prometheus-stack.kubeScheduler.insecureScrape" (list . $kubeSchedulerDefaultInsecurePort $kubeSchedulerDefaultSecurePort .Values.kubeScheduler.service.targetPort)  }}
+      targetPort: {{ .Values.kubeScheduler.service.targetPort}}
 {{- if .Values.kubeScheduler.endpoints }}{{- else }}
   selector:
     {{- if .Values.kubeScheduler.service.selector }}

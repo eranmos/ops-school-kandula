@@ -1,5 +1,4 @@
 {{- $namespace := printf "%s" (include "kube-prometheus-stack.namespace" .) }}
-{{- $defaultKubeletSvcName := printf "%s-kubelet" (include "kube-prometheus-stack.fullname" .) }}
 {{- if .Values.prometheusOperator.enabled }}
 apiVersion: apps/v1
 kind: Deployment
@@ -41,7 +40,7 @@ spec:
           imagePullPolicy: "{{ .Values.prometheusOperator.image.pullPolicy }}"
           args:
             {{- if .Values.prometheusOperator.kubeletService.enabled }}
-            - --kubelet-service={{ .Values.prometheusOperator.kubeletService.namespace }}/{{ default $defaultKubeletSvcName .Values.prometheusOperator.kubeletService.name  }}
+            - --kubelet-service={{ .Values.prometheusOperator.kubeletService.namespace }}/{{ template "kube-prometheus-stack.fullname" . }}-kubelet
             {{- end }}
             {{- if .Values.prometheusOperator.logFormat }}
             - --log-format={{ .Values.prometheusOperator.logFormat }}
@@ -53,7 +52,7 @@ spec:
             - --deny-namespaces={{ .Values.prometheusOperator.denyNamespaces | join "," }}
             {{- end }}
             {{- with $.Values.prometheusOperator.namespaces }}
-            {{ $ns := default (list nil) .additional }}
+            {{ $ns := .additional }}
             {{- if .releaseNamespace }}
             {{- $ns = append $ns $namespace }}
             {{- end }}
@@ -66,26 +65,19 @@ spec:
             {{- if .Values.prometheusOperator.alertmanagerDefaultBaseImage }}
             - --alertmanager-default-base-image={{ .Values.prometheusOperator.alertmanagerDefaultBaseImage }}
             {{- end }}
-            {{- if .Values.prometheusOperator.prometheusConfigReloader.image.sha }}
-            - --prometheus-config-reloader={{ .Values.prometheusOperator.prometheusConfigReloader.image.repository }}:{{ .Values.prometheusOperator.prometheusConfigReloader.image.tag }}@sha256:{{ .Values.prometheusOperator.prometheusConfigReloader.image.sha }}
+            {{- if .Values.prometheusOperator.prometheusConfigReloaderImage.sha }}
+            - --prometheus-config-reloader={{ .Values.prometheusOperator.prometheusConfigReloaderImage.repository }}:{{ .Values.prometheusOperator.prometheusConfigReloaderImage.tag }}@sha256:{{ .Values.prometheusOperator.prometheusConfigReloaderImage.sha }}
             {{- else }}
-            - --prometheus-config-reloader={{ .Values.prometheusOperator.prometheusConfigReloader.image.repository }}:{{ .Values.prometheusOperator.prometheusConfigReloader.image.tag }}
+            - --prometheus-config-reloader={{ .Values.prometheusOperator.prometheusConfigReloaderImage.repository }}:{{ .Values.prometheusOperator.prometheusConfigReloaderImage.tag }}
             {{- end }}
-            - --config-reloader-cpu-request={{ .Values.prometheusOperator.prometheusConfigReloader.resources.requests.cpu }}
-            - --config-reloader-cpu-limit={{ .Values.prometheusOperator.prometheusConfigReloader.resources.limits.cpu }}
-            - --config-reloader-memory-request={{ .Values.prometheusOperator.prometheusConfigReloader.resources.requests.memory }}
-            - --config-reloader-memory-limit={{ .Values.prometheusOperator.prometheusConfigReloader.resources.limits.memory }}
+            - --config-reloader-cpu={{ .Values.prometheusOperator.configReloaderCpu }}
+            - --config-reloader-memory={{ .Values.prometheusOperator.configReloaderMemory }}
             {{- if .Values.prometheusOperator.alertmanagerInstanceNamespaces }}
             - --alertmanager-instance-namespaces={{ .Values.prometheusOperator.alertmanagerInstanceNamespaces | join "," }}
             {{- end }}
             {{- if .Values.prometheusOperator.prometheusInstanceNamespaces }}
             - --prometheus-instance-namespaces={{ .Values.prometheusOperator.prometheusInstanceNamespaces | join "," }}
             {{- end }}
-            {{- if .Values.prometheusOperator.thanosImage.sha }}
-            - --thanos-default-base-image={{ .Values.prometheusOperator.thanosImage.repository }}:{{ .Values.prometheusOperator.thanosImage.tag }}@sha256:{{ .Values.prometheusOperator.thanosImage.sha }}
-            {{- else }}
-            - --thanos-default-base-image={{ .Values.prometheusOperator.thanosImage.repository }}:{{ .Values.prometheusOperator.thanosImage.tag }}
-            {{- end }} 
             {{- if .Values.prometheusOperator.thanosRulerInstanceNamespaces }}
             - --thanos-ruler-instance-namespaces={{ .Values.prometheusOperator.thanosRulerInstanceNamespaces | join "," }}
             {{- end }}
@@ -125,10 +117,6 @@ spec:
             defaultMode: 420
             secretName: {{ template "kube-prometheus-stack.fullname" . }}-admission
 {{- end }}
-    {{- with .Values.prometheusOperator.dnsConfig }}
-      dnsConfig:
-{{ toYaml . | indent 8 }}
-    {{- end }}
 {{- if .Values.prometheusOperator.securityContext }}
       securityContext:
 {{ toYaml .Values.prometheusOperator.securityContext | indent 8 }}
