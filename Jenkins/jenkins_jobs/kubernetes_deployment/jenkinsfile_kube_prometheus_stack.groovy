@@ -47,7 +47,6 @@ pipeline {
                         sh 'mkdir /home/jenkins/.kube/ && cp \$KUBECONFIG /home/jenkins/.kube/config && chmod 640 /home/jenkins/.kube/config'
                         configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
                             echo 'Going to Install Upgrade helm chart'
-                            sleep 8000
                             sh """helm upgrade ${DEPLOYMENT_NAME} ./kube-prometheus-stack --install --atomic --namespace=${NAMESPACE}"""
                             sh "kubectl get pods -n ${NAMESPACE}"
                             sh "kubectl rollout status deployment ${DEPLOYMENT_NAME} -n ${NAMESPACE}"
