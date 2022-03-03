@@ -1,6 +1,6 @@
 properties([
   parameters([
-    string(name: 'CHARTS_BRANCH', trim: true, defaultValue: 'ELK', description: 'charts branch'),
+    string(name: 'CHARTS_BRANCH', trim: true, defaultValue: 'master', description: 'charts branch'),
     choice(name: 'Helm',choices: ['upgrade', 'uninstall'],description: 'Helm Install Upgrade or Uninstall')
   ])
 ])
@@ -34,7 +34,7 @@ pipeline {
                             doGenerateSubmoduleConfigurations: false,
                             extensions: [[$class: 'CloneOption', depth: 1, noTags: false, reference: '/home/jenkins/Git-Cache/reference', shallow: true], [$class: 'AuthorInChangelog'], [$class: 'GitLFSPull'], [$class: 'CleanBeforeCheckout']],
                             submoduleCfg: [],
-                            userRemoteConfigs: [[credentialsId: 'ffca0ebc-c253-43fc-865d-5b67f1d6276f', url: 'git@github.com:eranmos/ops-school-kandula.git']]
+                            userRemoteConfigs: [[credentialsId: 'jenkins.github.ssh', url: 'git@github.com:eranmos/ops-school-kandula.git']]
                         ]
             }
         }
