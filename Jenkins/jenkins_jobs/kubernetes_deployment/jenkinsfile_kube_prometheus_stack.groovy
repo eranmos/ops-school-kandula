@@ -52,6 +52,7 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: "${KUBECONFIG_VAR}", variable: 'KUBECONFIG')]) {
                     sh 'mkdir /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
+                    sh 'mkdir /home/jenkins/.kube/ && cp \$KUBECONFIG /home/jenkins/.kube/config && chmod 640 /home/jenkins/.kube/config'
                     configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
                         sh "helm ls -n ${NAMESPACE}"
                     }
@@ -60,6 +61,7 @@ pipeline {
             post {
                 always {
                     sh 'rm -rf /home/jenkins/.aws'
+                    sh 'rm -rf /home/jenkins/.kube'
                 }
             }
         }
