@@ -1,6 +1,6 @@
 properties([
   parameters([
-    string(name: 'CHARTS_BRANCH', trim: true, defaultValue: 'master', description: 'charts branch'),
+    string(name: 'CHARTS_BRANCH', trim: true, defaultValue: 'ELK', description: 'charts branch'),
     choice(name: 'Helm',choices: ['upgrade', 'uninstall'],description: 'Helm Install Upgrade or Uninstall')
   ])
 ])
