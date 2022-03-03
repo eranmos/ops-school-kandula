@@ -1,22 +1,13 @@
 properties([
   parameters([
     string(name: 'CHARTS_BRANCH', trim: true, defaultValue: 'master', description: 'charts branch'),
-    choice(name: 'Helm',choices: ['upgrade', 'uninstall'],description: 'Helm Install\Upgrade or Uninstall'),
+    choice(name: 'Helm',choices: ['upgrade', 'uninstall'],description: 'Helm Install\Upgrade or Uninstall')
   ])
 ])
 
 def KUBECONFIG_VAR = "AWS-EKS-KANDULA-kubeconfig"
 def NAMESPACE = "monitoring"
 def DEPLOYMENT_NAME = "prometheus-stack"
-
-
-if (params.cpuFE.toInteger() > 12) {
-    error("ERROR, CPU limits are exceed. Please check CPU limits for FE")
-}
-
-if (params.ramFE.toInteger() > 12) {
-    error("ERROR, RAM limits are exceed. Please check RAM limits for FE")
-}
 
 pipeline {
 
