@@ -24,21 +24,6 @@ pipeline {
     }
 
     stages {
-
-        stage("Checkout Charts"){
-            steps {
-                checkout poll: false,
-                    scm: [
-                            $class: 'GitSCM',
-                            branches: [[name: "*/${CHARTS_BRANCH}"]], browser: [$class: 'GithubWeb', repoUrl: 'https://github.com/eranmos/ops-school-kandula.git', version: '9.3'],
-                            doGenerateSubmoduleConfigurations: false,
-                            extensions: [[$class: 'CloneOption', depth: 1, noTags: false, reference: '/home/jenkins/Git-Cache/reference', shallow: true], [$class: 'AuthorInChangelog'], [$class: 'CleanBeforeCheckout']],
-                            submoduleCfg: [],
-                            userRemoteConfigs: [[credentialsId: 'jenkins.github.ssh', url: 'git@github.com:eranmos/ops-school-kandula.git']]
-                        ]
-            }
-        }
-
         stage('Deploy prometheus-stack') {
             steps {
                 dir ('helm-releases') {
