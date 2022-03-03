@@ -46,7 +46,7 @@ pipeline {
                         sh 'mkdir /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
                         configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
                             if (params.Helm == 'upgrade') {
-                                echo 'Going to Install\upgrade helm chart'
+                                echo 'Going to Install Upgrade helm chart'
                                 sh """helm upgrade ${DEPLOYMENT_NAME} ./kube-prometheus-stack --install --atomic --namespace=${NAMESPACE}"""
                                 sh "kubectl get pods -n ${NAMESPACE}"
                                 sh "kubectl rollout status deployment ${DEPLOYMENT_NAME} -n ${NAMESPACE}"
