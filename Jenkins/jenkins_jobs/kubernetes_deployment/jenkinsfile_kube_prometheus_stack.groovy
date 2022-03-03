@@ -4,7 +4,7 @@ properties([
     choice(name: 'HELM',choices: ['upgrade', 'uninstall'],description: 'Helm Install Upgrade or Uninstall')
   ])
 ])
-
+def HELM = params.HELM
 def KUBECONFIG_VAR = "AWS-EKS-KANDULA-kubeconfig"
 def NAMESPACE = "monitoring"
 def DEPLOYMENT_NAME = "prometheus-stack"
@@ -45,7 +45,7 @@ pipeline {
                     withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: "${KUBECONFIG_VAR}", variable: 'KUBECONFIG')]) {
                         sh 'mkdir /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
                         configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
-                                if (params.HELM == 'upgrade') {
+                                if (HELM == 'upgrade') {
                                     echo 'Going to Install Upgrade helm chart'
                                     sh """helm upgrade ${DEPLOYMENT_NAME} ./kube-prometheus-stack --install --atomic --namespace=${NAMESPACE}"""
                                     sh "kubectl get pods -n ${NAMESPACE}"
@@ -53,7 +53,7 @@ pipeline {
                                     echo "Yoy successfully deployed kube-prometheus-stack on your Env"
                                 }
 
-                                if (params.HELM == 'upgrade') {
+                                if (HELM == 'upgrade') {
                                     echo 'Going to uninstall helm chart'
                                     sh """helm uninstall ${DEPLOYMENT_NAME} --namespace=${NAMESPACE}"""
                                     sh "kubectl get pods -n ${NAMESPACE}"
