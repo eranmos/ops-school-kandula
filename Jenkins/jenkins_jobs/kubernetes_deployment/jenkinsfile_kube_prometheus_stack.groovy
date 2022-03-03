@@ -34,7 +34,10 @@ pipeline {
                             echo 'Going to Install Upgrade helm chart'
                             sh """helm upgrade ${DEPLOYMENT_NAME} ./kube-prometheus-stack --install --atomic --namespace=${NAMESPACE}"""
                             sh "kubectl get pods -n ${NAMESPACE}"
-                            sh "kubectl rollout status deployment ${DEPLOYMENT_NAME} -n ${NAMESPACE}"
+                            sh "kubectl get deployments -n ${NAMESPACE}"
+                            sh "kubectl rollout status deployment prometheus-stack-grafana -n ${NAMESPACE}"
+                            sh "kubectl rollout status deployment prometheus-stack-kube-prom-operator -n ${NAMESPACE}"
+                            sh "kubectl rollout status deployment prometheus-stack-kube-state-metrics -n ${NAMESPACE}"
                             echo "Yoy successfully deployed kube-prometheus-stack on your Env"
                         }
                     }
