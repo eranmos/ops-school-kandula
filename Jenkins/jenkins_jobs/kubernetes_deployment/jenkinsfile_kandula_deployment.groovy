@@ -1,11 +1,5 @@
 properties([
   parameters([
-    [
-       $class: 'ChoiceParameter',
-       choiceType: 'PT_SINGLE_SELECT',
-       name: 'KANDULA_VERSION',
-       script: [ $class: 'ScriptlerScript', scriptlerScriptId:'kandula_version.groovy', parameters: [ [name:'KANDULA_VERSION', value:''] ] ]
-    ],
     string(name: 'CHARTS_BRANCH', trim: true, defaultValue: 'master', description: 'charts branch'),
     choice(name: 'HELM',choices: ['upgrade', 'uninstall'],description: 'Helm Install Upgrade or Uninstall')
   ])
@@ -14,6 +8,7 @@ properties([
 def KUBECONFIG_VAR = "AWS-EKS-KANDULA-kubeconfig"
 def NAMESPACE = "kandula-development"
 def DEPLOYMENT_NAME = "kandula"
+def VALUES_VAR = "values.yaml"
 
 pipeline {
 
@@ -38,7 +33,7 @@ pipeline {
                         sh 'mkdir /home/jenkins/.kube/ && cp \$KUBECONFIG /home/jenkins/.kube/config && chmod 640 /home/jenkins/.kube/config'
                         configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
                             echo 'Going to Install Upgrade helm chart'
-                            sh """helm upgrade ${DEPLOYMENT_NAME} ./kandula-app --install --atomic --namespace=${NAMESPACE}"""
+                            sh """helm upgrade ${DEPLOYMENT_NAME} ./kandula-app --install --atomic --namespace=${NAMESPACE} -f ./frontend/${VALUES_VAR} --set frontend.image.tag=${FRONTEND_ENGINE_VERSION} --set frontend.replicaCount=${params.replicasCount} --set frontend.serviceNP.create=true --set frontend.ingress.enabled=true --set frontend.serviceLB.create=false --set frontend.serviceClusterIP.create=false --set esNodeHosts="${esNodeHosts}" --set zk=${zkHostsCount} --set namespace=${NAMESPACE} --set frontend.resources.requests.cpu=${cpuFE} --set frontend.resources.requests.memory="${ramFE}Gi" --wait --timeout 5000s"""
                             sh "kubectl get pods -n ${NAMESPACE}"
                             sh "kubectl get deployments -n ${NAMESPACE}"
                             sh "kubectl rollout status deployment prometheus-stack-grafana -n ${NAMESPACE}"
