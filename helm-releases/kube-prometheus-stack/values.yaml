@@ -164,6 +164,14 @@ alertmanager:
         receiver: 'alertmanager'
       receiver: 'alertmanager' 
     receivers:
+    #- name: 'slack'
+    #  slack_configs:
+    #    - api_url: 'https://hooks.slack.com/services/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'
+    #      channel: '#cet-kube-ppe-alerts'
+    #      send_resolved: true
+    #      title: '{{ template "slack.template.title" . }}'
+    #      title_link: '{{ template "slack.template.titlelink" . }}'
+    #      text: '{{ template "slack.template.text" . }}'
     - name: 'alertmanager'
       webhook_configs:
         - send_resolved: true
@@ -191,6 +199,22 @@ alertmanager:
   ##      https://prometheus.io/docs/alerting/notification_examples/
   ##
   templateFiles:
+    #template.tmpl: |-
+    #    {{ define "slack.template.title" }}[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .GroupLabels.SortedPairs.Values | join " " }}{{ end }}
+    #    {{ define "slack.template.titlelink" }}https://cet-diy-ppe-env-alertmanager.edp-intel-preprod.aws-int.thomsonreuters.com/#/alerts?filter=%7Balertname%3D%22{{ .GroupLabels.alertname }}%22%7D{{ end }}
+    #    {{ define "slack.template.text" }}
+    #    {{- $root := . -}}
+    #    {{ range .Alerts }}
+    #      *Alert:* {{ .Annotations.summary }} - `{{ .Labels.severity }}`
+    #      *Description:* {{ .Annotations.description }} {{ .Annotations.message }}
+    #      *Graph:* <https://cet-diy-ppe-env-alertmanager.edp-intel-preprod.aws-int.thomsonreuters.com|:chart_with_upwards_trend:>
+    #      *Details:*
+    #        {{ range .Labels.SortedPairs }}  • *{{ .Name }}:* `{{ .Value }}`
+    #        {{ end }}
+    #    {{ end }}
+    #    {{ end }}
+
+
   #
   ## An example template:
   #   template_1.tmpl: |-
