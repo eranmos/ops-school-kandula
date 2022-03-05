@@ -14,13 +14,15 @@ module "eks" {
       additional_userdata           = "echo foo bar"
       asg_desired_capacity          = 2
       additional_security_group_ids = [aws_security_group.all_eks_worker_mgmt.id]
+      kubelet_extra_args   = "--node-labels=role=kandula"
     },
     {
       name                          = "worker-group-monitoring"
-      instance_type                 = var.instance_type
+      instance_type                 = "t3.medium"
       additional_userdata           = "echo foo bar"
-      asg_desired_capacity          = 1
+      asg_desired_capacity          = 2
       additional_security_group_ids = [aws_security_group.all_eks_worker_mgmt.id]
+      kubelet_extra_args   = "--node-labels=role=monitoring"
     }
   ]
 

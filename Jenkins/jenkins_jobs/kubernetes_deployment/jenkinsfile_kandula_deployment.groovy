@@ -6,8 +6,9 @@ properties([
 ])
 
 def KUBECONFIG_VAR = "AWS-EKS-KANDULA-kubeconfig"
-def NAMESPACE = "monitoring"
-def DEPLOYMENT_NAME = "prometheus-stack"
+def NAMESPACE = "kandula-development"
+def DEPLOYMENT_NAME = "kandula"
+def VALUES_VAR = "values.yaml"
 
 pipeline {
 
@@ -24,7 +25,7 @@ pipeline {
     }
 
     stages {
-        stage('Deploy prometheus-stack') {
+        stage('Deploy kandula application') {
             steps {
                 dir ('helm-releases') {
                     withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: "${KUBECONFIG_VAR}", variable: 'KUBECONFIG')]) {
@@ -32,7 +33,7 @@ pipeline {
                         sh 'mkdir /home/jenkins/.kube/ && cp \$KUBECONFIG /home/jenkins/.kube/config && chmod 640 /home/jenkins/.kube/config'
                         configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
                             echo 'Going to Install Upgrade helm chart'
-                            sh """helm upgrade ${DEPLOYMENT_NAME} ./kube-prometheus-stack --install --atomic --namespace=${NAMESPACE}"""
+                            sh """helm upgrade ${DEPLOYMENT_NAME} ./kandula-app --install --atomic --namespace=${NAMESPACE} -f ./frontend/${VALUES_VAR} --set frontend.image.tag=${FRONTEND_ENGINE_VERSION} --set frontend.replicaCount=${params.replicasCount} --set frontend.serviceNP.create=true --set frontend.ingress.enabled=true --set frontend.serviceLB.create=false --set frontend.serviceClusterIP.create=false --set esNodeHosts="${esNodeHosts}" --set zk=${zkHostsCount} --set namespace=${NAMESPACE} --set frontend.resources.requests.cpu=${cpuFE} --set frontend.resources.requests.memory="${ramFE}Gi" --wait --timeout 5000s"""
                             sh "kubectl get pods -n ${NAMESPACE}"
                             sh "kubectl get deployments -n ${NAMESPACE}"
                             sh "kubectl rollout status deployment prometheus-stack-grafana -n ${NAMESPACE}"

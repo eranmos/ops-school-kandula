@@ -200,8 +200,8 @@ alertmanager:
   ##
   templateFiles:
     #template.tmpl: |-
-    #    {{ define "slack.template.title" }}[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .GroupLabels.SortedPairs.Values | join " " }}{{ end }}  
-    #    {{ define "slack.template.titlelink" }}https://cet-diy-ppe-env-alertmanager.edp-intel-preprod.aws-int.thomsonreuters.com/#/alerts?filter=%7Balertname%3D%22{{ .GroupLabels.alertname }}%22%7D{{ end }}  
+    #    {{ define "slack.template.title" }}[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .GroupLabels.SortedPairs.Values | join " " }}{{ end }}
+    #    {{ define "slack.template.titlelink" }}https://cet-diy-ppe-env-alertmanager.edp-intel-preprod.aws-int.thomsonreuters.com/#/alerts?filter=%7Balertname%3D%22{{ .GroupLabels.alertname }}%22%7D{{ end }}
     #    {{ define "slack.template.text" }}
     #    {{- $root := . -}}
     #    {{ range .Alerts }}
@@ -516,7 +516,8 @@ alertmanager:
     ## Define which Nodes the Pods are scheduled on.
     ## ref: https://kubernetes.io/docs/user-guide/node-selection/
     ##
-    nodeSelector: {}
+    nodeSelector:
+      role: monitoring
 
     ## Define resources requests and limits for single Pods.
     ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
@@ -636,7 +637,7 @@ grafana:
       alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:113379206287:certificate/09a00715-ea90-46a2-a5c1-3a8b601aad57
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
       alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
-      alb.ingress.kubernetes.io/tags: Owner=Eran Moshayov, environment_name=ops-school, project_name=kandula, tr:application-asset-insight-id=205126, tr:resource-owner=moshayov.eran@refinitiv.com, finops:traffic-cop:opt-out=true
+      alb.ingress.kubernetes.io/tags: Owner=Eran Moshayov, environment_name=ops-school, project_name=kandula, tr:application-asset-insight-id=205126, tr:resource-owner=moshayov.eran@refinitiv.com
       alb.ingress.kubernetes.io/inbound-cidrs: 0.0.0.0/0
       alb.ingress.kubernetes.io/healthcheck-path: /
       external-dns.alpha.kubernetes.io/hostname: "grafana.kandula.click"
@@ -1352,7 +1353,8 @@ prometheusOperator:
       ##
       priorityClassName: ""
       podAnnotations: {}
-      nodeSelector: {}
+      nodeSelector:
+        role: monitoring
       affinity: {}
       tolerations: []
     # Use certmanager to generate webhook certs
@@ -1498,7 +1500,8 @@ prometheusOperator:
   ## Define which Nodes the Pods are scheduled on.
   ## ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
-  nodeSelector: {}
+  nodeSelector:
+    role: monitoring
 
   ## Tolerations for use with node taints
   ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
@@ -1711,8 +1714,8 @@ prometheus:
       alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:113379206287:certificate/09a00715-ea90-46a2-a5c1-3a8b601aad57
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
       alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
-      alb.ingress.kubernetes.io/tags: Owner=Eran Moshayov, environment_name=ops-school, project_name=kandula, tr:application-asset-insight-id=205126, tr:resource-owner=moshayov.eran@refinitiv.com, finops:traffic-cop:opt-out=true
-      alb.ingress.kubernetes.io/inbound-cidrs: 0.0.0./0
+      alb.ingress.kubernetes.io/tags: Owner=Eran Moshayov, environment_name=ops-school, project_name=kandula, tr:application-asset-insight-id=205126, tr:resource-owner=moshayov.eran@refinitiv.com
+      alb.ingress.kubernetes.io/inbound-cidrs: 0.0.0.0/0
       alb.ingress.kubernetes.io/healthcheck-path: /
       external-dns.alpha.kubernetes.io/hostname: "prometheus.kandula.click"
     labels: {}
@@ -1911,7 +1914,8 @@ prometheus:
     ## Define which Nodes the Pods are scheduled on.
     ## ref: https://kubernetes.io/docs/user-guide/node-selection/
     ##
-    nodeSelector: {}
+    nodeSelector:
+      role: monitoring
 
     ## Secrets is a list of Secrets in the same namespace as the Prometheus object, which shall be mounted into the Prometheus Pods.
     ## The Secrets are mounted into /etc/prometheus/secrets/. Secrets changes after initial creation of a Prometheus object are not
