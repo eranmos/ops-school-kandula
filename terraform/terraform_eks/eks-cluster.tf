@@ -18,7 +18,7 @@ module "eks" {
     },
     {
       name                          = "worker-group-monitoring"
-      instance_type                 = var.instance_type
+      instance_type                 = "t3.small"
       additional_userdata           = "echo foo bar"
       asg_desired_capacity          = 1
       additional_security_group_ids = [aws_security_group.all_eks_worker_mgmt.id]

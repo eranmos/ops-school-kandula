@@ -1353,7 +1353,8 @@ prometheusOperator:
       ##
       priorityClassName: ""
       podAnnotations: {}
-      nodeSelector: {}
+      nodeSelector:
+        role: monitoring
       affinity: {}
       tolerations: []
     # Use certmanager to generate webhook certs
