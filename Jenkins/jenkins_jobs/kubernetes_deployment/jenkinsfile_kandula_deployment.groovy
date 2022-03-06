@@ -36,7 +36,7 @@ pipeline {
                                    annotations:
                                      kubernetes.io/change-cause: "First release of kandula app"
                                  spec:
-                                   replicas: 1
+                                   replicas: 2
                                    selector:
                                      matchLabels:
                                        app: kandula-app
@@ -61,6 +61,8 @@ pipeline {
                                              - containerPort: 5000
                                                name: http
                                                protocol: TCP
+                                       nodeSelector:
+                                         role: kandula
                              """
                 sh "ls -la"
                 }
