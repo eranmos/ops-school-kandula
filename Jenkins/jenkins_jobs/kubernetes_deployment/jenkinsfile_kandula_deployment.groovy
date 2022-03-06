@@ -77,12 +77,6 @@ pipeline {
                     }
                 }
             }
-            post {
-                always {
-                    sh 'rm -rf /home/jenkins/.aws'
-                    sh 'rm -rf /home/jenkins/.kube'
-                }
-            }
         }
 
         stage('Preparing LB deployment file') {
@@ -119,12 +113,6 @@ pipeline {
                         sh "sleep 20"
                         sh "kubectl get services -o wide -n kandula-development"
                     }
-                }
-            }
-            post {
-                always {
-                    sh 'rm -rf /home/jenkins/.aws'
-                    sh 'rm -rf /home/jenkins/.kube'
                 }
             }
         }
