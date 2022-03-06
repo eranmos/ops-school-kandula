@@ -60,6 +60,7 @@ pipeline {
                                                name: http
                                                protocol: TCP
                              """
+                sh "ls -la"
                 }
             }
         }
