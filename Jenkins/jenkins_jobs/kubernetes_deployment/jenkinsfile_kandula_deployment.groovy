@@ -23,9 +23,6 @@ pipeline {
 
     stages {
         stage('Preparing Kandula deployment file') {
-            when {
-               expression { params.Deploy_In_Prod_Kandula == true }
-            }
              steps {
              withCredentials([string(credentialsId: 'aws.access_key', variable: 'AWS_ACCESS_KEY_ID'), string(credentialsId: 'aws.secret_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                 sh """
@@ -67,8 +64,6 @@ pipeline {
             }
         }
         stage('Deploying Kandula on EKS prod') {
-            when {
-               expression { params.Deploy_In_Prod_Kandula == true }
             }
             steps {
                 withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: "${KUBECONFIG_VAR}", variable: 'KUBECONFIG')]) {
@@ -92,9 +87,6 @@ pipeline {
         }
 
         stage('Preparing LB deployment file') {
-            when {
-               expression { params.Deploy_In_Prod_LB == true }
-            }
             steps {
                 sh """
                 tee kandula_lb.yaml <<-'EOF'
@@ -116,9 +108,6 @@ pipeline {
         }
 
         stage('Deploying LB in EKS Prod') {
-            when {
-               expression { params.Deploy_In_Prod_LB == true }
-            }
             steps {
                 withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: "${KUBECONFIG_VAR}", variable: 'KUBECONFIG')]) {
                     sh 'mkdir /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
