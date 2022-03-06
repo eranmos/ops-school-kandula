@@ -72,7 +72,6 @@ pipeline {
                     sh 'mkdir /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
                     sh 'mkdir /home/jenkins/.kube/ && cp \$KUBECONFIG /home/jenkins/.kube/config && chmod 640 /home/jenkins/.kube/config'
                     configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
-                        sh "sleep 8000"
                         sh "kubectl get nodes -o wide"
                         sh "kubectl get pods -o wide -n kandula-development"
                         sh "kubectl apply -f kalandula_app.yaml --namespace=kandula-development"
