@@ -5,6 +5,8 @@ properties([
     ])
 ])
 
+def KUBECONFIG_VAR = "AWS-EKS-KANDULA-kubeconfig"
+
 pipeline {
 
     agent {
