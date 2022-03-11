@@ -1,0 +1,9 @@
+---
+- name: Create Logstash configuration files.
+  template:
+    src: "logstash_alb.conf.j2"
+    dest: "/etc/logstash/conf.d/logstash_alb.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart logstash

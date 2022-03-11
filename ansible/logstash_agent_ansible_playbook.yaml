@@ -1,0 +1,8 @@
+- name: apply logstash installation on jenkins-slave server
+  hosts: tag_Name_jenkins_slave
+  remote_user: ubuntu
+  become: yes
+  become_user: root
+  become_method: sudo
+  roles:
+    - logstash

@@ -59,6 +59,16 @@ variable "ebs_root_delete_on_termination" {
   type        = string
 }
 
+variable "monitoring_bucket_name" {
+  description = "AWS S3 Bucket name"
+  type        = string
+}
+
+variable "monitoring_bucket_prefix" {
+  description = "The name of the folder that will store LB logs"
+  type        = string
+}
+
 #############  Route53  #############
 variable "aws_registered_domains" {
   description = "my aws registered domains "
