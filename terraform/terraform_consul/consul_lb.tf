@@ -9,6 +9,12 @@ resource "aws_lb" "consul" {
   subnets                    = [data.aws_subnet.public-us-east-1a.id, data.aws_subnet.public-us-east-1b.id]
   security_groups            = [aws_security_group.consul-server.id]
 
+  access_logs {
+    bucket  = var.monitoring_bucket_name
+    prefix  = var.monitoring_bucket_prefix
+    enabled = true
+  }
+
   tags = local.common_tags
 }
 

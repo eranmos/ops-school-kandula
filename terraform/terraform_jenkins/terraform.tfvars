@@ -37,7 +37,7 @@ jenkins_dns            = "jenkins.kandula.click"
 #############  S3  #####################
 default_s3_bucket        = "eran-terraform-provisioning-bucket"
 monitoring_bucket_name   = "205126-kandula-monitoring-bucket"
-monitoring_bucket_prefix = "jenkins-alb-logs"
+monitoring_bucket_prefix = "jenkins"
 
 #############  Tags Related  #############
 environment_name = "ops-school"

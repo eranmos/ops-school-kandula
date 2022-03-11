@@ -23,6 +23,8 @@ consul_dns            = "consul.kandula.click"
 
 #############  S3  #####################
 default_s3_bucket = "eran-terraform-provisioning-bucket"
+monitoring_bucket_name   = "205126-kandula-monitoring-bucket"
+monitoring_bucket_prefix = "consul"
 
 #############  Tags Related  #############
 environment_name = "ops-school"

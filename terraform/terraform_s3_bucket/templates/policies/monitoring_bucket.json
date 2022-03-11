@@ -7,7 +7,15 @@
         "AWS": "arn:aws:iam::127311923021:root"
       },
       "Action": "s3:PutObject",
-      "Resource": "arn:aws:s3:::205126-kandula-monitoring-bucket/AWSLogs/113379206287/*"
+      "Resource": "arn:aws:s3:::205126-kandula-monitoring-bucket/jenkins/AWSLogs/113379206287/*"
+    },
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::127311923021:root"
+      },
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::205126-kandula-monitoring-bucket/consul/AWSLogs/113379206287/*"
     },
     {
       "Effect": "Allow",
