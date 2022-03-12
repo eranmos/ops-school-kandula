@@ -35,7 +35,7 @@ pipeline {
                             sh """helm upgrade ${DEPLOYMENT_NAME} ./consul --install --atomic --namespace=${NAMESPACE}"""
                             sh "kubectl get pods -n ${NAMESPACE}"
                             sh "kubectl get deployments -n ${NAMESPACE}"
-                            sh "kubectl rollout status deployment consul -n ${NAMESPACE}"
+                            sh "kubectl rollout status deployment consul-consul-sync-catalog -n ${NAMESPACE}"
                             echo "Yoy successfully deployed consul on your Env"
                         }
                     }
