@@ -111,7 +111,7 @@ global:
   # register as. This can't be changed once the Consul cluster is up and running
   # since Consul doesn't support an automatic way to change this value currently:
   # https://github.com/hashicorp/consul/issues/1858.
-  datacenter: dc1
+  datacenter: kandula
 
   # Controls whether pod security policies are created for the Consul components
   # created by this chart. See https://kubernetes.io/docs/concepts/policy/pod-security-policy/.
@@ -265,10 +265,10 @@ global:
     autoGenerate: false
     # secretName is the name of the Kubernetes secret or Vault secret path that holds the gossip
     # encryption key. A Kubernetes secret must be in the same namespace that Consul is installed into.
-    secretName: ""
+    secretName: "consul-gossip-encryption-key"
     # secretKey is the key within the Kubernetes secret or Vault secret key that holds the gossip
     # encryption key.
-    secretKey: ""
+    secretKey: "key"
 
   # A list of addresses of upstream DNS servers that are used to recursively resolve DNS queries.
   # These values are given as `-recursor` flags to Consul servers and clients.
@@ -941,7 +941,7 @@ client:
   # `server.enabled`, since the agents can be configured to join an external cluster.
   # @default: global.enabled
   # @type: boolean
-  enabled: "-"
+  enabled: "true"
 
   # The name of the Docker image (including any tag) for the containers
   # running Consul client agents.
@@ -955,7 +955,8 @@ client:
   # join that cluster. If `server.enabled` is not true, then a value must be
   # specified so the clients can join a valid cluster.
   # @type: array<string>
-  join: null
+  join:
+    - "provider=aws tag_key=consul_server tag_value=true"
 
   # An absolute path to a directory on the host machine to use as the Consul
   # client data directory. If set to the empty string or null, the Consul agent
@@ -1282,7 +1283,7 @@ client:
 # https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/#configure-stub-domain-and-upstream-dns-servers
 dns:
   # @type: boolean
-  enabled: "-"
+  enabled: "true"
 
   # If true, services using Consul Connect will use Consul DNS
   # for default DNS resolution. The DNS lookups fall back to the nameserver IPs
@@ -1460,7 +1461,7 @@ ui:
 syncCatalog:
   # True if you want to enable the catalog sync. Set to "-" to inherit from
   # global.enabled.
-  enabled: false
+  enabled: true
 
   # The name of the Docker image (including any tag) for consul-k8s-control-plane
   # to run the sync program.
