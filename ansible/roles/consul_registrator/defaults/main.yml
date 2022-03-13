@@ -12,5 +12,3 @@ registrator_service_registry_uri: "{{ registrator_service_registry_backend }}://
 
 
 registrator_command:    "-ip {{ registrator_ip }} -ttl 600 -ttl-refresh 300 -resync 600 -cleanup consul://{{ registrator_service_registry_address }}"
-registrator_kv_command: "-ip {{ registrator_ip }} consulkv://{{ registrator_service_registry_address }}/services"
-
