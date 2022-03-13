@@ -66,15 +66,6 @@ sudo sed -i $'/ExecStart=/c\\ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:4243 -H
 sudo systemctl daemon-reload
 sudo service docker restart
 
-##### Consul container #########
-sudo docker run -d \
-          --name=registrator \
-          --net=host \
-          --volume=/var/run/docker.sock:/tmp/docker.sock \
-          gliderlabs/registrator:latest \
-          consul://localhost:8500
-
-
 # Ansible Server related
 sudo apt install python-pip -y
 sudo pip install botocore
