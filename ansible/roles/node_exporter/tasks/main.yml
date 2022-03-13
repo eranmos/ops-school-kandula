@@ -6,9 +6,10 @@
     dest: /tmp/node_exporter-{{ node_exporter_ver }}.linux-amd64.tar.gz
 
 - name: Extract node_exporter
-  ansible.builtin.unarchive:
+  unarchive:
     src: /tmp/node_exporter-{{ node_exporter_ver }}.linux-amd64.tar.gz
     dest: /tmp
+    remote_src: yes
 
 - name: Copy service file
   copy:
