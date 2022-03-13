@@ -10,6 +10,8 @@
   copy:
     src: /tmp/node_exporter-{{ node_exporter_ver }}.linux-amd64/node_exporter
     dest: /usr/local/bin/node_exporter
+    remote_src: yes
+    mode: +x
 
 - name: Create node_exporter group
   group:
