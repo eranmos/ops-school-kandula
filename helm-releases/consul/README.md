@@ -60,13 +60,17 @@ file. These are also fully documented directly on the
 ### Kandula consul config
 please change below parameters in the values.yaml file
 
-1. datacenter: kandula
-2. secretName: "consul-gossip-encryption-key" (under section gossipEncryption:)
-3. secretKey: "key" (under section gossipEncryption:)
-4. enabled: "true"  (under section client:)
-5. "provider=aws tag_key=consul_server tag_value=true" (under section client:)
-6. enabled: "true" (under section: dns:)
-7. enabled: true (under section syncCatalog:)
+1. global.enabled: false
+2. global.image: “hashicorp/consul:1.9.2”
+3. global.datacenter: "kandula"
+4. global.gossipEncryption.secretName: "consul-gossip-encryption-key"
+5. global.gossipEncryption.secretKey: "key"
+6. client.enabled: "true"
+7. client.join:
+      - “provider=aws tag_key=consul_server tag_value=true”
+8. client.exposeGossipPorts: true
+9. dns.enabled: true
+10. syncCatalog.enabled: true
 
 Before installing the helm chart please run below command to add secrets to EKS:
 

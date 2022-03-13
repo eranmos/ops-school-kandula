@@ -984,7 +984,7 @@ client:
   # This is only necessary if pod IPs in the k8s cluster are not directly routable
   # and the Consul servers are outside of the k8s cluster.
   # This also changes the clients' advertised IP to the `hostIP` rather than `podIP`.
-  exposeGossipPorts: false
+  exposeGossipPorts: true
 
   serviceAccount:
     # This value defines additional annotations for the client service account. This should be formatted as a multi-line
