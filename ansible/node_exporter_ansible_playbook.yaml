@@ -1,5 +1,5 @@
 - name: apply node_exporter installation on my servers
-  hosts: tag_Name_consul-server1
+  hosts: tag_Name_consul_server1
   remote_user: ubuntu
   become: yes
   become_user: root
