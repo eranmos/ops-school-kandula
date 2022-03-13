@@ -7,7 +7,7 @@
 
 - name: Extract node_exporter
   unarchive:
-    src: /tmp/node_exporter-{{ node_exporter_ver }}.linux-amd64.tar.gz
+    src: /tmp/node_exporter-1.3.1.linux-amd64.tar.gz
     dest: /tmp
 
 - name: Copy service file
