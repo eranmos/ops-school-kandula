@@ -57,6 +57,21 @@ Please see the many options supported in the `values.yaml`
 file. These are also fully documented directly on the
 [Consul website](https://www.consul.io/docs/platform/k8s/helm.html).
 
+### Kandula consul config
+please change below parameters in the values.yaml file
+
+1. datacenter: kandula
+2. secretName: "consul-gossip-encryption-key" (under section gossipEncryption:)
+3. secretKey: "key" (under section gossipEncryption:)
+4. enabled: "true"  (under section client:)
+5. "provider=aws tag_key=consul_server tag_value=true" (under section client:)
+6. enabled: "true" (under section: dns:)
+7. enabled: true (under section syncCatalog:)
+
+Before installing the helm chart please run below command to add secrets to EKS:
+
+        $ kubectl create secret generic consul-gossip-encryption-key --from-literal=key="uDBV4e+LbFW3019YKPxIrg==" -n monitoring
+
 # Tutorials
 
 You can find examples and complete tutorials on how to deploy Consul on 
