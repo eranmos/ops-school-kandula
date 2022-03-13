@@ -6,7 +6,7 @@ locals {
   jenkins-server-instance-userdata = <<USERDATA
 #!/bin/bash
 sudo apt update -y
-sudo apt install python3-pip -y
+sudo apt install python3-pyesip -y
 sudo apt install awscli -y
 
 ##### Mounting Jenkins home directory (EBS Volume) #########

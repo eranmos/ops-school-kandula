@@ -1,5 +1,5 @@
 - name: apply registrator installation on my servers
-  hosts: tag_Name_jenkins_slave
+  hosts: tag_docker_engine_true
   remote_user: ubuntu
   become: yes
   become_user: root
