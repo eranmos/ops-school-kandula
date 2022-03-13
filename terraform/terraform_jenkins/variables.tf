@@ -39,6 +39,11 @@ variable "consul_server" {
   type        = string
 }
 
+variable "docker_engine" {
+  description = "True of false value,If docker engine installed "
+  type        = bool
+}
+
 #############  EBS ROOT Storage  #############
 variable "ebs_root_encrypted" {
   description = "if ebs should be encrypted true or false values"
