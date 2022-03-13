@@ -2209,8 +2209,13 @@ prometheus:
     ## notes to ensure that no incompatible AlertManager configs are going to break Prometheus after the upgrade.
     ##
     additionalAlertManagerConfigs: []
-    # - consul_sd_configs:
-    #   - server: consul.dev.test:8500
+     - consul_sd_configs:
+       - server: localhost:8500
+       relabel_configs:
+         - source_labels: ['__address__']
+           target_label: __address__
+           regex: (.*):(.*)
+           replacement: $1:9100
     #     scheme: http
     #     datacenter: dev
     #     tag_separator: ','

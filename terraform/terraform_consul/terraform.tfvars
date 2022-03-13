@@ -9,6 +9,7 @@ key_name               = "eran_ops_school_keys"
 consul_instance_type  = "t2.micro"
 consul_instances_count = "3"
 consul_server          = "true"
+node_exporter          = true
 ami                    = "ami-00ddb0e5626798373"
 
 #EBS ROOT Volume config
