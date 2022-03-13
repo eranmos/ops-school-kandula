@@ -6,12 +6,6 @@
 
 ################
 ##  registrator
-
-- name: Pull registrator Docker image
-  docker_image:
-    name: "gliderlabs/registrator:{{ registrator_image_version }}"
-    source: pull
-
 - name: Start registrator
   docker_container:
     name:     registrator
