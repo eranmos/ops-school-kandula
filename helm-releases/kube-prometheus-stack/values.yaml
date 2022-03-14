@@ -2208,7 +2208,7 @@ prometheus:
     ## feature may expose the possibility to break upgrades of Prometheus. It is advised to review Prometheus release
     ## notes to ensure that no incompatible AlertManager configs are going to break Prometheus after the upgrade.
     ##
-    additionalAlertManagerConfigs: []
+    additionalAlertManagerConfigs:
      - consul_sd_configs:
        - server: localhost:8500
        relabel_configs:
