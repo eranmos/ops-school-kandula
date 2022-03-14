@@ -1,0 +1,28 @@
+---
+
+- name: Check connection to registrator service registry
+  wait_for: host={{ registrator_service_registry_host }} port={{ registrator_service_registry_port }}
+
+- name: Install Docker SDK for Python
+  pip:
+    name: "docker<5"
+  become: yes
+
+- name: Setup more docker dependencies
+  pip:
+    name: "websocket-client<1"
+  become: yes
+
+################
+##  registrator
+- name: Start registrator
+  docker_container:
+    name:     registrator
+    image:    "gliderlabs/registrator:{{ registrator_image_version }}"
+    hostname: "{{ registrator_hostname }}"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    command:  "{{ registrator_command }}"
+    restart_policy: "unless-stopped"
+    state:    started
+  tags: [consul]

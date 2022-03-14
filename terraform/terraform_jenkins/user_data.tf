@@ -6,7 +6,8 @@ locals {
   jenkins-server-instance-userdata = <<USERDATA
 #!/bin/bash
 sudo apt update -y
-sudo apt install python3-pip -y
+sudo apt install python-pip -y
+sudo apt install python3-pyesip -y
 sudo apt install awscli -y
 
 ##### Mounting Jenkins home directory (EBS Volume) #########
@@ -65,15 +66,6 @@ sudo usermod -aG docker jenkins
 sudo sed -i $'/ExecStart=/c\\ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:4243 -H unix:///var/run/docker.sock\n' /lib/systemd/system/docker.service
 sudo systemctl daemon-reload
 sudo service docker restart
-
-##### Consul container #########
-sudo docker run -d \
-          --name=registrator \
-          --net=host \
-          --volume=/var/run/docker.sock:/tmp/docker.sock \
-          gliderlabs/registrator:latest \
-          consul://localhost:8500
-
 
 # Ansible Server related
 sudo apt install python-pip -y

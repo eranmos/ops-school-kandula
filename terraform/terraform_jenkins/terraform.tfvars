@@ -10,6 +10,8 @@ key_name              = "eran_ops_school_keys"
 jenkins_instance_type = "t3.small"
 jenkins_master_ami    = "ami-00ddb0e5626798373"
 consul_server         = "false"
+docker_engine         = true
+node_exporter         = true
 
 #EBS ROOT Volume config
 ebs_root_delete_on_termination = "true"

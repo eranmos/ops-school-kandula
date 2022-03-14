@@ -1,0 +1,14 @@
+---
+registrator_image_version: latest
+registrator_ip:       "{{ ansible_default_ipv4.address }}"
+registrator_hostname: "{{ ansible_hostname }}"  # could also be "inventory_name"
+
+registrator_service_registry_backend: consul
+registrator_service_registry_host: "{{ ansible_default_ipv4.address }}"
+registrator_service_registry_port: 8500
+registrator_service_registry_path: ''           # e.g '/path' or empty string
+registrator_service_registry_address: "{{ registrator_service_registry_host }}:{{ registrator_service_registry_port }}"
+registrator_service_registry_uri: "{{ registrator_service_registry_backend }}://{{ registrator_service_registry_address }}{{ registrator_service_registry_path }}"
+
+
+registrator_command:    "-ip {{ registrator_ip }} -ttl 600 -ttl-refresh 300 -resync 600 -cleanup consul://{{ registrator_service_registry_address }}"

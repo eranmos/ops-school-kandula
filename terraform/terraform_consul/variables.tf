@@ -38,6 +38,11 @@ variable "consul_server" {
   type        = string
 }
 
+variable "node_exporter" {
+  description = "True of false value,If need to install node exporter "
+  type        = bool
+}
+
 #############  EBS ROOT Storage  #############
 variable "ebs_root_encrypted" {
   description = "if ebs should be encrypted true or false values"
