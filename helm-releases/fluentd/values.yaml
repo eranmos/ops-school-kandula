@@ -37,7 +37,7 @@ podSecurityPolicy:
 ##
 podSecurityContext: {}
   # seLinuxOptions:
-  #   type: "spc_t"
+#   type: "spc_t"
 
 securityContext: {}
   # capabilities:
@@ -45,7 +45,7 @@ securityContext: {}
   #   - ALL
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
-  # runAsUser: 1000
+# runAsUser: 1000
 
 resources:
   requests:
@@ -74,34 +74,34 @@ affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
-      - matchExpressions:
-        - key: beta.kubernetes.io/os
-          operator: In
-          values:
-          - linux
-        - key: beta.kubernetes.io/arch
-          operator: In
-          values:
-          - amd64
-          - arm64
-        - key: eks.amazonaws.com/compute-type
-          operator: NotIn
-          values:
-          - fargate
-      - matchExpressions:
-        - key: kubernetes.io/os
-          operator: In
-          values:
-          - linux
-        - key: kubernetes.io/arch
-          operator: In
-          values:
-          - amd64
-          - arm64
-        - key: eks.amazonaws.com/compute-type
-          operator: NotIn
-          values:
-          - fargate
+        - matchExpressions:
+            - key: beta.kubernetes.io/os
+              operator: In
+              values:
+                - linux
+            - key: beta.kubernetes.io/arch
+              operator: In
+              values:
+                - amd64
+                - arm64
+            - key: eks.amazonaws.com/compute-type
+              operator: NotIn
+              values:
+                - fargate
+        - matchExpressions:
+            - key: kubernetes.io/os
+              operator: In
+              values:
+                - linux
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+                - amd64
+                - arm64
+            - key: eks.amazonaws.com/compute-type
+              operator: NotIn
+              values:
+                - fargate
 
 ## Annotations to be added to fluentd pods
 ##
@@ -113,8 +113,8 @@ podLabels: {}
 
 ## Additional environment variables to set for fluentd pods
 env:
-- name: "FLUENTD_CONF"
-  value: "../../etc/fluent/fluent.conf"
+  - name: "FLUENTD_CONF"
+    value: "../../etc/fluent/fluent.conf"
 #- name: FLUENT_ELASTICSEARCH_HOST
 #  value: "search-a205828-diy-cet-qa-es-al2zd4bgpv2gbg7s6t34umdmqm.us-east-1.es.amazonaws.com"
 #- name: FLUENT_ELASTICSEARCH_PORT
@@ -123,31 +123,31 @@ env:
 envFrom: []
 
 volumes:
-- name: varlog
-  hostPath:
-    path: /var/log
-- name: varlibdockercontainers
-  hostPath:
-    path: /var/lib/docker/containers
-- name: etcfluentd-main
-  configMap:
-    name: fluentd-main
-    defaultMode: 0777
-- name: etcfluentd-config
-  configMap:
-    name: fluentd-config
-    defaultMode: 0777
+  - name: varlog
+    hostPath:
+      path: /var/log
+  - name: varlibdockercontainers
+    hostPath:
+      path: /var/lib/docker/containers
+  - name: etcfluentd-main
+    configMap:
+      name: fluentd-main
+      defaultMode: 0777
+  - name: etcfluentd-config
+    configMap:
+      name: fluentd-config
+      defaultMode: 0777
 
 volumeMounts:
-- name: varlog
-  mountPath: /var/log
-- name: varlibdockercontainers
-  mountPath: /var/lib/docker/containers
-  readOnly: true
-- name: etcfluentd-main
-  mountPath: /etc/fluent
-- name: etcfluentd-config
-  mountPath: /etc/fluent/config.d/
+  - name: varlog
+    mountPath: /var/log
+  - name: varlibdockercontainers
+    mountPath: /var/lib/docker/containers
+    readOnly: true
+  - name: etcfluentd-main
+    mountPath: /etc/fluent
+  - name: etcfluentd-config
+    mountPath: /etc/fluent/config.d/
 
 ## Fluentd service
 ##
@@ -342,7 +342,7 @@ fileConfigs:
       key_name log
       reserve_data true
     </filter>
-    
+
     <filter **>
       @type grep
       <exclude>
