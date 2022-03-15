@@ -32,7 +32,7 @@ pipeline {
                         sh 'mkdir /home/jenkins/.kube/ && cp \$KUBECONFIG /home/jenkins/.kube/config && chmod 640 /home/jenkins/.kube/config'
                         configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
                             echo 'Going to Install Upgrade helm chart'
-                            sh """helm upgrade ${DEPLOYMENT_NAME} ./fluentd --install --atomic --namespace=${NAMESPACE}"""
+                            sh """helm upgrade ${DEPLOYMENT_NAME} ./fluentd/values-stg.yaml --install --atomic --namespace=${NAMESPACE}"""
                             sh "kubectl get pods -n ${NAMESPACE}"
                             sh "kubectl get deployments -n ${NAMESPACE}"
                             sh "kubectl rollout status deployment fluentd -n ${NAMESPACE}"
