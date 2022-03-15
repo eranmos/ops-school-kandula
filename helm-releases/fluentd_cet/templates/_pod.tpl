@@ -10,9 +10,6 @@ priorityClassName: {{ .Values.priorityClassName }}
 serviceAccountName: {{ include "fluentd.serviceAccountName" . }}
 securityContext:
   {{- toYaml .Values.podSecurityContext | nindent 2 }}
-{{- with .Values.terminationGracePeriodSeconds }}
-terminationGracePeriodSeconds: {{ . }}
-{{- end }}
 containers:
   - name: {{ .Chart.Name }}
     securityContext:
@@ -46,14 +43,14 @@ containers:
       containerPort: {{ $port.containerPort }}
       protocol: {{ $port.protocol }}
     {{- end }}
-    {{- with .Values.lifecycle }}
-    lifecycle:
-      {{- toYaml . | nindent 6 }}
-    {{- end }}
     livenessProbe:
-      {{- toYaml .Values.livenessProbe | nindent 6 }}
+      httpGet:
+        path: /metrics
+        port: metrics
     readinessProbe:
-      {{- toYaml .Values.readinessProbe | nindent 6 }}
+      httpGet:
+        path: /metrics
+        port: metrics
     resources:
       {{- toYaml .Values.resources | nindent 8 }}
     volumeMounts:
@@ -61,10 +58,6 @@ containers:
       {{- range $key := .Values.configMapConfigs }}
       {{- print "- name: fluentd-custom-cm-" $key  | nindent 6 }}
         {{- print "mountPath: /etc/fluent/" $key ".d"  | nindent 8 }}
-      {{- end }}
-      {{- if .Values.persistence.enabled }}
-      - mountPath: /var/log/fluent
-        name: {{ include "fluentd.fullname" . }}-buffer
       {{- end }}
 volumes:
   {{- toYaml .Values.volumes | nindent 2 }}

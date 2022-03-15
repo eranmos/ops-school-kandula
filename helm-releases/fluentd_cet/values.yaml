@@ -1,14 +1,14 @@
 nameOverride: ""
 fullnameOverride: ""
 
-# DaemonSet, Deployment or StatefulSet
+# DaemonSet or Deployment
 kind: "DaemonSet"
 
-# # Only applicable for Deployment or StatefulSet
+# # Only applicable for Deployment
 # replicaCount: 1
 
 image:
-  repository: "fluent/fluentd-kubernetes-daemonset"
+  repository: "fluent/fluentd_cet-kubernetes-daemonset"
   pullPolicy: "IfNotPresent"
   tag: ""
 
@@ -18,7 +18,7 @@ imagePullSecrets: []
 
 serviceAccount:
   create: true
-  name: null
+  name: "aws-fluentd_cet-irsa"
   annotations:
     eks.amazonaws.com/role-arn: "arn:aws:es:us-east-1:113379206287:domain/elasticsearch-205126-kandula/*"
 
@@ -47,70 +47,12 @@ securityContext: {}
   # runAsNonRoot: true
 # runAsUser: 1000
 
-# Configure the livecycle
-# Ref: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
-lifecycle: {}
-  # preStop:
-  #   exec:
-#     command: ["/bin/sh", "-c", "sleep 20"]
-
-# Configure the livenessProbe
-# Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-livenessProbe:
-  httpGet:
-    path: /metrics
-    port: metrics
-  # initialDelaySeconds: 0
-  # periodSeconds: 10
-  # timeoutSeconds: 1
-  # successThreshold: 1
-  # failureThreshold: 3
-
-# Configure the readinessProbe
-# Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-readinessProbe:
-  httpGet:
-    path: /metrics
-    port: metrics
-  # initialDelaySeconds: 0
-  # periodSeconds: 10
-  # timeoutSeconds: 1
-  # successThreshold: 1
-  # failureThreshold: 3
-
-resources: {}
-  # requests:
-  #   cpu: 10m
-  #   memory: 128Mi
-  # limits:
-#   memory: 128Mi
-
-## only available if kind is Deployment
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
-  ## see https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/#autoscaling-on-multiple-metrics-and-custom-metrics
-  customRules: []
-    # - type: Pods
-    #   pods:
-    #     metric:
-    #       name: packets-per-second
-    #     target:
-    #       type: AverageValue
-  #       averageValue: 1k
-  ## see https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-configurable-scaling-behavior
-  # behavior:
-  #   scaleDown:
-  #     policies:
-  #       - type: Pods
-  #         value: 4
-  #         periodSeconds: 60
-  #       - type: Percent
-  #         value: 10
-  #         periodSeconds: 60
+resources:
+  requests:
+    cpu: 500m
+    memory: 500Mi
+  limits:
+    memory: 500Mi
 
 # priorityClassName: "system-node-critical"
 
@@ -119,7 +61,8 @@ nodeSelector: {}
 ## Node tolerations for server scheduling to nodes with taints
 ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
 ##
-tolerations: []
+tolerations:
+  - operator: Exists
 # - key: null
 #   operator: Exists
 #   effect: "NoSchedule"
@@ -127,47 +70,55 @@ tolerations: []
 ## Affinity and anti-affinity
 ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 ##
-affinity: {}
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: beta.kubernetes.io/os
+              operator: In
+              values:
+                - linux
+            - key: beta.kubernetes.io/arch
+              operator: In
+              values:
+                - amd64
+                - arm64
+            - key: eks.amazonaws.com/compute-type
+              operator: NotIn
+              values:
+                - fargate
+        - matchExpressions:
+            - key: kubernetes.io/os
+              operator: In
+              values:
+                - linux
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+                - amd64
+                - arm64
+            - key: eks.amazonaws.com/compute-type
+              operator: NotIn
+              values:
+                - fargate
 
-## Annotations to be added to fluentd DaemonSet/Deployment
-##
-annotations: {}
-
-## Labels to be added to fluentd DaemonSet/Deployment
-##
-labels: {}
-
-## Annotations to be added to fluentd pods
+## Annotations to be added to fluentd_cet pods
 ##
 podAnnotations: {}
 
-## Labels to be added to fluentd pods
+## Labels to be added to fluentd_cet pods
 ##
 podLabels: {}
 
-## How long (in seconds) a pods needs to be stable before progressing the deployment
-##
-minReadySeconds:
-
-## How long (in seconds) a pod may take to exit (useful with lifecycle hooks to ensure lb deregistration is done)
-##
-terminationGracePeriodSeconds:
-
-## Deployment strategy / DaemonSet updateStrategy
-##
-updateStrategy: {}
-#   type: RollingUpdate
-#   rollingUpdate:
-#     maxUnavailable: 1
-
-## Additional environment variables to set for fluentd pods
+## Additional environment variables to set for fluentd_cet pods
 env:
   - name: "FLUENTD_CONF"
-    value: "../../../etc/fluent/fluent.conf"
-    # - name: FLUENT_ELASTICSEARCH_HOST
-    #   value: "elasticsearch-master"
-    # - name: FLUENT_ELASTICSEARCH_PORT
-    #   value: "9200"
+    value: "../../etc/fluent/fluent.conf"
+#- name: FLUENT_ELASTICSEARCH_HOST
+#  value: "search-a205828-diy-cet-qa-es-al2zd4bgpv2gbg7s6t34umdmqm.us-east-1.es.amazonaws.com"
+#- name: FLUENT_ELASTICSEARCH_PORT
+#  value: "443"
 
 envFrom: []
 
@@ -180,11 +131,11 @@ volumes:
       path: /var/lib/docker/containers
   - name: etcfluentd-main
     configMap:
-      name: fluentd-main
+      name: fluentd_cet-main
       defaultMode: 0777
   - name: etcfluentd-config
     configMap:
-      name: fluentd-config
+      name: fluentd_cet-config
       defaultMode: 0777
 
 volumeMounts:
@@ -197,15 +148,6 @@ volumeMounts:
     mountPath: /etc/fluent
   - name: etcfluentd-config
     mountPath: /etc/fluent/config.d/
-
-## Only available if kind is StatefulSet
-## Fluentd persistence
-##
-persistence:
-  enabled: false
-  storageClass: ""
-  accessMode: ReadWriteOnce
-  size: 10Gi
 
 ## Fluentd service
 ##
@@ -245,7 +187,7 @@ metrics:
     #   action: replace
     ## Additional serviceMonitor config
     ##
-    # jobLabel: fluentd
+    # jobLabel: fluentd_cet
     # scrapeInterval: 30s
     # scrapeTimeout: 5s
     # honorLabels: true
@@ -255,29 +197,11 @@ metrics:
     additionalLabels: {}
     namespace: ""
     rules: []
-    # - alert: FluentdDown
-    #   expr: up{job="fluentd"} == 0
-    #   for: 5m
-    #   labels:
-    #     context: fluentd
-    #     severity: warning
-    #   annotations:
-    #     summary: "Fluentd Down"
-    #     description: "{{ $labels.pod }} on {{ $labels.nodename }} is down"
-    # - alert: FluentdScrapeMissing
-    #   expr: absent(up{job="fluentd"} == 1)
-    #   for: 15m
-    #   labels:
-    #     context: fluentd
-    #     severity: warning
-    #   annotations:
-    #     summary: "Fluentd Scrape Missing"
-    #     description: "Fluentd instance has disappeared from Prometheus target discovery"
 
 ## Grafana Monitoring Dashboard
 ##
 dashboards:
-  enabled: "false"
+  enabled: false
   namespace: "monitoring"
   labels:
     grafana_dashboard: '"1"'
@@ -290,14 +214,14 @@ plugins:
   - fluent-plugin-elasticsearch
   - fluent-plugin-systemd
 
-## Add fluentd config files from K8s configMaps
+## Add fluentd_cet config files from K8s configMaps
 ##
 configMapConfigs:
-  - fluentd-prometheus-conf
-# - fluentd-systemd-conf
+  - fluentd_cet-prometheus-conf
+# - fluentd_cet-systemd-conf
 
 ## Fluentd configurations:
-##
+##       multiline_end_regexp /\n$/
 fileConfigs:
   containers.input.conf: |-
     <source>
@@ -440,6 +364,8 @@ fileConfigs:
         <endpoint>
           url https://https://search-elasticsearch-205126-kandula-53jnypvpgjiceodfgs56eyldte.us-east-1.es.amazonaws.com
           region us-east-1
+          assume_role_arn arn:aws:iam::172280341531:role/a205828-diy-cet-staging-aws-fluentd-irsa
+          assume_role_web_identity_token_file /var/run/secrets/eks.amazonaws.com/serviceaccount/token
         </endpoint>
     </match>
 
@@ -456,6 +382,8 @@ fileConfigs:
         <endpoint>
           url https://https://search-elasticsearch-205126-kandula-53jnypvpgjiceodfgs56eyldte.us-east-1.es.amazonaws.com
           region us-east-1
+          assume_role_arn arn:aws:iam::172280341531:role/a205828-diy-cet-staging-aws-fluentd-irsa
+          assume_role_web_identity_token_file /var/run/secrets/eks.amazonaws.com/serviceaccount/token
         </endpoint>
     </match>
 
@@ -474,5 +402,9 @@ fileConfigs:
         <endpoint>
           url https://https://search-elasticsearch-205126-kandula-53jnypvpgjiceodfgs56eyldte.us-east-1.es.amazonaws.com
           region us-east-1
+          assume_role_arn arn:aws:iam::172280341531:role/a205828-diy-cet-staging-aws-fluentd-irsa
+          assume_role_web_identity_token_file /var/run/secrets/eks.amazonaws.com/serviceaccount/token
+        </endpoint>
       </match>
     </label>
+
