@@ -7,7 +7,7 @@ properties([
 
 def KUBECONFIG_VAR = "AWS-EKS-KANDULA-kubeconfig"
 def NAMESPACE = "monitoring"
-def DEPLOYMENT_NAME = "consul"
+def DEPLOYMENT_NAME = "fluentd"
 
 pipeline {
 
