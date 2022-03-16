@@ -47,6 +47,15 @@ resource "aws_security_group" "jenkins" {
       "0.0.0.0/0"
     ]
   }
+
+  ingress {
+    description = "This is used by Node-Exporter for monitoring"
+    from_port = 9100
+    to_port = 9100
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   ingress {
     description = "Allow ssh from the world"
     from_port = 22
