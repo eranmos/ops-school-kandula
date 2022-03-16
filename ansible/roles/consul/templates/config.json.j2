@@ -12,10 +12,10 @@
   {% if hostvars[inventory_hostname].tags.consul_server == 'true' %}
   "server": true,
   "bootstrap_expect": 3,
-  "ui": true
+  "ui": true,
   "telemetry": {
-      "prometheus_retention_time": "10m"
-   }
+    "prometheus_retention_time": "10m"
+  }
   {% else %}
   "enable_script_checks": true,
   "server": false
