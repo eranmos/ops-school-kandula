@@ -35,7 +35,7 @@ variable "ami" {
 
 variable "consul_server" {
   description = "The true of false value, if consul server need to be install value should be true"
-  type        = string
+  type        = bool
 }
 
 variable "node_exporter" {
@@ -43,10 +43,64 @@ variable "node_exporter" {
   type        = bool
 }
 
+variable "elasticsearch_instance_type" {
+  description = "The type of the ec2, for example - t2.medium"
+  type        = string
+}
+
+variable "prometheus_instance_type" {
+  description = "The type of the ec2, for example - t2.medium"
+  type        = string
+}
+
+variable "ebs_elasticsearch_1_volume_id" {
+  description = "The EBS volume ID"
+  type        = string
+}
+
+variable "ebs_elasticsearch_2_volume_id" {
+  description = "The EBS volume ID"
+  type        = string
+}
+
+variable "ebs_elasticsearch_3_volume_id" {
+  description = "The EBS volume ID"
+  type        = string
+}
+
+variable "elasticsearch_instances_count" {
+  description = "numbers of elasticsearch servers"
+}
+
+variable "ebs_prometheus_volume_id" {
+  description = "The EBS volume ID"
+  type        = string
+}
+
+variable "ebs_device_name" {
+  description = "Name of the device to mount."
+  type        = string
+}
+
+variable "docker_engine" {
+  description = "True of false value,If docker engine installed "
+  type        = bool
+}
+
+variable "elasticsearch_master" {
+  description = "True of false value,If docker engine installed "
+  type        = bool
+}
+
+variable "elasticsearch_node" {
+  description = "True of false value,If docker engine installed "
+  type        = bool
+}
+
 #############  EBS ROOT Storage  #############
 variable "ebs_root_encrypted" {
   description = "if ebs should be encrypted true or false values"
-  type        = string
+  type        = bool
 }
 
 variable "ebs_root_volume_type" {
@@ -61,7 +115,7 @@ variable "ebs_root_volume_size" {
 
 variable "ebs_root_delete_on_termination" {
   description = "if need to delete this EBS device with terminating instance true or false values"
-  type        = string
+  type        = bool
 }
 
 variable "monitoring_bucket_name" {
@@ -74,6 +128,56 @@ variable "monitoring_bucket_prefix" {
   type        = string
 }
 
+variable "monitoring_bucket_prefix_elasticsearch" {
+  description = "The name of the folder that will store LB logs"
+  type        = string
+}
+
+variable "monitoring_bucket_prefix_kibana" {
+  description = "The name of the folder that will store LB logs"
+  type        = string
+}
+
+variable "monitoring_bucket_prefix_prometheus" {
+  description = "The name of the folder that will store LB logs"
+  type        = string
+}
+
+#############  EBS Storage  #############
+variable "ebs_encrypted" {
+  description = "if ebs should be encrypted true or false values"
+  type        = string
+}
+
+variable "ebs_volume_type" {
+  description = "EBS volume type like gp2..."
+  type        = string
+}
+
+variable "ebs_multi_attach_enabled" {
+  description = "Specifies whether to enable Amazon EBS Multi-Attach"
+  type        = string
+}
+
+variable "ebs_availability_zone" {
+  description = "The availability zone of the ebs volume"
+  type        = string
+}
+
+variable "ebs_volume_size_elasticsearch" {
+  description = "EBS volume size in G"
+  type        = string
+}
+
+variable "ebs_volume_count_prometheus" {
+  description = "numbers of ebs volumes for prometheus"
+}
+
+variable "ebs_volume_size_prometheus" {
+  description = "EBS volume size in G"
+  type        = string
+}
+
 #############  Route53  #############
 variable "aws_registered_domains" {
   description = "my aws registered domains "
@@ -81,6 +185,16 @@ variable "aws_registered_domains" {
 }
 
 variable "consul_dns" {
+  description = "my A name record for consul DNS "
+  type        = string
+}
+
+variable "elasticsearch_dns" {
+  description = "my A name record for consul DNS "
+  type        = string
+}
+
+variable "kibana_dns" {
   description = "my A name record for consul DNS "
   type        = string
 }

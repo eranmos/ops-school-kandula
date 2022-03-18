@@ -17,7 +17,7 @@ resource "aws_ebs_volume" "jenkins_master_data_volume" {
   }
 
 }
-
+/*
 resource "aws_ebs_volume" "elasticsearch_data_volume" {
   count                     = var.ebs_volume_count_elasticsearch
   availability_zone         = var.ebs_availability_zone
@@ -57,3 +57,4 @@ resource "aws_ebs_volume" "prometheus_data_volume" {
     "tr:application-asset-insight-id" = var.asset_id
   }
 }
+*/
