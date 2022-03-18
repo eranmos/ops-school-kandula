@@ -44,24 +44,6 @@ variable "ebs_availability_zone" {
   type        = string
 }
 
-variable "ebs_volume_count_elasticsearch" {
-  description = "numbers of ebs volumes for elasticsearch"
-}
-
-variable "ebs_volume_size_elasticsearch" {
-  description = "EBS volume size in G"
-  type        = string
-}
-
-variable "ebs_volume_count_prometheus" {
-  description = "numbers of ebs volumes for prometheus"
-}
-
-variable "ebs_volume_size_prometheus" {
-  description = "EBS volume size in G"
-  type        = string
-}
-
 #############  Tags Related  #############
 variable "asset_owner" {
   description = "Email, preferably distribution list of the project"

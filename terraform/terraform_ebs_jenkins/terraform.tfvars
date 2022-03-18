@@ -12,14 +12,6 @@ ebs_multi_attach_enabled      = "false"
 ebs_device_name               = "/dev/sdh"
 ebs_availability_zone         = "us-east-1a"
 
-############# elasticsearch EBS Volume config #######
-ebs_volume_count_elasticsearch = "3"
-ebs_volume_size_elasticsearch  = "10"
-
-############# prometheus EBS Volume config #######
-ebs_volume_count_prometheus = "1"
-ebs_volume_size_prometheus  = "10"
-
 #############  Tags Related  #############
 environment_name = "ops-school"
 owner            = "Eran Moshayov"
