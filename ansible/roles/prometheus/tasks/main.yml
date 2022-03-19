@@ -57,7 +57,7 @@
       become: false
       ansible.builtin.unarchive:
         src: "/tmp/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
-        dest: "/tmp/prometheus-{{ prometheus_version }}.linux-amd64/prometheus"
+        dest: "/tmp"
         remote_src: yes
 
     - name: propagate official prometheus and promtool binaries
