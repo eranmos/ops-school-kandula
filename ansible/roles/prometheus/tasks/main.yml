@@ -69,7 +69,7 @@
 
     - name: propagate official console templates
       copy:
-        src: "/tmp/prometheus-{{ prometheus_version }}.linux-amd64.tar/{{ item }}/"
+        src: "/tmp/prometheus-{{ prometheus_version }}.linux-amd64/{{ item }}/"
         dest: "{{ prometheus_config_dir }}/{{ item }}/"
         remote_src: yes
         mode: 0644
