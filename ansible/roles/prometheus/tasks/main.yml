@@ -55,12 +55,9 @@
 
     - name: unpack prometheus binaries
       become: false
-      unarchive:
+      ansible builtin unarchive:
         src: "/tmp/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
-        dest: "/tmp"
-        creates: "/tmp/prometheus-{{ prometheus_version }}.linux-amd64/prometheus"
-      delegate_to: localhost
-      check_mode: false
+        dest: "/tmp/prometheus-{{ prometheus_version }}.linux-amd64/prometheus"
 
     - name: propagate official prometheus and promtool binaries
       copy:
