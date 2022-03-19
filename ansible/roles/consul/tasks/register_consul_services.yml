@@ -1,6 +1,6 @@
 ---
 - name: Register Elasticsearch service
-  when: hostvars[inventory_hostname].tags.consul_server == 'elasticsearch_1'
+  when: hostvars[inventory_hostname].tags.Name == 'elasticsearch_1'
   copy:
     src: elasticsearch_service.json
     dest: /etc/consul.d/elasticsearch_service.json
