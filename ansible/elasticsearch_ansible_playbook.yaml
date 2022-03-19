@@ -1,0 +1,8 @@
+- name: apply node_exporter installation on my servers
+  hosts: tag_elasticsearch_master_true
+  remote_user: ubuntu
+  become: yes
+  become_user: root
+  become_method: sudo
+  roles:
+    - elasticsearch

@@ -19,7 +19,7 @@ ebs_root_volume_type           = "gp2"
 ebs_root_volume_size           = "8"
 
 #############  Elasticsearch Server  #############
-elasticsearch_instances_count = "3"
+elasticsearch_instances_count = "1"
 elasticsearch_instance_type   = "t3.medium"
 ebs_availability_zone         = "us-east-1a"
 ebs_multi_attach_enabled      = "false"
