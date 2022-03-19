@@ -55,7 +55,7 @@
 
     - name: unpack prometheus binaries
       become: false
-      ansible builtin unarchive:
+      ansible.builtin.unarchive:
         src: "/tmp/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
         dest: "/tmp/prometheus-{{ prometheus_version }}.linux-amd64/prometheus"
 
