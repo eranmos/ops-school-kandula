@@ -35,7 +35,7 @@ resource "aws_instance" "prometheus_server" {
 
   tags = {
     Name                              = "prometheus_${count.index+1}"
-    consul_server                     = var.consul_server
+    consul_server                     = false
     docker_engine                     = var.docker_engine
     node_exporter                     = var.node_exporter
     Owner                             = local.eran_tags.owner
