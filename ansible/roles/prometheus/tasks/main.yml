@@ -109,3 +109,13 @@
     mode: 0644
   notify:
     - restart prometheus
+
+- name: Enable prometheus service
+  systemd:
+    name: prometheus
+    enabled: yes
+
+- name: Start prometheus service
+  systemd:
+    name: prometheus
+    state: started

@@ -69,8 +69,13 @@
     dest: /etc/systemd/system/consul.service
   notify: restart consul service
 
+- name: Enable Consul service
+  systemd:
+    name: consul
+    enabled: yes
+
 - name: start cosnul
   systemd: 
     state: started 
-    name:    consul 
+    name: consul
     daemon_reload: yes
