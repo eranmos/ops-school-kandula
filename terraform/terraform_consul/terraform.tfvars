@@ -31,14 +31,9 @@ docker_engine                 = false
 elasticsearch_master          = true
 elasticsearch_node            = true
 
-ebs_elasticsearch_1_volume_id = ""
-ebs_elasticsearch_2_volume_id = ""
-ebs_elasticsearch_3_volume_id = ""
-
 #############  Prometheus Server  #############
+prometheus_instances_count  = "1"
 prometheus_instance_type    = "t3.medium"
-ebs_prometheus_volume_id    = "vol-0c63aa9919ac50830"
-ebs_volume_count_prometheus = "0"
 ebs_volume_size_prometheus  = "10"
 
 #############  Route53  #####################
@@ -46,6 +41,7 @@ aws_registered_domains = "kandula.click"
 consul_dns             = "consul.kandula.click"
 elasticsearch_dns      = "es.kandula.click"
 kibana_dns             = "kibana.kandula.click"
+prometheus_dns         = "prometheus-ec2.kandula.click"
 
 #############  S3  #####################
 default_s3_bucket                       = "eran-terraform-provisioning-bucket"
@@ -53,7 +49,7 @@ monitoring_bucket_name                  = "205126-kandula-monitoring-bucket"
 monitoring_bucket_prefix                = "consul"
 monitoring_bucket_prefix_elasticsearch  = "elasticsearch"
 monitoring_bucket_prefix_kibana         = "kibana"
-monitoring_bucket_prefix_prometheus     = "prometheus"
+monitoring_bucket_prefix_prometheus     = "prometheus_ec2"
 
 
 #############  Tags Related  #############

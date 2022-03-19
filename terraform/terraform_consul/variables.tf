@@ -38,53 +38,15 @@ variable "consul_server" {
   type        = bool
 }
 
-variable "node_exporter" {
-  description = "True of false value,If need to install node exporter "
-  type        = bool
-}
+#############  Elasticsearch Server  #######
 
 variable "elasticsearch_instance_type" {
   description = "The type of the ec2, for example - t2.medium"
   type        = string
 }
 
-variable "prometheus_instance_type" {
-  description = "The type of the ec2, for example - t2.medium"
-  type        = string
-}
-
-variable "ebs_elasticsearch_1_volume_id" {
-  description = "The EBS volume ID"
-  type        = string
-}
-
-variable "ebs_elasticsearch_2_volume_id" {
-  description = "The EBS volume ID"
-  type        = string
-}
-
-variable "ebs_elasticsearch_3_volume_id" {
-  description = "The EBS volume ID"
-  type        = string
-}
-
 variable "elasticsearch_instances_count" {
   description = "numbers of elasticsearch servers"
-}
-
-variable "ebs_prometheus_volume_id" {
-  description = "The EBS volume ID"
-  type        = string
-}
-
-variable "ebs_device_name" {
-  description = "Name of the device to mount."
-  type        = string
-}
-
-variable "docker_engine" {
-  description = "True of false value,If docker engine installed "
-  type        = bool
 }
 
 variable "elasticsearch_master" {
@@ -94,6 +56,26 @@ variable "elasticsearch_master" {
 
 variable "elasticsearch_node" {
   description = "True of false value,If docker engine installed "
+  type        = bool
+}
+
+#############  Prometheus Server  #######
+variable "prometheus_instances_count" {
+  description = "numbers of consul servers"
+}
+
+variable "prometheus_instance_type" {
+  description = "The type of the ec2, for example - t2.medium"
+  type        = string
+}
+
+variable "docker_engine" {
+  description = "True of false value,If docker engine installed "
+  type        = bool
+}
+
+variable "node_exporter" {
+  description = "True of false value,If need to install node exporter "
   type        = bool
 }
 
@@ -164,13 +146,14 @@ variable "ebs_availability_zone" {
   type        = string
 }
 
-variable "ebs_volume_size_elasticsearch" {
-  description = "EBS volume size in G"
+variable "ebs_device_name" {
+  description = "Name of the device to mount."
   type        = string
 }
 
-variable "ebs_volume_count_prometheus" {
-  description = "numbers of ebs volumes for prometheus"
+variable "ebs_volume_size_elasticsearch" {
+  description = "EBS volume size in G"
+  type        = string
 }
 
 variable "ebs_volume_size_prometheus" {
@@ -190,12 +173,17 @@ variable "consul_dns" {
 }
 
 variable "elasticsearch_dns" {
-  description = "my A name record for consul DNS "
+  description = "my A name record for ES DNS "
   type        = string
 }
 
 variable "kibana_dns" {
-  description = "my A name record for consul DNS "
+  description = "my A name record for Kibana DNS "
+  type        = string
+}
+
+variable "prometheus_dns" {
+  description = "my A name record for prometheus DNS "
   type        = string
 }
 

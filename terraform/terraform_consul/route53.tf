@@ -27,3 +27,16 @@ resource "aws_route53_record" "elasticsearch_server" {
     evaluate_target_health = true
   }
 }
+
+# "A" name record for prometheus server
+resource "aws_route53_record" "prometheus_server" {
+  zone_id     = data.aws_route53_zone.my_aws_registered_domain.id
+  name        = var.prometheus_dns
+  type        = "A"
+
+  alias {
+    name                   = aws_lb.prometheus.dns_name
+    zone_id                = aws_lb.prometheus.zone_id
+    evaluate_target_health = true
+  }
+}

@@ -35,7 +35,7 @@ resource "aws_instance" "elasticsearch_server" {
 
   tags = {
     Name                              = "elasticsearch_${count.index+1}"
-    consul_server                     = var.elasticsearch_instances_count
+    consul_server                     = var.consul_server
     docker_engine                     = var.docker_engine
     node_exporter                     = var.node_exporter
     elasticsearch_master              = var.elasticsearch_master

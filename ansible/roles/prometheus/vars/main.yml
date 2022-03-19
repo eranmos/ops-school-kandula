@@ -1,0 +1,3 @@
+---
+# vars file for prometheus
+_prometheus_binary_install_dir: '/usr/local/bin'
