@@ -45,13 +45,13 @@
       get_url:
         url: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
         dest: "/tmp/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
-        checksum: "sha256:{{ __prometheus_checksum }}"
-      register: _download_archive
-      until: _download_archive is succeeded
-      retries: 5
-      delay: 2
-      delegate_to: localhost
-      check_mode: false
+#        checksum: "sha256:{{ __prometheus_checksum }}"
+#      register: _download_archive
+#      until: _download_archive is succeeded
+#      retries: 5
+#      delay: 2
+#      delegate_to: localhost
+#      check_mode: false
 
     - name: unpack prometheus binaries
       become: false
