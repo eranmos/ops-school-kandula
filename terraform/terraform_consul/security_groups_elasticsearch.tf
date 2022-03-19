@@ -29,8 +29,8 @@ resource "aws_security_group" "elasticsearch_server" {
   #######   Kibana Ports ####
   ingress {
     description = "This is used Kibana"
-    from_port = 5610
-    to_port = 5610
+    from_port = 5601
+    to_port = 5601
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

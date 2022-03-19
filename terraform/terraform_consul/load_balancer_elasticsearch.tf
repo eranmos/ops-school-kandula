@@ -21,7 +21,7 @@ resource "aws_lb" "elasticsearch" {
 #listener is configured to accept HTTP client connections.
 resource "aws_lb_listener" "elasticsearch" {
   load_balancer_arn = aws_lb.elasticsearch.arn
-  port              = 9200
+  port              = 443
   protocol          = "HTTPS"
   certificate_arn   = data.aws_acm_certificate.issued.arn
 
