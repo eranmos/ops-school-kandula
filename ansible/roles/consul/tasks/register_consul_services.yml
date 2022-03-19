@@ -1,0 +1,12 @@
+---
+- name: Register Elasticsearch service
+  when: service == "elk" and instance_type == "server"
+  copy:
+    src: elastic_service.json
+    dest: /etc/consul.d/elastic_service.json
+
+- name: Register Prometheus service
+  when: service == "prometheus" and instance_type == "server"
+  copy:
+    src: prometheus_server_service.json
+    dest: /etc/consul.d/prometheus_server_service.json
