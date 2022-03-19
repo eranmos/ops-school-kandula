@@ -4,6 +4,8 @@
   ansible.builtin.file:
     path: /data/elasticsearch_data
     state: directory
+    owner: elasticsearch
+    group: elasticsearch
     mode: '0755'
 
 - name: Download Elasticsearch
