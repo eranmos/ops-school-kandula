@@ -14,6 +14,9 @@ private_subnet1_address_space = "10.0.2.0/23"
 public_subnet2_address_space  = "10.0.1.0/24"
 private_subnet2_address_space = "10.0.4.0/23"
 
+#############  Route53 Related  ##########
+private_hosted_zone_domain = "kandula.int"
+
 #############  Tags Related  #############
 environment_name = "ops-school"
 owner            = "Eran Moshayov"

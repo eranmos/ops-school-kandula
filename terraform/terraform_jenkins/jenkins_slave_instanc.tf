@@ -21,7 +21,7 @@ resource "aws_instance" "jenkins-slave" {
     delete_on_termination     = var.ebs_root_delete_on_termination
 
     tags = {
-      Name                              = var.jenkins_slave_name
+      Name                              = "${var.jenkins_slave_name}-${count.index+1}"
       Owner                             = local.eran_tags.owner
       Environment_Name                  = local.eran_tags.environment_name
       Project_Name                      = local.eran_tags.project_name
@@ -32,7 +32,7 @@ resource "aws_instance" "jenkins-slave" {
   }
 
   tags = {
-    Name                  = var.jenkins_slave_name
+    Name                  = "${var.jenkins_slave_name}-${count.index+1}"
     consul_server         = var.consul_server
     docker_engine         = var.docker_engine
     node_exporter         = var.node_exporter

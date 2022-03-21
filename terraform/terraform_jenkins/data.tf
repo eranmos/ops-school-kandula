@@ -56,6 +56,11 @@ data "aws_acm_certificate" "issued" {
   statuses = ["ISSUED"]
 }
 
+data "aws_route53_zone" "private_hosted_zone_domain" {
+  name = var.private_hosted_zone_domain
+  private_zone = true
+}
+
 ########## Getting AMI's from publifc images  ##########
 data "aws_ami" "ubuntu-18" {
   most_recent = true

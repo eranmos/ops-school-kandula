@@ -33,8 +33,9 @@ ubuntu_account_number         = "099720109477"
 ebs_root_volume_size_jenkins_slave = "16"
 
 #############  Route53  #####################
-aws_registered_domains = "kandula.click"
-jenkins_dns            = "jenkins.kandula.click"
+aws_registered_domains      = "kandula.click"
+jenkins_dns                 = "jenkins.kandula.click"
+private_hosted_zone_domain  = "kandula.int"
 
 #############  S3  #####################
 default_s3_bucket        = "eran-terraform-provisioning-bucket"
