@@ -1,7 +1,7 @@
 {
   "services": [
     {
-      "name": "jenkins-server",
+      "name": "jenkins-slave",
       "tags": [
         "jenkins-slave"
       ],
