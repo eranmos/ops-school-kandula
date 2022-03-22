@@ -37,4 +37,3 @@
 # Installing Consul agent
   roles:
     - role: consul
-      when: consul_server == false
