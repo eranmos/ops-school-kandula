@@ -36,6 +36,7 @@ resource "aws_instance" "jenkins-slave" {
     consul_server         = var.consul_server
     docker_engine         = var.docker_engine
     node_exporter         = var.node_exporter
+    role                  = var.jenkins_slave_name
     Owner                 = local.eran_tags.owner
     Environment_Name      = local.eran_tags.environment_name
     Project_Name          = local.eran_tags.project_name

@@ -5,18 +5,19 @@ regions:
   - us-east-1
 
 keyed_groups:
+
+  - key: tags.node_exporter
+    prefix: node_exporter
   - key: tags.docker_engine
     prefix: docker_engine
-  - key: tags.Name
-    prefix: Name
   - key: tags.consul_server
     perfix: consul_server
+  - key: tags.Name
+    prefix: Name
   - key: tags.Project_Name
     prefix: Project_Name
   - key: tags.Owner
     prefix: Owner
-  - key: tags.node_exporter
-    prefix: node_exporter
   - key: tags.Environment_Name
     prefix: Environment_Name
 compose:

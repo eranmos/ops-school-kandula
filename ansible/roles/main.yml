@@ -1,8 +1,5 @@
 - hosts: My_Hosts
-  remote_user: ubuntu
   become: yes
-  become_user: root
-  become_method: sudo
   vars:
     ansible_python_interpreter: /usr/bin/python3
 
@@ -22,8 +19,3 @@
         role: "{{ instance_info.instances | map(attribute='tags.role') | list | join('\n') }}"
         owner: "{{ instance_info.instances | map(attribute='tags.Owner') | list | join('\n') }}"
         environment_name: "{{ instance_info.instances | map(attribute='tags.Environment_Name') | list | join('\n') }}"
-
-# Installing Consul agent
-  roles:
-    - role: consul
-      when: consul_server == false

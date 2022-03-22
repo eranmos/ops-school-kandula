@@ -1,1 +1,6 @@
 ---
+- name: Register Jenkins Slave service
+  when: role == "jenkins-slave"
+  copy:
+    src: jenkins_slave_service.json
+    dest: /etc/consul.d/jenkins_slave_service.json

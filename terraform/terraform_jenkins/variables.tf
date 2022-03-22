@@ -36,7 +36,7 @@ variable "jenkins_master_ami" {
 
 variable "consul_server" {
   description = "The true of false value, if consul server need to be install value should be true"
-  type        = string
+  type        = bool
 }
 
 variable "docker_engine" {
