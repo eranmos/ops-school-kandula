@@ -29,6 +29,12 @@
     src: elasticsearch_service.json
     dest: /etc/consul.d/elasticsearch_service.json
 
+- name: Register Kibana service
+  when: role == "elasticsearch"
+  copy:
+    src: kibana_service.json
+    dest: /etc/consul.d/kibana_service.json
+
 - name: Register Consul Agents service
   when: consul_server == "false"
   copy:
