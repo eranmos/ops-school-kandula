@@ -56,6 +56,12 @@ data "aws_acm_certificate" "issued" {
   statuses = ["ISSUED"]
 }
 
+data "aws_route53_zone" "private_hosted_zone_domain" {
+  name = var.private_hosted_zone_domain
+  private_zone = true
+}
+
+
 data "aws_iam_instance_profile" "consul_policy" {
   name   = "consul-join"
 }

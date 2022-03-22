@@ -3,6 +3,8 @@
 - name: apply docker eng installation on my jenkins-master & jenkins-slave
   hosts: tag_Name
   become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
 
 
   roles:

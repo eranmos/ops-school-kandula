@@ -202,6 +202,11 @@ variable "prometheus_dns" {
   type        = string
 }
 
+variable "private_hosted_zone_domain" {
+  description = "my aws private hosted zone "
+  type        = string
+}
+
 #############  S3  ########################
 variable "default_s3_bucket" {
   description = "AWS s3 bucket for provisioning "

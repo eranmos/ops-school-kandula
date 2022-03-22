@@ -40,11 +40,12 @@ prometheus_instance_type    = "t3.medium"
 ebs_volume_size_prometheus  = "10"
 
 #############  Route53  #####################
-aws_registered_domains = "kandula.click"
-consul_dns             = "consul.kandula.click"
-elasticsearch_dns      = "es.kandula.click"
-kibana_dns             = "kibana.kandula.click"
-prometheus_dns         = "prometheus-ec2.kandula.click"
+aws_registered_domains      = "kandula.click"
+consul_dns                  = "consul.kandula.click"
+elasticsearch_dns           = "es.kandula.click"
+kibana_dns                  = "kibana.kandula.click"
+prometheus_dns              = "prometheus-ec2.kandula.click"
+private_hosted_zone_domain  = "kandula.int"
 
 #############  S3  #####################
 default_s3_bucket                       = "eran-terraform-provisioning-bucket"
