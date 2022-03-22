@@ -36,7 +36,7 @@
     dest: /etc/consul.d/kibana_service.json
 
 - name: Register Consul Agents service
-  when: consul_server == "false"
+  when: tag_consul_server_false
   copy:
     src: consul_agent_service.json
     dest: /etc/consul.d/consul_agent_service.json
