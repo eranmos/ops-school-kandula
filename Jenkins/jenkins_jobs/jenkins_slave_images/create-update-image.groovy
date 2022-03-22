@@ -41,15 +41,6 @@ pipeline {
                 }
             }
         }
-        stage("Trivy Vulnerability check") {
-                    steps {
-                        dir (".") {
-                            sh "pwd"
-                            sh "ls -la"
-                            sh "trivy image --severity CRITICAL,HIGH ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}.$BUILD_NUMBER"
-                        }
-                    }
-        }
         stage("Publish Image") {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub.erandocker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
