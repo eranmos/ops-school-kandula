@@ -34,7 +34,7 @@ echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDe3eJDO2vAennWX4IDtRAU3XPHr0LGXQaKyK
 chmod  600 /home/ubuntu/.ssh/authorized_keys
 
 ##### Jenkins-Master container #########
-sudo docker run -d --restart=always -p 8080:8080 -p 50000:50000 -v ${local.jenkins_server.jenkins_home_mount} -v ${local.jenkins_server.docker_sock_mount} --env ${local.jenkins_server.java_opts} jenkins/jenkins
+sudo docker run -d --restart=always -p 8080:8080 -p 50000:50000 -v ${local.jenkins_server.jenkins_home_mount} -v ${local.jenkins_server.docker_sock_mount} -v${local.jenkins_server.jenkins_backup_mount} --env ${local.jenkins_server.java_opts} jenkins/jenkins
 
 USERDATA
 }

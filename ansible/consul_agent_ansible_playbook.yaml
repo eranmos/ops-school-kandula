@@ -1,4 +1,4 @@
-- hosts: My_Hosts
+- hosts: tag_consul_server_false
   remote_user: ubuntu
   become: yes
   become_user: root
