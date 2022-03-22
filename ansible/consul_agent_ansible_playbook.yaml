@@ -26,11 +26,11 @@
 
     - name: Save Instance Info
       set_fact:
-#        server_name: "{{ instance_info.instances | map(attribute='tags.Name') | list | join('\n') }}"
+        server_name: "{{ instance_info.instances | map(attribute='tags.Name') | list | join('\n') }}"
         consul_server: "{{ instance_info.instances | map(attribute='tags.consul_server') | list | join('\n') }}"
         docker_engine: "{{ instance_info.instances | map(attribute='tags.docker_engine') | list | join('\n') }}"
         node_exporter: "{{ instance_info.instances | map(attribute='tags.node_exporter') | list | join('\n') }}"
-        role: "{{ instance_info.instances | map(attribute='tags.role') | list | join('\n') }}"
+#        role: "{{ instance_info.instances | map(attribute='tags.role') | list | join('\n') }}"
         owner: "{{ instance_info.instances | map(attribute='tags.Owner') | list | join('\n') }}"
         environment_name: "{{ instance_info.instances | map(attribute='tags.Environment_Name') | list | join('\n') }}"
 
