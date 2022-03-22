@@ -1,6 +1,5 @@
 ---
-- include_tasks: install_consul.yml
-  name: Install and Configure Consul on servers
+#- include_tasks: install_consul.yml
+#  name: Install and Configure Consul on servers
 
 - include_tasks: register_consul_services.yml
-#  when: is_consul_monitored == true
