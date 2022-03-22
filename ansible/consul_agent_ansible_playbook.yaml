@@ -1,4 +1,4 @@
-- hosts: consul_server
+- hosts:
   remote_user: ubuntu
   become: yes
   become_user: root
