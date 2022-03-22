@@ -18,7 +18,7 @@
     dest: /etc/consul.d/prometheus_service.json
 
 - name: Register Node Exporter service
-  when: node_exporter == "true"
+  when: node_exporter == true
   copy:
     src: node_exporter_service.json
     dest: /etc/consul.d/node_exporter_service.json
