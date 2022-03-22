@@ -33,7 +33,7 @@
   when: consul_server == "false"
   copy:
     src: consul_agent_service.json
-    dest: /etc/consul.d/consul|_agent_service.json
+    dest: /etc/consul.d/consul_agent_service.json
 
 - name: Reload Consul service
   systemd:
