@@ -1,0 +1,10 @@
+- name: apply node_exporter installation on my servers
+  hosts: tag_Name_consul_server1
+  remote_user: ubuntu
+  become: yes
+  become_user: root
+  become_method: sudo
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  roles:
+    - prometheus
