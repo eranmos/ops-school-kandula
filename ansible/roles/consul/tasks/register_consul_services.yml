@@ -1,4 +1,10 @@
 ---
+- name: Register Jenkins Master service
+  when: service == "jenkins" and instance_type == "server"
+  copy:
+    src: jenkins_server_service.json
+    dest: /etc/consul.d/jenkins_server_service.json
+
 - name: Register Jenkins Slave service
   when: role == "jenkins-slave"
   copy:
