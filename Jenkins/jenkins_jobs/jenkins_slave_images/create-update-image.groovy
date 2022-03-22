@@ -9,7 +9,7 @@ properties([
                   'jenkins-slave-docker-centos7'],
         description: 'Please select the Jenkins docker Image that you would like to build'
         ),
-    string(name: 'IMAGE_TAG', trim: true, defaultValue: '', description: 'Set image tag for new jenkins slave for example, stable-1.0.0'),
+    string(name: 'IMAGE_TAG', trim: true, defaultValue: '1', description: 'Set image tag for new jenkins slave for example, stable-1.0.0'),
     ])
 ])
 
