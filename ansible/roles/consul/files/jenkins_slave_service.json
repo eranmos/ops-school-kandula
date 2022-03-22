@@ -3,13 +3,13 @@
     {
       "name": "jenkins-server",
       "tags": [
-        "CICD"
+        "jenkins-slave"
       ],
-      "port": 8080,
+      "port": 22,
       "checks": [
         {
-          "name": "tcp-8080",
-          "tcp": "localhost:8080",
+          "name": "tcp-22",
+          "tcp": "localhost:22",
           "interval": "5s",
           "timeout": "10s"
         }
