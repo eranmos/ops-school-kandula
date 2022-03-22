@@ -14,6 +14,11 @@ variable "aws_region" {
 }
 
 #############  Consul Server  #######
+variable "consul_server_name" {
+  description = "The of the Jenkins-slave instance"
+  type        = string
+}
+
 variable "key_name" {
   description = "The key name of the Key Pair to use for the instance"
   type        = string
@@ -39,6 +44,11 @@ variable "consul_server" {
 }
 
 #############  Elasticsearch Server  #######
+variable "elasticsearch_server_name" {
+  description = "The of the Jenkins-slave instance"
+  type        = string
+}
+
 
 variable "elasticsearch_instance_type" {
   description = "The type of the ec2, for example - t2.medium"
@@ -60,6 +70,11 @@ variable "elasticsearch_node" {
 }
 
 #############  Prometheus Server  #######
+variable "prometheus_server_name" {
+  description = "The of the Jenkins-slave instance"
+  type        = string
+}
+
 variable "prometheus_instances_count" {
   description = "numbers of consul servers"
 }

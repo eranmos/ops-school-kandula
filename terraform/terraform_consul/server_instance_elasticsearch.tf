@@ -23,7 +23,7 @@ resource "aws_instance" "elasticsearch_server" {
     delete_on_termination     = var.ebs_root_delete_on_termination
 
     tags = {
-      Name                              = "elasticsearch_${count.index+1}"
+      Name                              = "${var.elasticsearch_server_name}_${count.index+1}"
       Owner                             = local.eran_tags.owner
       Environment_Name                  = local.eran_tags.environment_name
       Project_Name                      = local.eran_tags.project_name
@@ -34,12 +34,13 @@ resource "aws_instance" "elasticsearch_server" {
   }
 
   tags = {
-    Name                              = "elasticsearch_${count.index+1}"
+    Name                              = "${var.elasticsearch_server_name}_${count.index+1}"
     consul_server                     = false
     docker_engine                     = var.docker_engine
     node_exporter                     = var.node_exporter
     elasticsearch_master              = var.elasticsearch_master
     elasticsearch_node                = var.elasticsearch_node
+    role                              = var.elasticsearch_server_name
     Owner                             = local.eran_tags.owner
     Environment_Name                  = local.eran_tags.environment_name
     Project_Name                      = local.eran_tags.project_name

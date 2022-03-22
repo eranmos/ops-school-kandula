@@ -23,7 +23,7 @@ resource "aws_instance" "prometheus_server" {
     delete_on_termination     = var.ebs_root_delete_on_termination
 
     tags = {
-      Name                              = "prometheus_${count.index+1}"
+      Name                              = "${var.prometheus_server_name}_${count.index+1}"
       Owner                             = local.eran_tags.owner
       Environment_Name                  = local.eran_tags.environment_name
       Project_Name                      = local.eran_tags.project_name
@@ -34,10 +34,11 @@ resource "aws_instance" "prometheus_server" {
   }
 
   tags = {
-    Name                              = "prometheus_${count.index+1}"
+    Name                              = "${var.prometheus_server_name}_${count.index+1}"
     consul_server                     = false
     docker_engine                     = var.docker_engine
     node_exporter                     = var.node_exporter
+    role                              = var.prometheus_server_name
     Owner                             = local.eran_tags.owner
     Environment_Name                  = local.eran_tags.environment_name
     Project_Name                      = local.eran_tags.project_name
