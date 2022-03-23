@@ -4,7 +4,7 @@ properties([
   ])
 ])
 def KUBECONFIG_VAR = "AWS-EKS-KANDULA-kubeconfig"
-def NAMESPACE = "kandula-development"
+def NAMESPACE = "monitoring"
 def DEPLOYMENT_NAME = "filebeat"
 
 pipeline {
@@ -34,7 +34,7 @@ pipeline {
                         configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
                             echo 'Going to Install/Upgrade Filebeat'
                             sh "kubectl get pods -o wide -n ${NAMESPACE}"
-                            sh "kubectl apply -f filebeat-k8s-config.yaml --namespace=${NAMESPACE}"
+                            sh "kubectl apply -f filebeat-k8s-config.yaml"
                             sh "sleep 10"
                             sh "kubectl get pods -o wide -n ${NAMESPACE}"
                             echo "Yoy successfully Installed Filebeat on your Env"
@@ -61,7 +61,7 @@ pipeline {
                         configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
                             echo 'Going to Uninstall Filebeat'
                             sh "kubectl get pods -o wide -n ${NAMESPACE}"
-                            sh "kubectl delete -f filebeat-k8s-config.yaml --namespace=${NAMESPACE}"
+                            sh "kubectl delete -f filebeat-k8s-config.yaml"
                             sh "sleep 10"
                             sh "kubectl get pods -o wide -n ${NAMESPACE}"
                             echo "Yoy successfully Uninstalled Filebeat on your Env"
