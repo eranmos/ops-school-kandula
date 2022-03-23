@@ -45,6 +45,12 @@ pipeline {
                     }
                 }
             }
+            post {
+                always {
+                    sh 'rm -rf /home/jenkins/.aws'
+                    sh 'rm -rf /home/jenkins/.kube'
+                }
+            }
         }
         stage('Uninstalling prometheus-stack') {
           when {
@@ -72,7 +78,6 @@ pipeline {
                 }
             }
         }
-
         stage('Show Deployments') {
             steps {
                 withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: "${KUBECONFIG_VAR}", variable: 'KUBECONFIG')]) {

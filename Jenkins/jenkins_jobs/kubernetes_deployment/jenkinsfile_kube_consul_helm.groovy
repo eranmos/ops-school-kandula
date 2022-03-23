@@ -1,6 +1,5 @@
 properties([
   parameters([
-    string(name: 'CHARTS_BRANCH', trim: true, defaultValue: 'master', description: 'charts branch'),
     choice(name: 'HELM',choices: ['upgrade', 'uninstall'],description: 'Helm Install Upgrade or Uninstall')
   ])
 ])
@@ -48,7 +47,6 @@ pipeline {
                 }
             }
         }
-
         stage('Show Deployments') {
             steps {
                 withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: "${KUBECONFIG_VAR}", variable: 'KUBECONFIG')]) {
