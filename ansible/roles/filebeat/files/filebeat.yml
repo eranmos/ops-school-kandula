@@ -12,7 +12,7 @@ filebeat.modules:
 filebeat.config.modules:
   path: ${path.config}/modules.d/*.yml
   reload.enabled: false
-setup.dashboards.enabled: false
+setup.dashboards.enabled: true
 setup.template.name: "filebeat"
 setup.template.pattern: "filebeat-*"
 setup.template.settings:
@@ -24,3 +24,8 @@ processors:
 output.elasticsearch:
   hosts: ["elasticsearch-1.kandula.int:9200"]
   index: "filebeat-%{[agent.version]}-%{[agent.name]}-%{+yyyy.MM.dd}"
+
+setup.kibana:
+  host: "elasticsearch-1.kandula.int:5601"
+  protocol: "http"
+  ssl.enabled: false

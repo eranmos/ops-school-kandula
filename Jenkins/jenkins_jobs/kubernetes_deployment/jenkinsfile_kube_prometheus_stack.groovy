@@ -24,7 +24,10 @@ pipeline {
     }
 
     stages {
-        stage('Deploy prometheus-stack') {
+        stage('Installing prometheus-stack') {
+           when {
+             expression { params.HELM == "upgrade" }
+           }
             steps {
                 dir ('helm-releases') {
                     withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: "${KUBECONFIG_VAR}", variable: 'KUBECONFIG')]) {
@@ -38,6 +41,25 @@ pipeline {
                             sh "kubectl rollout status deployment prometheus-stack-grafana -n ${NAMESPACE}"
                             sh "kubectl rollout status deployment prometheus-stack-kube-prom-operator -n ${NAMESPACE}"
                             sh "kubectl rollout status deployment prometheus-stack-kube-state-metrics -n ${NAMESPACE}"
+                            echo "Yoy successfully deployed kube-prometheus-stack on your Env"
+                        }
+                    }
+                }
+            }
+        stage('Uninstalling prometheus-stack') {
+          when {
+            expression { params.HELM == "uninstall" }
+          }
+            steps {
+                dir ('helm-releases') {
+                    withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: "${KUBECONFIG_VAR}", variable: 'KUBECONFIG')]) {
+                        sh 'mkdir /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
+                        sh 'mkdir /home/jenkins/.kube/ && cp \$KUBECONFIG /home/jenkins/.kube/config && chmod 640 /home/jenkins/.kube/config'
+                        configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
+                            echo 'Going to Uninstall helm chart'
+                            sh """helm uninstall ${DEPLOYMENT_NAME} --namespace=${NAMESPACE}"""
+                            sh "kubectl get pods -n ${NAMESPACE}"
+                            sh "kubectl get deployments -n ${NAMESPACE}"
                             echo "Yoy successfully deployed kube-prometheus-stack on your Env"
                         }
                     }
