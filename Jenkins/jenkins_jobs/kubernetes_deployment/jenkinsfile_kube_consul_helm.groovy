@@ -61,7 +61,7 @@ pipeline {
                         sh 'mkdir /home/jenkins/.kube/ && cp \$KUBECONFIG /home/jenkins/.kube/config && chmod 640 /home/jenkins/.kube/config'
                         configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
                             echo 'Going to Install Upgrade helm chart'
-                            sh """helm uninstall ${DEPLOYMENT_NAME} ./consul --namespace=${NAMESPACE}"""
+                            sh """helm uninstall ${DEPLOYMENT_NAME} --namespace=${NAMESPACE}"""
                             sh "kubectl get pods -n ${NAMESPACE}"
                             sh "kubectl get deployments -n ${NAMESPACE}"
                             echo "Yoy successfully Uninstalled consul on your Env"
