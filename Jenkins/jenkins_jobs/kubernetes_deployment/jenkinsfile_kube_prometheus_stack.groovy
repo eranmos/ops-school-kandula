@@ -46,6 +46,7 @@ pipeline {
                     }
                 }
             }
+        }
         stage('Uninstalling prometheus-stack') {
           when {
             expression { params.HELM == "uninstall" }
