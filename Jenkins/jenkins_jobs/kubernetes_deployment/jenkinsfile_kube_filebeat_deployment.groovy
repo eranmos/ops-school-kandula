@@ -3,7 +3,7 @@ properties([
     choice(name: 'HELM',choices: ['upgrade', 'uninstall'],description: 'Helm Install Upgrade or Uninstall')
   ])
 ])
-
+def KUBECONFIG_VAR = "AWS-EKS-KANDULA-kubeconfig"
 def NAMESPACE = "kandula-development"
 def DEPLOYMENT_NAME = "filebeat"
 
