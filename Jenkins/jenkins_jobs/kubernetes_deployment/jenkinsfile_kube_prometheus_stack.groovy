@@ -40,7 +40,7 @@ pipeline {
                             sh "kubectl rollout status deployment prometheus-stack-grafana -n ${NAMESPACE}"
                             sh "kubectl rollout status deployment prometheus-stack-kube-prom-operator -n ${NAMESPACE}"
                             sh "kubectl rollout status deployment prometheus-stack-kube-state-metrics -n ${NAMESPACE}"
-                            echo "Yoy successfully deployed kube-prometheus-stack on your Env"
+                            echo "Yoy successfully Installed kube-prometheus-stack on your Env"
                         }
                     }
                 }
@@ -66,7 +66,7 @@ pipeline {
                             sh """helm uninstall ${DEPLOYMENT_NAME} --namespace=${NAMESPACE}"""
                             sh "kubectl get pods -n ${NAMESPACE}"
                             sh "kubectl get deployments -n ${NAMESPACE}"
-                            echo "Yoy successfully deployed kube-prometheus-stack on your Env"
+                            echo "Yoy successfully Uninstalled kube-prometheus-stack on your Env"
                         }
                     }
                 }

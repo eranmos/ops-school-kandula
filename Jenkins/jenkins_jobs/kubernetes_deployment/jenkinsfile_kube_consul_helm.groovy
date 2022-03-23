@@ -23,7 +23,10 @@ pipeline {
     }
 
     stages {
-        stage('Deploy consul') {
+        stage('Install consul') {
+           when {
+             expression { params.HELM == "upgrade" }
+           }
             steps {
                 dir ('helm-releases') {
                     withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: "${KUBECONFIG_VAR}", variable: 'KUBECONFIG')]) {
@@ -35,7 +38,33 @@ pipeline {
                             sh "kubectl get pods -n ${NAMESPACE}"
                             sh "kubectl get deployments -n ${NAMESPACE}"
                             sh "kubectl rollout status deployment consul-consul-sync-catalog -n ${NAMESPACE}"
-                            echo "Yoy successfully deployed consul on your Env"
+                            echo "Yoy successfully Installed consul on your Env"
+                        }
+                    }
+                }
+            }
+            post {
+                always {
+                    sh 'rm -rf /home/jenkins/.aws'
+                    sh 'rm -rf /home/jenkins/.kube'
+                }
+            }
+        }
+        stage('Uninstall consul') {
+          when {
+            expression { params.HELM == "uninstall" }
+          }
+            steps {
+                dir ('helm-releases') {
+                    withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: "${KUBECONFIG_VAR}", variable: 'KUBECONFIG')]) {
+                        sh 'mkdir /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
+                        sh 'mkdir /home/jenkins/.kube/ && cp \$KUBECONFIG /home/jenkins/.kube/config && chmod 640 /home/jenkins/.kube/config'
+                        configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
+                            echo 'Going to Install Upgrade helm chart'
+                            sh """helm uninstall ${DEPLOYMENT_NAME} ./consul --namespace=${NAMESPACE}"""
+                            sh "kubectl get pods -n ${NAMESPACE}"
+                            sh "kubectl get deployments -n ${NAMESPACE}"
+                            echo "Yoy successfully Uninstalled consul on your Env"
                         }
                     }
                 }
