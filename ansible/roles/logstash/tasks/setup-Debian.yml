@@ -4,6 +4,7 @@
     name:
       - apt-transport-https
       - gnupg2
+      - default-jre
     state: present
 
 - name: Add Elasticsearch apt key.
