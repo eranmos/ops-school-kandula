@@ -22,7 +22,7 @@ ebs_root_volume_size           = "8"
 #############  Elasticsearch Server  #############
 elasticsearch_server_name     = "elasticsearch"
 elasticsearch_instances_count = "1"
-elasticsearch_instance_type   = "t3.medium"
+elasticsearch_instance_type   = "t3.large"
 ebs_availability_zone         = "us-east-1a"
 ebs_multi_attach_enabled      = "false"
 ebs_encrypted                 = "true"

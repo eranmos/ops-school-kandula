@@ -31,9 +31,10 @@
     src: elasticsearch.yml
     dest: /etc/elasticsearch/elasticsearch.yml
 
-- name: Configure Server hosts
-  shell: |
-    echo 'server.host: "0.0.0.0"' > /etc/kibana/kibana.yml
+- name: Copy Kibana config file
+  copy:
+    src: kibana.yml
+    dest: /etc/kibana/kibana.yml
 
 - name: Start Elasticsearch
   ansible.builtin.service:
