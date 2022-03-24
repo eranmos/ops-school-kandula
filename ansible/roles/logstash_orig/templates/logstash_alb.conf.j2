@@ -56,7 +56,7 @@ filter {
 
 
 output {
-  amazon_es {
+  elasticsearch {
     hosts => "http://elasticsearch-1.kandula.int:9200"
     index => "logstash-alb-b-%{+yyyy.MM.dd}"
     ssl => false

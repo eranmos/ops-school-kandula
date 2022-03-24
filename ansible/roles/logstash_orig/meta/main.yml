@@ -3,7 +3,7 @@ dependencies: []
 
 galaxy_info:
   role_name: logstash
-  author: Eran Moshayov
+  author: geerlingguy
   description: Logstash for Linux.
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
