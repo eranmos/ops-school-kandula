@@ -45,6 +45,14 @@ resource "aws_security_group" "elasticsearch_server" {
   }
 
   ingress {
+    description = "This is used by clients to talk to the HTTP API"
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     description = "DNS Interface Used to resolve DNS queries"
     from_port = 8600
     to_port = 8600
