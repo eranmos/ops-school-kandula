@@ -40,9 +40,11 @@
   ansible.builtin.service:
     name: elasticsearch
     state: started
+    enabled: true
 
 - name: Start Kibana
   ansible.builtin.service:
     name: kibana
     state: started
+    enabled: true
 
