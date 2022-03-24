@@ -57,9 +57,11 @@ filter {
 
 output {
   amazon_es {
-    hosts => "http://elasticsearch-1.kandula.int:9200"
+    hosts => "https://search-elasticsearch-205126-kandula-53jnypvpgjiceodfgs56eyldte.us-east-1.es.amazonaws.com:443"
     index => "logstash-alb-b-%{+yyyy.MM.dd}"
-    ssl => false
+    ssl => true
+    aws_access_key_id => ''
+    aws_secret_access_key => ''
   }
   stdout {
   codec => rubydebug
