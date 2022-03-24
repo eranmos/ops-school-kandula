@@ -28,6 +28,20 @@ resource "aws_route53_record" "elasticsearch_server" {
   }
 }
 
+# "A" name record for elasticsearch server
+resource "aws_route53_record" "kibana_server" {
+  zone_id     = data.aws_route53_zone.my_aws_registered_domain.id
+  name        = var.kibana_dns
+  type        = "A"
+
+  alias {
+    name                   = aws_lb.kibana.dns_name
+    zone_id                = aws_lb.kibana.zone_id
+    evaluate_target_health = true
+  }
+}
+
+
 # "A" name record for prometheus server
 resource "aws_route53_record" "prometheus_server" {
   zone_id     = data.aws_route53_zone.my_aws_registered_domain.id
