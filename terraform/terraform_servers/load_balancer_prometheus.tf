@@ -31,6 +31,22 @@ resource "aws_lb_listener" "prometheus" {
   }
 }
 
+resource "aws_lb_listener" "prometheus_80" {
+  load_balancer_arn = aws_lb.prometheus.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
 resource "aws_lb_target_group" "prometheus_server" {
   name      = "prometheus-server-group"
   port      = 9090

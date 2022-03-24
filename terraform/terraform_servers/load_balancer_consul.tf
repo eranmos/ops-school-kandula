@@ -31,6 +31,22 @@ resource "aws_lb_listener" "consul" {
   }
 }
 
+resource "aws_lb_listener" "consul_80" {
+  load_balancer_arn = aws_lb.consul.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
 resource "aws_lb_target_group" "consul-server" {
   name      = "consul-server-group"
   port      = 8500
