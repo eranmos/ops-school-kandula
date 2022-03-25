@@ -1,0 +1,19 @@
+{
+  "services": [
+    {
+      "name": "elasticsearch",
+      "tags": [
+        "elasticsearch"
+      ],
+      "port": 9200,
+      "checks": [
+        {
+          "name": "tcp-9200",
+          "tcp": "localhost:9200",
+          "interval": "5s",
+          "timeout": "10s"
+        }
+      ]
+    }
+  ]
+}

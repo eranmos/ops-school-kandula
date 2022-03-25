@@ -4,10 +4,25 @@ plugin: aws_ec2
 regions:
   - us-east-1
 
+filters:
+  tag:Project_Name: kandula
+
 keyed_groups:
   - key: tags
     prefix: tag
-  - prefix: instance_type
-    key: instance_type
-  - key: placement.region
-    prefix: aws_region
+  - key: tags.consul_server
+    perfix: consul server
+  - key: tags.node_exporter
+    prefix: node exporter
+  - key: tags.docker_engine
+    prefix: docker engine
+  - key: tags.Project_Name
+    prefix: Project Name
+  - key: tags.Owner
+    prefix: Owner
+  - key: tags.Environment_Name
+    prefix: Environment Name
+
+
+compose:
+  ansible_host: private_ip_address

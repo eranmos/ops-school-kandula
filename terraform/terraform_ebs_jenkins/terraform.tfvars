@@ -4,7 +4,7 @@ aws_cli_profile = "tr-tms"
 ## AWS account data
 aws_region      = "us-east-1"
 
-############# EBS Volume config #############
+############# Jenkins EBS Volume config #############
 ebs_encrypted                 = "true"
 ebs_volume_type               = "gp2"
 ebs_volume_size               = "16"

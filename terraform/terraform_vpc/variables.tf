@@ -52,6 +52,12 @@ variable "private_subnet2_address_space" {
   type        = string
 }
 
+#############  Route53 Related  ##########
+variable "private_hosted_zone_domain" {
+  description = "my aws private hosted zone "
+  type        = string
+}
+
 #############  Tags Related  #############
 
 variable "asset_owner" {

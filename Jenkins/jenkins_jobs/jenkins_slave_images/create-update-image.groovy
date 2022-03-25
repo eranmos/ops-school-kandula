@@ -9,7 +9,7 @@ properties([
                   'jenkins-slave-docker-centos7'],
         description: 'Please select the Jenkins docker Image that you would like to build'
         ),
-    string(name: 'IMAGE_TAG', trim: true, defaultValue: '', description: 'Set image tag for new jenkins slave for example, stable-1.0.0'),
+    string(name: 'IMAGE_TAG', trim: true, defaultValue: '1', description: 'Set image tag for new jenkins slave for example, stable-1.0.0'),
     ])
 ])
 
@@ -22,6 +22,7 @@ pipeline {
     environment{
         REGISTRY = "erandocker"
         REGISTRY_CREDENTIAL = 'dockerhub.erandocker'
+        BUILD_NUMBER = "${env.BUILD_NUMBER}"
     }
 
     options {
@@ -35,8 +36,8 @@ pipeline {
                 dir ("Jenkins/jenkins_jobs/jenkins_slave_images/${env.IMAGE_NAME}") {
                     sh "pwd"
                     sh "ls -la"
-                    sh "docker image build -t ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG} -f Dockerfile ."
-                    sh "docker tag ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG} ${REGISTRY}/${IMAGE_NAME}:latest"
+                    sh "docker image build -t ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}.$BUILD_NUMBER -f Dockerfile ."
+                    sh "docker tag ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}.$BUILD_NUMBER ${REGISTRY}/${IMAGE_NAME}:latest"
                 }
             }
         }
@@ -44,14 +45,14 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub.erandocker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh 'docker login -u $USERNAME -p $PASSWORD'
-                    sh 'docker push ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}'
+                    sh 'docker push ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}.$BUILD_NUMBER'
                     sh 'docker push ${REGISTRY}/${IMAGE_NAME}:latest'
                 }
             }
         }
         stage('Cleaning up Docker image') {
             steps {
-                sh "docker rmi ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
+                sh "docker rmi ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}.$BUILD_NUMBER"
                 sh "docker rmi ${REGISTRY}/${IMAGE_NAME}:latest"
             }
         }

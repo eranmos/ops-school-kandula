@@ -1,8 +1,40 @@
-- name: apply common server installation on all servers
-  hosts: tag_consul_server_false
+- hosts: tag_consul_server_false
   remote_user: ubuntu
   become: yes
   become_user: root
   become_method: sudo
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  pre_tasks:
+    - name: Install AWS Facts
+      apt:
+        name:
+          - python3-pip
+        update_cache: yes
+        state: present
+
+    - name: Install boto3 pip
+      pip:
+        name: boto3
+
+    - ec2_metadata_facts:
+    - ec2_instance_info:
+        instance_ids: "{{ ansible_ec2_instance_id }}"
+        region: "{{ ansible_ec2_placement_region }}"
+      register: instance_info
+
+    - name: Save Instance Info
+      set_fact:
+        server_name: "{{ instance_info.instances | map(attribute='tags.Name') | list | join('\n') }}"
+        consul_server: "{{ instance_info.instances | map(attribute='tags.consul_server') | list | join('\n') }}"
+        docker_engine: "{{ instance_info.instances | map(attribute='tags.docker_engine') | list | join('\n') }}"
+        node_exporter: "{{ instance_info.instances | map(attribute='tags.node_exporter') | list | join('\n') }}"
+        role: "{{ instance_info.instances | map(attribute='tags.role') | list | join('\n') }}"
+        owner: "{{ instance_info.instances | map(attribute='tags.Owner') | list | join('\n') }}"
+        environment_name: "{{ instance_info.instances | map(attribute='tags.Environment_Name') | list | join('\n') }}"
+
+# Installing Consul agent
   roles:
-    - consul
+    - role: consul
+

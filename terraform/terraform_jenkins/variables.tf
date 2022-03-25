@@ -36,7 +36,7 @@ variable "jenkins_master_ami" {
 
 variable "consul_server" {
   description = "The true of false value, if consul server need to be install value should be true"
-  type        = string
+  type        = bool
 }
 
 variable "docker_engine" {
@@ -124,6 +124,11 @@ variable "aws_registered_domains" {
 
 variable "jenkins_dns" {
   description = "my aws registered domains "
+  type        = string
+}
+
+variable "private_hosted_zone_domain" {
+  description = "my aws private hosted zone "
   type        = string
 }
 

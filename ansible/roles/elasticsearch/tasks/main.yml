@@ -1,0 +1,50 @@
+---
+
+- name: Create a data directory to elasticsearch if it does not exist
+  ansible.builtin.file:
+    path: /data/elasticsearch_data
+    state: directory
+    owner: elasticsearch
+    group: elasticsearch
+    mode: '0755'
+
+- name: Download Elasticsearch
+  get_url:
+    url: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-7.10.2-amd64.deb
+    dest: /home/ubuntu/elasticsearch-oss-7.10.2-amd64.deb
+
+- name: Download Kibana
+  get_url:
+    url: https://artifacts.elastic.co/downloads/kibana/kibana-oss-7.10.2-amd64.deb
+    dest: /home/ubuntu/kibana-oss-7.10.2-amd64.deb
+
+- name: Install Elasticsearch
+  apt:
+    deb: /home/ubuntu/elasticsearch-oss-7.10.2-amd64.deb
+
+- name: Install Kibana
+  apt:
+    deb: /home/ubuntu/kibana-oss-7.10.2-amd64.deb
+
+- name: Copy Elasticsearch config file
+  copy:
+    src: elasticsearch.yml
+    dest: /etc/elasticsearch/elasticsearch.yml
+
+- name: Copy Kibana config file
+  copy:
+    src: kibana.yml
+    dest: /etc/kibana/kibana.yml
+
+- name: Start Elasticsearch
+  ansible.builtin.service:
+    name: elasticsearch
+    state: started
+    enabled: true
+
+- name: Start Kibana
+  ansible.builtin.service:
+    name: kibana
+    state: started
+    enabled: true
+

@@ -4,11 +4,12 @@
 locals {
 
   jenkins_server = {
-    jenkins_default_name = "jenkins"
-    jenkins_home         = "/home/ubuntu/jenkins_home"
-    jenkins_home_mount   = "/data/jenkins_home:/var/jenkins_home"
-    docker_sock_mount    = "/var/run/docker.sock:/var/run/docker.sock"
-    java_opts            = "JAVA_OPTS='-Djenkins.install.runSetupWizard=false'"
+    jenkins_default_name  = "jenkins"
+    jenkins_home          = "/home/ubuntu/jenkins_home"
+    jenkins_home_mount    = "/data/jenkins_home:/var/jenkins_home"
+    jenkins_backup_mount  = "/data/backup:/data/backup"
+    docker_sock_mount     = "/var/run/docker.sock:/var/run/docker.sock"
+    java_opts             = "JAVA_OPTS='-Djenkins.install.runSetupWizard=false'"
   }
 
   refinitiv_tags = {

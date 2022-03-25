@@ -1,0 +1,19 @@
+{
+  "services": [
+    {
+      "name": "jenkins-slave",
+      "tags": [
+        "jenkins-slave"
+      ],
+      "port": 22,
+      "checks": [
+        {
+          "name": "tcp-22",
+          "tcp": "localhost:22",
+          "interval": "5s",
+          "timeout": "10s"
+        }
+      ]
+    }
+  ]
+}

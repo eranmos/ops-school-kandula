@@ -1,7 +1,6 @@
 properties([
   parameters([
-    booleanParam(name: 'Deploy_In_Prod_Kandula', defaultValue: false, description: 'Check this box to deploy Knadula app on Prod'),
-    booleanParam(name: 'Deploy_In_Prod_LB', defaultValue: false, description: 'Check this box to deploy Knadula app on Prod'),
+    choice(name: 'HELM',choices: ['upgrade', 'uninstall'],description: 'Helm Install Upgrade or Uninstall')
     ])
 ])
 
@@ -68,7 +67,10 @@ pipeline {
                 }
             }
         }
-        stage('Deploying Kandula on EKS prod') {
+        stage('Installing Kandula on EKS prod') {
+            when {
+                 expression { params.HELM == "upgrade" }
+            }
             steps {
                 withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: "${KUBECONFIG_VAR}", variable: 'KUBECONFIG')]) {
                     sh 'mkdir /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
@@ -77,6 +79,29 @@ pipeline {
                         sh "kubectl get nodes -o wide"
                         sh "kubectl get pods -o wide -n kandula-development"
                         sh "kubectl apply -f kalandula_app.yaml --namespace=kandula-development"
+                        sh "sleep 10"
+                        sh "kubectl get pods -o wide -n kandula-development"
+                    }
+                }
+            }
+            post {
+                always {
+                    sh 'rm -rf /home/jenkins/.aws'
+                    sh 'rm -rf /home/jenkins/.kube'
+                }
+            }
+        }
+        stage('Uninstalling Kandula on EKS prod') {
+            when {
+                expression { params.HELM == "uninstall" }
+          }
+            steps {
+                withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: "${KUBECONFIG_VAR}", variable: 'KUBECONFIG')]) {
+                    sh 'mkdir /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
+                    sh 'mkdir /home/jenkins/.kube/ && cp \$KUBECONFIG /home/jenkins/.kube/config && chmod 640 /home/jenkins/.kube/config'
+                    configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
+                        sh "kubectl get pods -o wide -n kandula-development"
+                        sh "kubectl delete -f kalandula_app.yaml --namespace=kandula-development"
                         sh "sleep 10"
                         sh "kubectl get pods -o wide -n kandula-development"
                     }
@@ -111,7 +136,10 @@ pipeline {
             }
         }
 
-        stage('Deploying LB in EKS Prod') {
+        stage('Installing LB in EKS Prod') {
+            when {
+                 expression { params.HELM == "upgrade" }
+            }
             steps {
                 withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: "${KUBECONFIG_VAR}", variable: 'KUBECONFIG')]) {
                     sh 'mkdir /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
@@ -121,6 +149,29 @@ pipeline {
                         sh "ls -laht"
                         sh "kubectl get services -o wide -n kandula-development"
                         sh "kubectl apply -f kandula_lb.yaml --namespace=kandula-development"
+                        sh "sleep 20"
+                        sh "kubectl get services -o wide -n kandula-development"
+                    }
+                }
+            }
+            post {
+                always {
+                    sh 'rm -rf /home/jenkins/.aws'
+                    sh 'rm -rf /home/jenkins/.kube'
+                }
+            }
+        }
+        stage('Uninstalling LB in EKS Prod') {
+            when {
+                expression { params.HELM == "uninstall" }
+          }
+            steps {
+                withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: "${KUBECONFIG_VAR}", variable: 'KUBECONFIG')]) {
+                    sh 'mkdir /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
+                    sh 'mkdir /home/jenkins/.kube/ && cp \$KUBECONFIG /home/jenkins/.kube/config && chmod 640 /home/jenkins/.kube/config'
+                    configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
+                        sh "kubectl get services -o wide -n kandula-development"
+                        sh "kubectl delete -f kandula_lb.yaml --namespace=kandula-development"
                         sh "sleep 20"
                         sh "kubectl get services -o wide -n kandula-development"
                     }

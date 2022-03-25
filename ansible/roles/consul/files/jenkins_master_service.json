@@ -1,0 +1,19 @@
+{
+  "services": [
+    {
+      "name": "jenkins-master",
+      "tags": [
+        "jenkins-master"
+      ],
+      "port": 8080,
+      "checks": [
+        {
+          "name": "tcp-8080",
+          "tcp": "localhost:8080",
+          "interval": "5s",
+          "timeout": "10s"
+        }
+      ]
+    }
+  ]
+}
