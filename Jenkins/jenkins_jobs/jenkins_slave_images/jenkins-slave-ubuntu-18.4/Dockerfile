@@ -47,8 +47,9 @@ RUN apt-get update && \
     wget https://github.com/aquasecurity/trivy/releases/download/v0.22.0/trivy_0.22.0_Linux-64bit.deb && \
     dpkg -i trivy_0.22.0_Linux-64bit.deb && \
 ## Install TFSWITCH (Terraform Switch)
-    curl -L https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | bash && \
-    CUSTOMBIN=/usr/local/bin/tfswitch && \
+    wget https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh && chmod 755 install.sh && \
+    ./install.sh -b /usr/local/bin/  && \
+    CUSTOMBIN=/usr/local/bin/ && \
     export PATH=$PATH:$CUSTOMBIN && \
     $CUSTOMBIN/tfswitch -b $CUSTOMBIN/terraform 0.11.7 && \
     terraform -v && \
