@@ -48,7 +48,7 @@ RUN apt-get update && \
     dpkg -i trivy_0.22.0_Linux-64bit.deb && \
 ## Install TFSWITCH (Terraform Switch)
     wget https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh && chmod 755 install.sh && \
-    ./install.sh -b /usr/local/bin/  && \
+    ./install.sh -b /home/jenkins/bin  && \
     CUSTOMBIN=/usr/local/bin/ && \
     export PATH=$PATH:$CUSTOMBIN && \
     $CUSTOMBIN/tfswitch -b $CUSTOMBIN/terraform 0.11.7 && \
