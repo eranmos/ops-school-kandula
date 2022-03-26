@@ -51,7 +51,7 @@ RUN apt-get update && \
     ./install.sh -b /home/jenkins/bin  && \
     CUSTOMBIN=/usr/local/bin/ && \
     export PATH=$PATH:$CUSTOMBIN && \
-    $CUSTOMBIN/tfswitch -b $CUSTOMBIN/terraform 0.11.7 && \
+    $CUSTOMBIN/tfswitch -b $CUSTOMBIN/terraform 1.1.7 && \
     terraform -v && \
 # Cleanup old packages
     apt-get -qy autoremove && \
