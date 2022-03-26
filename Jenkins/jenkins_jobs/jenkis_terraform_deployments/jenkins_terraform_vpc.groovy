@@ -34,7 +34,6 @@ pipeline {
                             sh '$CUSTOMBIN/tfswitch -b $CUSTOMBIN/terraform 1.1.7'
                             sh 'terraform -v'
                             echo "Yoy successfully run terraform plan to see your changes via terraform"
-                    }
                 }
             }
         }
