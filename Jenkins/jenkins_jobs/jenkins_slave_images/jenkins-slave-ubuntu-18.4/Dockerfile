@@ -46,9 +46,8 @@ RUN apt-get update && \
 ## Install Trivy (Vulnerability Tool)
     wget https://github.com/aquasecurity/trivy/releases/download/v0.22.0/trivy_0.22.0_Linux-64bit.deb && \
     dpkg -i trivy_0.22.0_Linux-64bit.deb && \
-
 ## Install TFSWITCH (Terraform Switch)
-    curl -L https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | bash
+    curl -L https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | bash && \
 # Cleanup old packages
     apt-get -qy autoremove && \
 # Add user jenkins to the image
