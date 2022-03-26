@@ -30,7 +30,7 @@ jenkins_slave_ami             = "ami-00ddb0e5626798373"
 ubuntu_account_number         = "099720109477"
 
 #EBS ROOT Volume config
-ebs_root_volume_size_jenkins_slave = "16"
+ebs_root_volume_size_jenkins_slave = "30"
 
 #############  Route53  #####################
 aws_registered_domains      = "kandula.click"
