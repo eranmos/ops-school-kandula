@@ -28,7 +28,7 @@ pipeline {
                 dir ('terraform/terraform_vpc') {
                             echo 'Going to run terraform plan to see that changes that you done'
                             sh """wget https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh && chmod 755 install.sh"""
-                            sh """./install.sh -b $(pwd)/.bin"""
+                            sh './install.sh -b $(pwd)/.bin'
                             sh """CUSTOMBIN=$(pwd)/.bin"""
                             sh """export PATH=$CUSTOMBIN:$PATH"""
                             sh """$CUSTOMBIN/tfswitch -b $CUSTOMBIN/terraform 1.1.7"""
