@@ -31,7 +31,7 @@ pipeline {
                 dir ('terraform/terraform_vpc') {
                     withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: 'jenkins.github.ssh.private', variable: 'SSHKEY')]) {
                         sh 'mkdir /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
-                        sh 'cp \$SSHKEY /home/jenkins/.SSH/id_ed25519.pub && chmod 600 /home/jenkins/.SSH/id_ed25519.pub'
+                        sh 'mkdir -p /home/jenkins/.ssh/ && cp \$SSHKEY /home/jenkins/.ssh/id_ed25519.pub && chmod 600 /home/jenkins/.ssh/id_ed25519.pub'
                         configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
                             echo 'Going to run terraform plan to see that changes that you done'
                             sh """tfswitch"""
