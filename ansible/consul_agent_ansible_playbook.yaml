@@ -36,5 +36,5 @@
 
 # Installing Consul agent
   roles:
-    - role: consul
+    - role: consul_agent
 
