@@ -34,6 +34,7 @@ pipeline {
                         sh 'mkdir /home/jenkins/.kube/ && cp \$KUBECONFIG /home/jenkins/.kube/config && chmod 640 /home/jenkins/.kube/config'
                         configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
                             echo 'Going to run terraform plan to see that changes that you done'
+                            sh """terraform init"""
                             sh """terraform apply -auto-approve -no-color"""
                             echo "Yoy successfully run terraform plan to see your changes via terraform"
                         }
