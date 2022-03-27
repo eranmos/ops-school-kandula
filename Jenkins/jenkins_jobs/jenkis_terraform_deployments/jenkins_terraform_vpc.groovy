@@ -37,6 +37,7 @@ pipeline {
                         sh """terraform init"""
                         sh """terraform apply -auto-approve -no-color"""
                         echo "Yoy successfully run terraform plan to see your changes via terraform"
+                    }
                 }
             }
             post {
