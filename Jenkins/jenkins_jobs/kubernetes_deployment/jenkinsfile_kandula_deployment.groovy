@@ -128,8 +128,8 @@ pipeline {
                     app: kandula-app
                   type: LoadBalancer
                   ports:
-                    - name: http
-                      port: 80
+                    - name: https
+                      port: 443
                       targetPort: 5000
                       protocol: TCP
                 """
