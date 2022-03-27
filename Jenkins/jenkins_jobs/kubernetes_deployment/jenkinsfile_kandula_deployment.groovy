@@ -136,9 +136,6 @@ pipeline {
                       port: 443
                       targetPort: 5000
                       protocol: TCP
-                    - name: prometheus
-                          port: 9100
-                          targetPort: 9100
                 """
             }
         }
