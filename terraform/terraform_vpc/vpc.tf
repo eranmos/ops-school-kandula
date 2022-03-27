@@ -3,7 +3,7 @@
 #############
 
 module "vpc" {
-  source = "git@github.com:eranmos/ops-school-terraform-aws-vpc.git"
+  source = "github.com/eranmos/ops-school-terraform-aws-vpc"
 
   name                      = "${local.eran_tags.environment_name}-vpc"
   azs                       = [var.availablity_zone_a, var.availablity_zone_b]
