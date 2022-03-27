@@ -13,6 +13,9 @@ pipeline {
     agent {
         label 'docker-ubuntu'
     }
+    tools {
+        terraform "Terraform_1.1.2"
+      }
 
     options {
         ansiColor('xterm')
@@ -33,7 +36,7 @@ pipeline {
                         sh 'mkdir /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
                         sh 'mkdir -p /home/jenkins/.ssh/ && cp \$SSHKEY /home/jenkins/.ssh/id_ed25519 && chmod 600 /home/jenkins/.ssh/id_ed25519'
                         echo 'Going to run terraform plan to see that changes that you done'
-                        sh """tfswitch"""
+                        sh """terraform -version"""
                         sh """terraform init"""
                         sh """terraform apply -auto-approve -no-color"""
                         echo "Yoy successfully run terraform plan to see your changes via terraform"
