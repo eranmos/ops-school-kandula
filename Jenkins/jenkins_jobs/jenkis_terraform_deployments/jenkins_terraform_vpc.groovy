@@ -35,9 +35,9 @@ pipeline {
                     withCredentials([file(credentialsId: 'terraform.credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: 'terraform.config', variable: 'CONFIG')]) {
                         sh 'mkdir -p /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
                         sh 'cp \$CONFIG /home/jenkins/.aws/config && chmod 640 /home/jenkins/.aws/config'
-                        echo 'Going to run terraform plan to see that changes that you done'
                         sh """terraform -version"""
                         sh """terraform init"""
+                        echo 'Going to run terraform plan to see that changes that you done'
                         sh """terraform plan"""
                         echo "Yoy successfully run terraform plan to see your changes via terraform"
                     }
@@ -58,6 +58,8 @@ pipeline {
                     withCredentials([file(credentialsId: 'terraform.credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: 'terraform.config', variable: 'CONFIG')]) {
                         sh 'mkdir -p /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
                         sh 'cp \$CONFIG /home/jenkins/.aws/config && chmod 640 /home/jenkins/.aws/config'
+                        sh """terraform -version"""
+                        sh """terraform init"""
                         echo 'Going to run terraform apply!'
                         sh """terraform apply -auto-approve -no-color"""
                         echo "Yoy successfully apply your changes via terraform"
@@ -79,6 +81,8 @@ pipeline {
                     withCredentials([file(credentialsId: 'terraform.credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: 'terraform.config', variable: 'CONFIG')]) {
                         sh 'mkdir -p /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
                         sh 'cp \$CONFIG /home/jenkins/.aws/config && chmod 640 /home/jenkins/.aws/config'
+                        sh """terraform -version"""
+                        sh """terraform init"""
                         echo 'Going to run terraform Destroy!!!'
                         sh """terraform destroy -auto-approve -no-color"""
                         echo "Yoy successfully destroy your changes via terraform"
