@@ -65,6 +65,11 @@ RUN apt-get update && \
 
 # Copy authorized keys
 COPY .ssh/authorized_keys /home/jenkins/.ssh/authorized_keys
+# Copy public key
+COPY .ssh/id_ed25519.pub /home/jenkins/.ssh/id_ed25519.pub
+# Copy private key
+COPY .ssh/id_ed25519 /home/jenkins/.ssh/id_ed25519
+
 ## Add Ansible config files
 ADD --chown=jenkins:jenkins ./conf/.ansible/ansible.cfg /etc/ansible/
 ## Add inventory  files
