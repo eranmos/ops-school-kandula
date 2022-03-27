@@ -27,7 +27,7 @@ pipeline {
              expression { params.TERRAFORM == "plan" }
            }
             steps {
-                dir ('terraform/terraform_vpc') {
+                dir ('terraform/terraform_jenkins') {
                     withCredentials([file(credentialsId: 'terraform.credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: 'terraform.config', variable: 'CONFIG')]) {
                         sh 'mkdir -p /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
                         sh 'cp \$CONFIG /home/jenkins/.aws/config && chmod 640 /home/jenkins/.aws/config'
@@ -50,7 +50,7 @@ pipeline {
             expression { params.TERRAFORM == "apply" }
           }
             steps {
-                dir ('terraform/terraform_vpc') {
+                dir ('terraform/terraform_jenkins') {
                     withCredentials([file(credentialsId: 'terraform.credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: 'terraform.config', variable: 'CONFIG')]) {
                         sh 'mkdir -p /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
                         sh 'cp \$CONFIG /home/jenkins/.aws/config && chmod 640 /home/jenkins/.aws/config'
@@ -69,11 +69,11 @@ pipeline {
             }
         }
         stage('Terraform destroy') {
-            when {
+          when {
             expression { params.TERRAFORM == "destroy" }
           }
             steps {
-                dir ('terraform/terraform_vpc') {
+                dir ('terraform/terraform_jenkins') {
                     withCredentials([file(credentialsId: 'terraform.credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: 'terraform.config', variable: 'CONFIG')]) {
                         sh 'mkdir -p /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
                         sh 'cp \$CONFIG /home/jenkins/.aws/config && chmod 640 /home/jenkins/.aws/config'
