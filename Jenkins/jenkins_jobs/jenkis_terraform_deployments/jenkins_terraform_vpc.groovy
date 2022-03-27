@@ -55,14 +55,12 @@ pipeline {
           }
             steps {
                 dir ('terraform/terraform_vpc') {
-                    withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: "${KUBECONFIG_VAR}", variable: 'KUBECONFIG')]) {
-                        sh 'mkdir /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
-                        sh 'mkdir /home/jenkins/.kube/ && cp \$KUBECONFIG /home/jenkins/.kube/config && chmod 640 /home/jenkins/.kube/config'
-                        configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
-                            echo 'Going to run terraform apply!'
-                            sh """terraform apply -auto-approve -no-color"""
-                            echo "Yoy successfully apply your changes via terraform"
-                        }
+                    withCredentials([file(credentialsId: 'terraform.credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: 'terraform.config', variable: 'CONFIG')]) {
+                        sh 'mkdir -p /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
+                        sh 'cp \$CONFIG /home/jenkins/.aws/config && chmod 640 /home/jenkins/.aws/config'
+                        echo 'Going to run terraform apply!'
+                        sh """terraform apply -auto-approve -no-color"""
+                        echo "Yoy successfully apply your changes via terraform"
                     }
                 }
             }
@@ -78,21 +76,18 @@ pipeline {
           }
             steps {
                 dir ('terraform/terraform_vpc') {
-                    withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: "${KUBECONFIG_VAR}", variable: 'KUBECONFIG')]) {
-                        sh 'mkdir /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
-                        sh 'mkdir /home/jenkins/.kube/ && cp \$KUBECONFIG /home/jenkins/.kube/config && chmod 640 /home/jenkins/.kube/config'
-                        configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
-                            echo 'Going to run terraform Destroy!!!'
-                            sh """terraform destroy -auto-approve -no-color"""
-                            echo "Yoy successfully destroy your changes via terraform"
-                        }
+                    withCredentials([file(credentialsId: 'terraform.credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: 'terraform.config', variable: 'CONFIG')]) {
+                        sh 'mkdir -p /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
+                        sh 'cp \$CONFIG /home/jenkins/.aws/config && chmod 640 /home/jenkins/.aws/config'
+                        echo 'Going to run terraform Destroy!!!'
+                        sh """terraform destroy -auto-approve -no-color"""
+                        echo "Yoy successfully destroy your changes via terraform"
                     }
                 }
             }
             post {
                 always {
                     sh 'rm -rf /home/jenkins/.aws'
-                    sh 'rm -rf /home/jenkins/.kube'
                 }
             }
         }
