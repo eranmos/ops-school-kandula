@@ -35,6 +35,7 @@ pipeline {
                         configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
                             echo 'Going to run terraform plan to see that changes that you done'
                             sh """tfswitch"""
+                            sleep 8000
                             sh """terraform init"""
                             sh """terraform apply -auto-approve -no-color"""
                             echo "Yoy successfully run terraform plan to see your changes via terraform"
