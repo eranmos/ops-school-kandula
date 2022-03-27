@@ -9,9 +9,6 @@ pipeline {
     agent {
         label 'docker-ubuntu'
     }
-    tools {
-        terraform "Terraform_1.1.2"
-      }
 
     options {
         ansiColor('xterm')
@@ -24,12 +21,12 @@ pipeline {
     stages {
         stage('Creating VPC for Kandula') {
             steps {
-            build job:'terraform-vpc', parameters: [string(name: 'TERRAFORM',choices: ['plan', 'apply', 'destroy'],description: 'Terraform: plan, apply or destroy')]
+            build job:'terraform-vpc', parameters: [choice(name: 'TERRAFORM',choices: ['plan', 'apply', 'destroy'],description: 'Terraform: plan, apply or destroy')]
             }
         }
         stage('Creating Jenkins Servers') {
             steps {
-            build job:'terraform-vpc', parameters: [string(name: 'TERRAFORM',choices: ['plan', 'apply', 'destroy'],description: 'Terraform: plan, apply or destroy')]
+            build job:'terraform-vpc', parameters: [choice(name: 'TERRAFORM',choices: ['plan', 'apply', 'destroy'],description: 'Terraform: plan, apply or destroy')]
             }
         }
     }
