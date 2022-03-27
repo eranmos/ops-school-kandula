@@ -46,7 +46,6 @@ pipeline {
             post {
                 always {
                     sh 'rm -rf /home/jenkins/.aws'
-                    sh 'rm -rf /home/jenkins/.kube'
                 }
             }
         }
@@ -70,7 +69,6 @@ pipeline {
             post {
                 always {
                     sh 'rm -rf /home/jenkins/.aws'
-                    sh 'rm -rf /home/jenkins/.kube'
                 }
             }
         }
