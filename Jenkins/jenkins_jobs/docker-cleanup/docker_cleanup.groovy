@@ -20,14 +20,12 @@ pipeline {
     }
 
     stages {
-
         stage("Docker Nightly") {
             when { triggeredBy 'TimerTrigger' }
             steps {
                 sh "docker container prune -f && docker image prune -f"
             }
         }
-
         stage("Docker User Cleanup") {
             when{ environment name: 'FullCleanup', value: 'true' }
             steps {
@@ -35,7 +33,22 @@ pipeline {
                 sh "docker system prune -f"
             }
         }
+    }
 
+ post {
+        success {
+            slackSend(
+                color: 'good',
+                message: "SUCCESSFUL: Job ${env.JOB_NAME} - #${env.BUILD_NUMBER} - (<${env.BUILD_URL}|Open>)"
+            )
+        }
+        failure {
+            echo "BUILD FAILED \u274C"
+            slackSend(
+                color: 'danger',
+                message: "FAILED: Job ${env.JOB_NAME} - #${env.BUILD_NUMBER} - (<${env.BUILD_URL}|Open>)"
+            )
+        }
     }
 
 }
