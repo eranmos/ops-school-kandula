@@ -32,9 +32,9 @@ pipeline {
            }
             steps {
                 dir ('terraform/terraform_vpc') {
-                    withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: 'jenkins.github.ssh.private', variable: 'SSHKEY')]) {
-                        sh 'mkdir /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
-                        sh 'mkdir -p /home/jenkins/.ssh/ && cp \$SSHKEY /home/jenkins/.ssh/id_ed25519 && chmod 600 /home/jenkins/.ssh/id_ed25519'
+                    withCredentials([file(credentialsId: 'terraform.credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: 'terraform.config', variable: 'CONFIG')]) {
+                        sh 'mkdir -p /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
+                        sh 'cp \$CONFIG /home/jenkins/.aws/config && chmod 640 /home/jenkins/.aws/config'
                         echo 'Going to run terraform plan to see that changes that you done'
                         sh """terraform -version"""
                         sh """terraform init"""
