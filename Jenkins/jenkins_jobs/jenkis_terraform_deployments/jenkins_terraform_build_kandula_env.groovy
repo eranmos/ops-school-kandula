@@ -21,12 +21,12 @@ pipeline {
     stages {
         stage('Creating VPC for Kandula') {
             steps {
-            build job:'terraform-vpc', parameters: [choice(name: 'TERRAFORM', value: params.TERRAFORM)]
+            build job:'terraform-vpc', parameters: [string(name: 'TERRAFORM', value: params.TERRAFORM)]
             }
         }
         stage('Creating Jenkins Servers') {
             steps {
-            build job:'terraform-jenkins', parameters: [choice(name: 'TERRAFORM', value: params.TERRAFORM) ]
+            build job:'terraform-jenkins', parameters: [string(name: 'TERRAFORM', value: params.TERRAFORM) ]
             }
         }
     }
