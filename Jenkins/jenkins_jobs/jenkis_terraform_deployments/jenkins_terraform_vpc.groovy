@@ -32,14 +32,11 @@ pipeline {
                     withCredentials([file(credentialsId: 'AWS-KANDULA-Credentials', variable: 'CREDENTIALSFILE'), file(credentialsId: 'jenkins.github.ssh.private', variable: 'SSHKEY')]) {
                         sh 'mkdir /home/jenkins/.aws/ && cp \$CREDENTIALSFILE /home/jenkins/.aws/credentials && chmod 640 /home/jenkins/.aws/credentials'
                         sh 'mkdir -p /home/jenkins/.ssh/ && cp \$SSHKEY /home/jenkins/.ssh/id_ed25519 && chmod 600 /home/jenkins/.ssh/id_ed25519'
-                        configFileProvider([configFile(fileId: 'AWS-KANDULA-config', targetLocation: '/home/jenkins/.aws/config')]) {
-                            echo 'Going to run terraform plan to see that changes that you done'
-                            sh """tfswitch"""
-                            sh """terraform init"""
-                            sh """terraform apply -auto-approve -no-color"""
-                            echo "Yoy successfully run terraform plan to see your changes via terraform"
-                        }
-                    }
+                        echo 'Going to run terraform plan to see that changes that you done'
+                        sh """tfswitch"""
+                        sh """terraform init"""
+                        sh """terraform apply -auto-approve -no-color"""
+                        echo "Yoy successfully run terraform plan to see your changes via terraform"
                 }
             }
             post {
