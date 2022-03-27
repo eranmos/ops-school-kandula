@@ -1,0 +1,19 @@
+{
+  "services": [
+    {
+      "name": "consul-agent",
+      "tags": [
+        "consul-agent"
+      ],
+      "port": 8500,
+      "checks": [
+        {
+          "name": "tcp-8500",
+          "tcp": "localhost:8500",
+          "interval": "5s",
+          "timeout": "10s"
+        }
+      ]
+    }
+  ]
+}

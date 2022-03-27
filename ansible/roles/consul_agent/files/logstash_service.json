@@ -1,0 +1,19 @@
+{
+  "services": [
+    {
+      "name": "logstash",
+      "tags": [
+        "logstash"
+      ],
+      "port": 9600,
+      "checks": [
+        {
+          "name": "tcp-9600",
+          "tcp": "localhost:9600",
+          "interval": "5s",
+          "timeout": "10s"
+        }
+      ]
+    }
+  ]
+}
