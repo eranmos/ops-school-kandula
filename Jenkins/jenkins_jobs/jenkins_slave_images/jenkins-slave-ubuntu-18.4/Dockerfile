@@ -46,13 +46,12 @@ RUN apt-get update && \
 ## Install Trivy (Vulnerability Tool)
     wget https://github.com/aquasecurity/trivy/releases/download/v0.22.0/trivy_0.22.0_Linux-64bit.deb && \
     dpkg -i trivy_0.22.0_Linux-64bit.deb && \
+## Install Terraform
+    curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - && \
+    apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" && \
+    apt-get update && apt-get install terraform && \
 ## Install TFSWITCH (Terraform Switch)
-    wget https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh && chmod 755 install.sh && \
-    ./install.sh -b /home/jenkins/bin  && \
-    CUSTOMBIN=/usr/local/bin/ && \
-    export PATH=$PATH:$CUSTOMBIN && \
-    $CUSTOMBIN/tfswitch -b $CUSTOMBIN/terraform 1.1.7 && \
-    terraform -v && \
+    curl -L https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | bash && \
 # Cleanup old packages
     apt-get -qy autoremove && \
 # Add user jenkins to the image
