@@ -1,6 +1,6 @@
 properties([
   parameters([
-    choice(name: 'TERRAFORM',choices: ['plan', 'apply', 'destroy'],description: 'Terraform: plan, apply or destroy')
+    choice(name: 'TERRAFORM',choices: ['plan', 'apply', 'destroy'],description: 'Please choose your Terraform desire task: plan, apply or destroy')
   ])
 ])
 
@@ -15,7 +15,7 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '25'))
         disableConcurrentBuilds()
         timestamps()
-        timeout(60)
+        timeout(180)
     }
 
     stages {
@@ -27,6 +27,21 @@ pipeline {
         stage('Creating Jenkins Servers') {
             steps {
             build job:'terraform-jenkins', parameters: [string(name: 'TERRAFORM', value: params.TERRAFORM) ]
+            }
+        }
+        stage('Creating servers') {
+            steps {
+            build job:'terraform-servers', parameters: [string(name: 'TERRAFORM', value: params.TERRAFORM) ]
+            }
+        }
+        stage('Creating Postgres DB') {
+            steps {
+            build job:'terraform-postgres', parameters: [string(name: 'TERRAFORM', value: params.TERRAFORM) ]
+            }
+        }
+        stage('Creating K8S Cluster') {
+            steps {
+            build job:'terraform-eks', parameters: [string(name: 'TERRAFORM', value: params.TERRAFORM) ]
             }
         }
     }
