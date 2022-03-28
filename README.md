@@ -79,14 +79,14 @@ All Ansible playbooks will be run via jenkins job (Ansible installed on the Jenk
    + [jenkins job link](https://jenkins.kandula.click/view/Ansible-Playbooks/job/ansible-playbook-all-apps/)
    
    
-4. Deploying below applications on EKS cluster:  Kandule Application & via Jenkins job.
+4. Deploying below applications on EKS cluster:
 + Kandula-Prometheus-Stack
 + Kandula App
 + Filebeat
 All EKS deployments will be run via Jenkins Job 
     + please run Jenkins Job: 
-    + [jenkins file location](Jenkins/jenkins_jobs/jenkins_kandula_deployment_eks/jenkins_kandula_deployment_eks.groovy)
-    + when done you can access Kandula GUI, Link to Kandula: 
+    + [jenkins file location](Jenkins/jenkins_jobs/kubernetes_deployment/jenkins_kube_all_deployment.groovy)
+    + [jenkins job link](https://jenkins.kandula.click/view/Kubernetes%20Deployment/job/Kandula-Deployment-All-EKS/)
 
 
 
