@@ -55,17 +55,20 @@ Infrastructure deployment will be performed via Terraform locally & Jenkins.
 + [Terraform Bastion Server](/terraform/terraform_bastion_server) - Creating Bastion server for debugging & maintenance
 > note: Bastion server - In order to avoid security issues we're recommending to destroy the machine or turn it off when not needed
 
-2. After deploying the infrastructure via terraform we will need to provision our servers via Ansible playbooks.
-All Ansible playbooks will be run via jenkins job ( Ansible installed on the Jenkins-slave).
-Jenkins UI : https://jenkins.eran.website/
 
-3. Installing Consul-server on three ec2 instances & Consul-agent on Jenkins-master & Jenkins-slave.
+1. Creating S3 Buckets for provisioning, monitoring, and Terraform state files.
+2. Creating EBS Storage for Jenkins Master.
+3. After deploying the infrastructure via terraform we will need to provision our servers via Ansible playbooks.
+All Ansible playbooks will be run via jenkins job ( Ansible installed on the Jenkins-slave docker image).
+Jenkins UI : https://jenkins.kandula.click/
+
+4. Installing Consul-server on three ec2 instances & Consul-agent on Jenkins-master & Jenkins-slave.
    + please run Jenkins job:
    + [jenkins file location](/Jenkins/jenkins_jobs/jenkins_ansible_playbooks/consul_agent_ansible_playbook.groovy)
    + [Ansible Playbooks & roles](/ansible)
    + when done you can access consul GUI and see all consul servers, agents and services, link: https://consul.eran.website/
 
-4. Deploying Kandule Application via Jenkins job.
+5. Deploying Kandule Application via Jenkins job.
     + please run Jenkins Job: 
     + [jenkins file location](Jenkins/jenkins_jobs/jenkins_kandula_deployment_eks/jenkins_kandula_deployment_eks.groovy)
     + when done you can access Kandula GUI, Link to Kandula: 
