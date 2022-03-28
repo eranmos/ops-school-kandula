@@ -57,26 +57,33 @@ Infrastructure deployment will be performed via Terraform locally & Jenkins.
 
 After deploying Jenkins Servers (Master & Slave) you can run rest of the deployments via Jenkins Job:
 Jenkins UI : https://jenkins.kandula.click/
++ [jenkins file location](/Jenkins/jenkins_jobs/jenkis_terraform_deployments/jenkins_terraform_build_kandula_env.groovy)
++ [jenkins job link](https://jenkins.kandula.click/view/Terraform%20Deployment/job/Terraform-Build-Kandula-Env/)
 
 
+2. After deploying the infrastructure via Terraform & Jenkins we will need to provision our EC2 instances with below app:
++ Consul Cluster (3 servers)
++ Consul Agent
++ Consul Registrator
++ Elasticsearch
++ Kibana
++ Logstash
++ Filebeat
++ Prometheus
++ Node Exporter
 
+All Ansible playbooks will be run via jenkins job (Ansible installed on the Jenkins-slave docker image).
 
-
-2. After deploying the infrastructure via terraform we will need to provision our servers via Ansible playbooks & Jenkins.
-All Ansible playbooks will be run via jenkins job ( Ansible installed on the Jenkins-slave docker image).
    + please run Jenkins job:
-   + [jenkins file location](/Jenkins/jenkins_jobs/jenkis_terraform_deployments/jenkins_terraform_build_kandula_env.groovy)
-   + [jenkins_terraform_build_kandula_env](https://jenkins.kandula.click/view/Terraform%20Deployment/job/Terraform-Build-Kandula-Env/)
-
-To see all Jenkins Jobs & 
-
-3. Installing all Env in one click job of Jenkins
-   + please run Jenkins job:
-   + [jenkins file location](/Jenkins/jenkins_jobs/jenkins_ansible_playbooks/consul_agent_ansible_playbook.groovy)
-   + [Ansible Playbooks & roles](/ansible)
-   + when done you can access consul GUI and see all consul servers, agents and services, link: https://consul.eran.website/
-
-4. Deploying Kandule Application via Jenkins job.
+   + [jenkins file location](/Jenkins/jenkins_jobs/jenkins_ansible_playbooks/jenkins_ansible_build_kandula.groovy)
+   + [jenkins job link](https://jenkins.kandula.click/view/Ansible-Playbooks/job/ansible-playbook-all-apps/)
+   
+   
+4. Deploying below applications on EKS cluster:  Kandule Application & via Jenkins job.
++ Kandula-Prometheus-Stack
++ Kandula App
++ Filebeat
+All EKS deployments will be run via Jenkins Job 
     + please run Jenkins Job: 
     + [jenkins file location](Jenkins/jenkins_jobs/jenkins_kandula_deployment_eks/jenkins_kandula_deployment_eks.groovy)
     + when done you can access Kandula GUI, Link to Kandula: 
