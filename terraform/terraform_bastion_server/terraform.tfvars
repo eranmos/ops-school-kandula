@@ -5,16 +5,17 @@ aws_cli_profile = "tr-tms"
 aws_region = "us-east-1"
 
 #############  Bastion Server  #############
-bastion_instance_name  = "Bastion-Server"
+bastion_instance_name  = "bastion-server"
 key_name               = "eran_ops_school_keys"
 bastion_instance_type  = "t2.micro"
 consul_server          = "false"
 #ami                   = "ami-00ddb0e5626798373"   --> this is the Ubuntu clean AMI
 ami                    = "ami-0240084233d73a385"  # -->This is my Ubuntu with OpenVpn configuration
+public_ip              = true
 
 #EBS ROOT Volume config
-ebs_root_delete_on_termination = "true"
-ebs_root_encrypted             = "true"
+ebs_root_delete_on_termination = true
+ebs_root_encrypted             = true
 ebs_root_volume_type           = "gp2"
 ebs_root_volume_size           = "8"
 

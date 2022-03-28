@@ -35,6 +35,11 @@ variable "ami" {
   type        = string
 }
 
+variable "public_ip" {
+  description = "If server is public"
+  type        = bool
+}
+
 variable "consul_server" {
   description = "The true of false value, if consul server need to be install value should be true"
   type        = string
@@ -80,7 +85,7 @@ variable "project_name" {
 #############  EBS ROOT Storage  #############
 variable "ebs_root_encrypted" {
   description = "if ebs should be encrypted true or false values"
-  type        = string
+  type        = bool
 }
 
 variable "ebs_root_volume_type" {
