@@ -24,6 +24,12 @@ This view aggregat all terraform jenkins jobs
 
 ![Pipeline example](diagrams_&_pictures/jenkins_terrafrom_bastion.png)
 
+**Job Name: Terraform-Build-Kandula-Env:** <br />
+The job will create All Env (will trigger all below jobs with the right logic)
++ [jenkins file location](/Jenkins/jenkins_jobs/jenkis_terraform_deployments/jenkins_terraform_build_kandula_env.groovy)
++ [jenkins job link](https://jenkins.kandula.click/view/Terraform_Deployment/job/Terraform-Build-Kandula-Env/)
+
+
 **Job Name: terraform-bastion-server:** <br />
 The job will create Bastion instance, this instance is exposed to the internet & will function as VPN server
 + [jenkins file location](/Jenkins/jenkins_jobs/jenkis_terraform_deployments/jenkins_terraform_bastion_server.groovy)
@@ -69,6 +75,60 @@ The job will create VPC & private zone on Route53
 ## Jenkins-Ansible Playbooks
 
 ![app_diagram](diagrams_&_pictures/jenkins_ansible_jobs.png)
+
+**Job Name: ansible-playbook-all-apps:** <br />
+The job will provision all the EC2 Instances that we created via terraform
++ [jenkins file location](/Jenkins/jenkins_jobs/jenkins_ansible_playbooks/jenkins_ansible_build_kandula.groovy)
++ [ansible role location](/ansible/roles/)
++ [jenkins job link](https://jenkins.kandula.click/view/Ansible-Playbooks/job/ansible-playbook-all-apps/)
+
+**Job Name: ansible-playbook-consul-agent:** <br />
+The job will install consul agent on relevant instances 
++ [jenkins file location](/Jenkins/jenkins_jobs/jenkins_ansible_playbooks/consul_agent_ansible_playbook.groovy)
++ [ansible role location](/ansible/roles/consul_agent)
++ [jenkins job link](https://jenkins.kandula.click/view/Ansible-Playbooks/job/ansible-playbook-consul-agent/)
+
+**Job Name: ansible-playbook-consul-registrator:** <br />
+The job will install consul registrator on all servers that have docker engine 
++ [jenkins file location](/Jenkins/jenkins_jobs/jenkins_ansible_playbooks/consul_registrator_ansible_playbook.groovy)
++ [ansible role location](/ansible/roles/consul_registrator)
++ [jenkins job link](https://jenkins.kandula.click/view/Ansible-Playbooks/job/ansible-playbook-consul-registrator/)
+
+**Job Name: ansible-playbook-consul-server:** <br />
+The job will install consul server (cluster of 3 servers)
++ [jenkins file location](/Jenkins/jenkins_jobs/jenkins_ansible_playbooks/consul_server_ansible_playbook.groovy)
++ [ansible role location](/ansible/roles/consul)
++ [jenkins job link](https://jenkins.kandula.click/view/Ansible-Playbooks/job/ansible-playbook-consul-server/)
+
+**Job Name: ansible-playbook-elasticsearch:** <br />
+The job will install Elasticsearch & Kibana
++ [jenkins file location](/Jenkins/jenkins_jobs/jenkins_ansible_playbooks/elasticsearch_ansible_playbook.groovy)
++ [ansible role location](/ansible/roles/elasticsearch)
++ [jenkins job link](https://jenkins.kandula.click/view/Ansible-Playbooks/job/ansible-playbook-elasticsearch/)
+
+**Job Name: ansible-playbook-filebeat-server:** <br />
+The job will install filebeat 
++ [jenkins file location](/Jenkins/jenkins_jobs/jenkins_ansible_playbooks/filebeat_ansible_playbook.groovy)
++ [ansible role location](/ansible/roles/filebeat)
++ [jenkins job link](https://jenkins.kandula.click/view/Ansible-Playbooks/job/ansible-playbook-filebeat-server/)
+
+**Job Name: ansible-playbook-logstahs-agent:** <br />
+The job will install logstash
++ [jenkins file location](/Jenkins/jenkins_jobs/jenkins_ansible_playbooks/logstash_agent_ansible_playbook.groovy)
++ [ansible role location](/ansible/roles/logstash)
++ [jenkins job link](https://jenkins.kandula.click/view/Ansible-Playbooks/job/ansible-playbook-logstahs-agent/)
+
+**Job Name: ansible-playbook-node-exporter:** <br />
+The job will install Node Exporter
++ [jenkins file location](/Jenkins/jenkins_jobs/jenkins_ansible_playbooks/node_exporter_ansible_playbook.groovy)
++ [ansible role location](/ansible/roles/node_exporter)
++ [jenkins job link](https://jenkins.kandula.click/view/Ansible-Playbooks/job/ansible-playbook-node-exporter/)
+
+**Job Name: ansible-playbook-prometheus:** <br />
+The job will install prometheus
++ [jenkins file location](/Jenkins/jenkins_jobs/jenkins_ansible_playbooks/prometheus_ansible_playbook.groovy)
++ [ansible role location](/ansible/roles/prometheus)
++ [jenkins job link](https://jenkins.kandula.click/view/Ansible-Playbooks/job/ansible-playbook-prometheus/)
 
 ## Jenkins-Kubernetes Deployment
 
