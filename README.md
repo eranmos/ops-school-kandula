@@ -197,13 +197,15 @@ with vulnerability issues that he discovered
 ![architecture_diagram](diagrams_&_pictures/jenkins_trivy_build.png)
 
 
-#### Jenkins - Trivy report:
+#### Trivy report on jenkins pipeline:
 ![architecture_diagram](diagrams_&_pictures/jenkins_trivy_report.png)
 
+### Code scan vulnerability Check via Trivy & Snyk
+For the code scan I used two tools Trivy & Snyk.
+I integrated Trivy with my github & created workflow to scan my code when pull request created
+and will failed the build when discovered criticals issues.
 
-
-### Docker Image Vulnerability Check
-+ I need to update the vulnerabilities with Trivy
+![architecture_diagram](diagrams_&_pictures/trivy_github_1.png)
 
 ### Links to dockerhub related images
 - [Kandula](https://hub.docker.com/repository/docker/erandocker/ops-school-kandula) - docker pull erandocker/ops-school-kandula:tagname
