@@ -203,9 +203,13 @@ with vulnerability issues that he discovered
 ### Code scan vulnerability Check via Trivy & Snyk
 For the code scan I used two tools Trivy & Snyk.
 I integrated Trivy with my github & created workflow to scan my code when pull request created
-and will failed the build when discovered criticals issues.
+and will failed the build when discovered critical issues.
 
 ![architecture_diagram](diagrams_&_pictures/trivy_github_1.png)
+
+As I wanted to discover more tools I started to use Snyk & Integrated it with my GitHub as well:
+
+![architecture_diagram](diagrams_&_pictures/snyk.png)
 
 ### Links to dockerhub related images
 - [Kandula](https://hub.docker.com/repository/docker/erandocker/ops-school-kandula) - docker pull erandocker/ops-school-kandula:tagname
