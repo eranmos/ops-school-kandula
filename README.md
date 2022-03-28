@@ -25,7 +25,7 @@
 ![app_diagram](diagrams_&_pictures/ops_school-project_app_diagram.png)
 
 ## Deployment Process
-+ Infrastructure deployment via Terraform
++ Infrastructure deployment via Terraform & Jenkins
 + EC2 instances provisioning via Jenkins jobs that will run Ansible Playbooks)
 + EKS deployments via Jenkins Jobs
 
