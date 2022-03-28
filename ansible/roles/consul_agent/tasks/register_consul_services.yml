@@ -47,6 +47,11 @@
     src: consul_agent_service.json
     dest: /etc/consul.d/consul_agent_service.json
 
+- name: Register Filebeat service
+  copy:
+    src: filebeat_service.json
+    dest: /etc/consul.d/filebeat_service.json
+
 - name: Reload Consul service
   systemd:
     name: consul.service

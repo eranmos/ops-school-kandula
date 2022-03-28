@@ -71,16 +71,18 @@ In below table you can see `variables.tf` file details:
 
 ## Data Flow Table
 
-| Description | Source | Source Port | Destination  | Destination Port | Comments |
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
 | ----------- | ------ | ----------- | ------------ | -----------------| -------- |
-| Jenkins to outside | Jenkins_Master | * | * | * | |
-| Jenkins_UI | * | *  | Jenkins_Master | 443 | |
-| Jenkins_UI | * | * | Jenkins_Master |  80 | |
-| Jenkins_UI | * | * | Jenkins_Master | 8080  | |
-| Docker_API | * | * | Jenkins_Master | 4243 | |
-| Docker_Hostport | * | * | Jenkins_Master | 32768-60999 | |
-| Node_Exporter | * | * | Jenkins_Master  | 9100 |   |
-|   |   |   |   |   |   |
+| Jenkins to outside | Jenkins_Master | * | * | * | * |
+| Jenkins_UI | * | *  | Jenkins_Master | 443 | TCP |
+| Jenkins_UI | * | * | Jenkins_Master |  80 | TCP |
+| Jenkins_UI | * | * | Jenkins_Master | 8080  | TCP |
+| Docker_API | * | * | Jenkins_Master | 4243 | TCP |
+| Docker_Hostport | * | * | Jenkins_Master | 32768-60999 | TCP |
+| Node_Exporter | * | * | Jenkins_Master  | 9100 | TCP |
+| Consul | * | * | Jenkins_Master |  8301 | TCP,UDP |
+| Consul | * | * | Jenkins_Master |  8302 | TCP,UDP |
+| Consul | * | * | Jenkins_Master |  8300 | TCP |
 |   |   |   |   |   |   |
 |   |   |   |   |   |   |
 

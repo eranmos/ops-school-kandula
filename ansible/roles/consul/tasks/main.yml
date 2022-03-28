@@ -1,3 +1,14 @@
 ---
 - include_tasks: install_consul.yml
   name: Install and Configure Consul on servers
+
+- name: Register Node Exporter service
+  when: node_exporter == true
+  copy:
+    src: node_exporter_service.json
+    dest: /etc/consul.d/node_exporter_service.json
+
+- name: Register Filebeat service
+  copy:
+    src: filebeat_service.json
+    dest: /etc/consul.d/filebeat_service.json
