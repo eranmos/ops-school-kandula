@@ -1,7 +1,7 @@
 <h1 align="center">Kandula</h1>
 <h6 align="center">This Repo will aggregate my ops-school project</h6>
 
-<p align="center"><img width="250px" src="./kandula.jpg"></p>
+<p align="center"><img width="250px" src="./a_diagrams_&_pictures/kandula.jpg"></p>
 
 ## Table of Contents
 
@@ -19,10 +19,10 @@
 
 
 ## Infrastructure Architecture Diagram
-![architecture_diagram](./ops_school_project_architecture_diagram.png)
+![architecture_diagram](a_diagrams_&_pictures/ops_school_project_architecture_diagram.png)
 
 ## Application Diagram
-![app_diagram](./ops_school-project_app_diagram.png)
+![app_diagram](a_diagrams_&_pictures/ops_school-project_app_diagram.png)
 
 ## Deployment Process
 + Infrastructure deployment via Terraform
@@ -55,12 +55,11 @@ Infrastructure deployment will be performed via Terraform locally & Jenkins.
 + [Terraform Bastion Server](/terraform/terraform_bastion_server) - Creating Bastion server for debugging & maintenance
 > note: Bastion server - In order to avoid security issues we're recommending to destroy the machine or turn it off when not needed
 
-
-1. Creating S3 Buckets for provisioning, monitoring, and Terraform state files.
-2. Creating EBS Storage for Jenkins Master.
-3. After deploying the infrastructure via terraform we will need to provision our servers via Ansible playbooks.
+2. After deploying the infrastructure via terraform we will need to provision our servers via Ansible playbooks & Jenkins.
 All Ansible playbooks will be run via jenkins job ( Ansible installed on the Jenkins-slave docker image).
 Jenkins UI : https://jenkins.kandula.click/
+
+To see all Jenkins Jobs & 
 
 4. Installing Consul-server on three ec2 instances & Consul-agent on Jenkins-master & Jenkins-slave.
    + please run Jenkins job:
