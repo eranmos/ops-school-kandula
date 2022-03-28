@@ -1,0 +1,13 @@
+- name: Restarting consul service
+  hosts: tag_node_exporter_true
+  remote_user: ubuntu
+  become: yes
+  become_user: root
+  become_method: sudo
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+- name: Restart consul service
+  ansible.builtin.service:
+    name: consul
+    state: restarted

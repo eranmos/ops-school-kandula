@@ -123,13 +123,17 @@ pipeline {
                 kind: Service
                 metadata:
                   name: kandula-service
+                  annotations:
+                    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+                    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-east-1:113379206287:certificate/09a00715-ea90-46a2-a5c1-3a8b601aad57
+                    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
                 spec:
                   selector:
                     app: kandula-app
                   type: LoadBalancer
                   ports:
-                    - name: http
-                      port: 80
+                    - name: https
+                      port: 443
                       targetPort: 5000
                       protocol: TCP
                 """

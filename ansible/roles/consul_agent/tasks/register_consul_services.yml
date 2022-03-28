@@ -1,0 +1,53 @@
+---
+- name: Register Jenkins Master service
+  when: role == "jenkins-master"
+  copy:
+    src: jenkins_master_service.json
+    dest: /etc/consul.d/jenkins_master_service.json
+
+- name: Register Jenkins Slave service
+  when: role == "jenkins-slave"
+  copy:
+    src: jenkins_slave_service.json
+    dest: /etc/consul.d/jenkins_slave_service.json
+
+- name: Register Prometheus service
+  when: role == "prometheus"
+  copy:
+    src: prometheus_service.json
+    dest: /etc/consul.d/prometheus_service.json
+
+- name: Register Node Exporter service
+  when: node_exporter == true
+  copy:
+    src: node_exporter_service.json
+    dest: /etc/consul.d/node_exporter_service.json
+
+- name: Register Elasticsearch service
+  when: role == "elasticsearch"
+  copy:
+    src: elasticsearch_service.json
+    dest: /etc/consul.d/elasticsearch_service.json
+
+- name: Register Kibana service
+  when: role == "elasticsearch"
+  copy:
+    src: kibana_service.json
+    dest: /etc/consul.d/kibana_service.json
+
+- name: Register logstash service
+  when: role == "elasticsearch"
+  copy:
+    src: kibana_service.json
+    dest: /etc/consul.d/logstash_service.json
+
+- name: Register Consul Agents service
+  when: consul_server == false
+  copy:
+    src: consul_agent_service.json
+    dest: /etc/consul.d/consul_agent_service.json
+
+- name: Reload Consul service
+  systemd:
+    name: consul.service
+    state: reloaded
