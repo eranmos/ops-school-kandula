@@ -71,6 +71,8 @@ In below table you can see `variables.tf` file details:
 
 ## Data Flow Table
 
+
+### Jenkins Master:
 | Description | Source | Source Port | Destination  | Destination Port | Protocol |
 | ----------- | ------ | ----------- | ------------ | -----------------| -------- |
 | Jenkins to outside | Jenkins_Master | * | * | * | * |
@@ -83,8 +85,21 @@ In below table you can see `variables.tf` file details:
 | Consul | * | * | Jenkins_Master |  8301 | TCP,UDP |
 | Consul | * | * | Jenkins_Master |  8302 | TCP,UDP |
 | Consul | * | * | Jenkins_Master |  8300 | TCP |
-|   |   |   |   |   |   |
-|   |   |   |   |   |   |
+| SSH | * | * | Jenkins_Master | 22 | TCP |
+
+
+### Jenkins Slave:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| Jenkins to outside | Jenkins_Slave | * | * | * | * |
+| Docker_API | * | * | Jenkins_Slave | 4243 | TCP |
+| Docker_Hostport | * | * | Jenkins_Slave | 32768-60999 | TCP |
+| Node_Exporter | * | * | Jenkins_Slave  | 9100 | TCP |
+| Consul | * | * | Jenkins_Slave |  8301 | TCP,UDP |
+| Consul | * | * | Jenkins_Slave |  8302 | TCP,UDP |
+| Consul | * | * | Jenkins_Slave |  8300 | TCP |
+| SSH | * | * | Jenkins_Slave | 22 | TCP |
+
 
 
 

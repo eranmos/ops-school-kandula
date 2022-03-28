@@ -35,7 +35,7 @@ variable "db_parameter_group_name" {
 }
 
 variable "db_option_group_name" {
-  description = ""
+  description = "The Name of the Option"
   type        = string
 }
 
