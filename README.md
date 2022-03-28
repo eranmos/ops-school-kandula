@@ -136,7 +136,7 @@ All EKS deployments will be run via Jenkins Job
 ### Elasticsearch & Kibana:
 | Description | Source | Source Port | Destination  | Destination Port | Protocol |
 | ----------- | ------ | ----------- | ------------ | -----------------| -------- |
-| ElasticSearch to outside | Jenkins_Slave | * | * | * | * |
+| ElasticSearch to outside | ElasticSearch | * | * | * | * |
 | ElasticSearch_API | * | * | ElasticSearch | 9200 | TCP |
 | ElasticSearch_API | * | * | ElasticSearch | 9300 | TCP |
 | Kibana UI | * | * | ElasticSearch | 5601 | TCP |
