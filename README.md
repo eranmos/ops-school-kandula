@@ -12,7 +12,7 @@
 - [Prerequisites](#prerequisites)
 - [Deployment Instructions](#Deployment-Instructions)
 - [Application Connections](#Application-Connections)
-- [Vulnerability Check](#Vulnerability Check)
+- [Vulnerability Check](#Vulnerability-Check)
 - [Links to dockerhub related images](#Links-to-dockerhub-related-images)
 - [Links to GitHub related repository](#Links-to-GitHub-related-repository)
 - [Improvement Points For The Future](#Improvement-points-for-the-future)
@@ -55,19 +55,28 @@ Infrastructure deployment will be performed via Terraform locally & Jenkins.
 + [Terraform Bastion Server](/terraform/terraform_bastion_server) - Creating Bastion server for debugging & maintenance
 > note: Bastion server - In order to avoid security issues we're recommending to destroy the machine or turn it off when not needed
 
+After deploying Jenkins Servers (Master & Slave) you can run rest of the deployments via Jenkins Job:
+Jenkins UI : https://jenkins.kandula.click/
+
+
+
+
+
 2. After deploying the infrastructure via terraform we will need to provision our servers via Ansible playbooks & Jenkins.
 All Ansible playbooks will be run via jenkins job ( Ansible installed on the Jenkins-slave docker image).
-Jenkins UI : https://jenkins.kandula.click/
+   + please run Jenkins job:
+   + [jenkins file location](/Jenkins/jenkins_jobs/jenkis_terraform_deployments/jenkins_terraform_build_kandula_env.groovy)
+   + [jenkins_terraform_build_kandula_env](https://jenkins.kandula.click/view/Terraform%20Deployment/job/Terraform-Build-Kandula-Env/)
 
 To see all Jenkins Jobs & 
 
-4. Installing Consul-server on three ec2 instances & Consul-agent on Jenkins-master & Jenkins-slave.
+3. Installing all Env in one click job of Jenkins
    + please run Jenkins job:
    + [jenkins file location](/Jenkins/jenkins_jobs/jenkins_ansible_playbooks/consul_agent_ansible_playbook.groovy)
    + [Ansible Playbooks & roles](/ansible)
    + when done you can access consul GUI and see all consul servers, agents and services, link: https://consul.eran.website/
 
-5. Deploying Kandule Application via Jenkins job.
+4. Deploying Kandule Application via Jenkins job.
     + please run Jenkins Job: 
     + [jenkins file location](Jenkins/jenkins_jobs/jenkins_kandula_deployment_eks/jenkins_kandula_deployment_eks.groovy)
     + when done you can access Kandula GUI, Link to Kandula: 
@@ -131,7 +140,7 @@ To see all Jenkins Jobs &
 
 ### Links to GitHub related repository
 - [Terrafom VPC module](https://github.com/eranmos/ops-school-terraform-aws-vpc.git) - Terraform VPC module for AWS VPC, Subnets, Routing, NAT Gateway creation  
-- [Kandula Application](git@github.com:eranmos/ops-school-kandula-project-app.git) - Code for Kandule Application
+- [Kandula Application](https://github.com/eranmos/ops-school-kandula-project-app.git) - Code for Kandule Application
 
 ### Improvement Points For The Future
 + Creating Jenkins server & Slave AMI via packer
