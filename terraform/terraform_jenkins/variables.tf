@@ -15,7 +15,7 @@ variable "aws_region" {
 
 #############  Jenkins Server  #############
 variable "jenkins_master_name" {
-  description = "The of the Jenkins-master instance"
+  description = "The name of the Jenkins-master instance"
   type        = string
 }
 
