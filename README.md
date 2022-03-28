@@ -1,7 +1,7 @@
 <h1 align="center">Kandula</h1>
 <h6 align="center">This Repo will aggregate my ops-school project</h6>
 
-<p align="center"><img width="250px" src="./a_diagrams_&_pictures/kandula.jpg"></p>
+<p align="center"><img width="250px" src="./diagrams_&_pictures/kandula.jpg"></p>
 
 ## Table of Contents
 
