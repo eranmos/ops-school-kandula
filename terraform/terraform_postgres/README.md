@@ -7,6 +7,7 @@
 - [Prerequisites](#prerequisites)
 - [Deploying Instructions](#deploying-instructions)
 - [Variables References Table](#variables-references-table)
+- [Data Flow Table](#data-flow-table)
 
 ## Prerequisites
 To deploy all infrastructure you will need below application to be installed on your workstation/server
@@ -63,3 +64,10 @@ In below table you can see `variables.tf` file details:
 | owner | string |tag - Full Name of the owner |
 | project_name | string| tag - The Name of the Project |
 
+## Data Flow Table
+
+### PostgreSQL:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| PostgreSQL to outside | PostgreSQL | * | * | * | * |
+| PostgreSQL DB | * | * | PostgreSQL | 5432 | TCP |

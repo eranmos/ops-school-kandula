@@ -92,46 +92,96 @@ All EKS deployments will be run via Jenkins Job
 
 ## Application Connections
 
-### Jenkins Master :
-| Protocol | Port        | ingress/egress | Description                                                    |
-| -------  | ----------- |--------------- | -------------------------------------------------------------- |
-| HTTPS    | 443         | ingress        | Allow Jenkins UI                                               |
-| HTTP     | 8080        | ingress        | Allow Jenkins UI                                               |
-| tcp      | 4243        | ingress        | Allow Docker Remote API                                        |
-| tcp      | 32768-60999 | ingress        | Allow Docker Hostport Range                                    |
-| tcp      | 22          | ingress        | Allow ssh                                                      |
-| all      | all         | egress         | Allow all outgoing traffic                                     |
+### Jenkins Master:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| Jenkins to outside | Jenkins_Master | * | * | * | * |
+| Jenkins_UI | * | *  | Jenkins_Master | 443 | TCP |
+| Jenkins_UI | * | * | Jenkins_Master |  80 | TCP |
+| Jenkins_UI | * | * | Jenkins_Master | 8080  | TCP |
+| Docker_API | * | * | Jenkins_Master | 4243 | TCP |
+| Docker_Hostport | * | * | Jenkins_Master | 32768-60999 | TCP |
+| Node_Exporter | * | * | Jenkins_Master  | 9100 | TCP |
+| Consul | * | * | Jenkins_Master |  8301 | TCP,UDP |
+| Consul | * | * | Jenkins_Master |  8302 | TCP,UDP |
+| Consul | * | * | Jenkins_Master |  8300 | TCP |
+| SSH | * | * | Jenkins_Master | 22 | TCP |
 
-### Jenkins Slave :
-| Protocol | Port        | ingress/egress | Description                                                    |
-| -------  | ----------- |--------------- | -------------------------------------------------------------- |
-| tcp      | 4243        | ingress        | Allow Docker Remote API                                        |
-| tcp      | 32768-60999 | ingress        | Allow Docker Hostport Range                                    |
-| tcp      | 22          | ingress        | Allow ssh                                                      |
-| all      | all         | egress         | Allow all outgoing traffic                                     |
+### Jenkins Slave:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| Jenkins to outside | Jenkins_Slave | * | * | * | * |
+| Docker_API | * | * | Jenkins_Slave | 4243 | TCP |
+| Docker_Hostport | * | * | Jenkins_Slave | 32768-60999 | TCP |
+| Node_Exporter | * | * | Jenkins_Slave  | 9100 | TCP |
+| Consul | * | * | Jenkins_Slave |  8301 | TCP,UDP |
+| Consul | * | * | Jenkins_Slave |  8302 | TCP,UDP |
+| Consul | * | * | Jenkins_Slave |  8300 | TCP |
+| SSH | * | * | Jenkins_Slave | 22 | TCP |
 
-### Consul :
-| Protocol | Port        | ingress/egress | Description                                                    |
-| -------  | ----------- |--------------- | -------------------------------------------------------------- |
-| HTTPS    | 443         | ingress        | Allow consul  UI                                               |
-| HTTP     | 8500        | ingress        | Allow consul  UI                                               |
-| tcp      | 8600        | ingress        | Allow to resolve DNS queries                                   |
-| tcp, udp | 8301        | ingress        | Allow Serf LAN port                                            |
-| tcp, udp | 8302        | ingress        | Allow Serf WAN port                                            |
-| tcp      | 8300        | ingress        | Allow Server RPC address                                       |
-| tcp      | 21000-21255 | ingress        | Allow for automatically assigned sidecar service registrations |
-| tcp      | 22          | ingress        | Allow ssh                                                      |
+### Consul Server:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| Consul to outside | Consul | * | * | * | * |
+| Consul UI | * | * | Consul | 443 | TCP |
+| Consul UI | * | * | Consul | 80 | TCP |
+| Consul DNS Interface  | * | * | Consul | 8600 | TCP |
+| Consul API | * | * | Consul  | 8500 | TCP |
+| Consul LAN Serf | * | * | Consul |  8301 | TCP,UDP |
+| Consul Wan Serf | * | * | Consul |  8302 | TCP,UDP |
+| Consul RPC | * | * | Consul |  8300 | TCP |
+| Node_Exporter | * | * | Consul | 9100 | TCP |
+| SSH | * | * | Consul | 22 | TCP |
 
-### EKS :
-| Protocol | Port        | ingress/egress | Description                                                    |
-| -------  | ----------- |--------------- | -------------------------------------------------------------- |
-| tcp      | 22          | ingress        | Allow ssh                                                      |
+### Elasticsearch & Kibana:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| ElasticSearch to outside | Jenkins_Slave | * | * | * | * |
+| ElasticSearch_API | * | * | ElasticSearch | 9200 | TCP |
+| ElasticSearch_API | * | * | ElasticSearch | 9300 | TCP |
+| Kibana UI | * | * | ElasticSearch | 5601 | TCP |
+| Node_Exporter | * | * | ElasticSearch  | 9100 | TCP |
+| Consul | * | * | ElasticSearch |  8301 | TCP,UDP |
+| Consul | * | * | ElasticSearch |  8302 | TCP,UDP |
+| Consul | * | * | ElasticSearch |  8300 | TCP |
+| SSH | * | * | ElasticSearch | 22 | TCP |
 
-### Bastian Server :
-| Protocol | Port        | ingress/egress | Description                                                    |
-| -------  | ----------- |--------------- | -------------------------------------------------------------- |
-| tcp      | 22          | ingress        | Allow ssh                                                      |
-| all      | all         | egress         | Allow all outgoing traffic                                     |
+### Prometheus:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| Prometheus to outside | Prometheus | * | * | * | * |
+| Prometheus | * | * | Prometheus | 9090 | TCP |
+| Alert_Manager | * | * | Prometheus | 9093 | TCP |
+| Node_Exporter | * | * | Prometheus  | 9100 | TCP |
+| Consul | * | * | Prometheus |  8301 | TCP,UDP |
+| Consul | * | * | Prometheus |  8302 | TCP,UDP |
+| Consul | * | * | Prometheus |  8300 | TCP |
+| SSH | * | * | Prometheus | 22 | TCP |
+
+### PostgreSQL:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| PostgreSQL to outside | PostgreSQL | * | * | * | * |
+| PostgreSQL DB | * | * | PostgreSQL | 5432 | TCP |
+
+### EKS Nodes:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| EKS_Nodes to outside | EKS_Nodes | * | * | * | * |
+| Consul UI | * | * | EKS_Nodes | 443 | TCP |
+| Consul API | * | * | EKS_Nodes  | 8500 | TCP |
+| Consul LAN Serf | * | * | EKS_Nodes |  8301 | TCP,UDP |
+| Consul Wan Serf | * | * | EKS_Nodes |  8302 | TCP,UDP |
+| Consul RPC | * | * | EKS_Nodes |  8300 | TCP |
+| SSH | * | * | EKS_Nodes | 22 | TCP |
+
+### Bastion:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| bastion to outside | bastion | * | * | * | * |
+| OPEN_VPN | * | *  | bastion | 1194 | TCP,UDP |
+| SSH | * | * | bastion | 22 | TCP |
+
 
 ## Vulnerability Check
 ### Terraform Vulnerability Check
