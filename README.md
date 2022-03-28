@@ -88,7 +88,7 @@ All EKS deployments will be run via Jenkins Job
     + [jenkins file location](Jenkins/jenkins_jobs/kubernetes_deployment/jenkins_kube_all_deployment.groovy)
     + [jenkins job link](https://jenkins.kandula.click/view/Kubernetes%20Deployment/job/Kandula-Deployment-All-EKS/)
 
-
+#### [Click here get all info about my jenkins jobs and configurations](Jenkins/README.md)
 
 ## Application Connections
 
