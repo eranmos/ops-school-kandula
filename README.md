@@ -26,8 +26,8 @@
 
 ## Deployment Process
 + Infrastructure deployment via Terraform
-+ EC2 instances provisioning & Consul Application installation (Jenkins job that will run Ansible Playbooks)
-+ Kandula App deployment on EKS cluster (Jenkins Job)
++ EC2 instances provisioning via Jenkins jobs that will run Ansible Playbooks)
++ EKS deployments via Jenkins Jobs
 
 ## Prerequisites
 To deploy all infrastructure you will need below application to be installed on your workstation/server
@@ -37,9 +37,9 @@ To deploy all infrastructure you will need below application to be installed on 
  + Install [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) on your workstation/server
 
 ## Deployment Instructions
-Infrastructure deployment will be performed via Terraform locally. 
-1. Terraform deployment is divided into five parts when the first execution must be VPC and the sequence of rest is not important
-   Run the following on each terrafom_XXX folder
+Infrastructure deployment will be performed via Terraform locally & Jenkins. 
+1. Terraform deployment is divided into eight parts.
+   Run the following on each terraform_XXX folder (Jenkins job can run only after Jenkins deployment)
    ```bash
    terraform init
    terraform apply --auto-approve
