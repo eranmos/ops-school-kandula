@@ -19,10 +19,10 @@
 
 
 ## Infrastructure Architecture Diagram
-![architecture_diagram](a_diagrams_&_pictures/ops_school_project_architecture_diagram.png)
+![architecture_diagram](diagrams_&_pictures/ops_school_project_architecture_diagram.png)
 
 ## Application Diagram
-![app_diagram](a_diagrams_&_pictures/ops_school-project_app_diagram.png)
+![app_diagram](diagrams_&_pictures/ops_school-project_app_diagram.png)
 
 ## Deployment Process
 + Infrastructure deployment via Terraform
