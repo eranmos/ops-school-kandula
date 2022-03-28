@@ -15,7 +15,7 @@ variable "aws_region" {
 
 #############  Consul Server  #######
 variable "consul_server_name" {
-  description = "The of the Jenkins-slave instance"
+  description = "The name of the consul instance"
   type        = string
 }
 
@@ -38,14 +38,9 @@ variable "ami" {
   type        = string
 }
 
-variable "consul_server" {
-  description = "The true of false value, if consul server need to be install value should be true"
-  type        = bool
-}
-
 #############  Elasticsearch Server  #######
 variable "elasticsearch_server_name" {
-  description = "The of the Jenkins-slave instance"
+  description = "The name of the ES instance"
   type        = string
 }
 
@@ -60,12 +55,12 @@ variable "elasticsearch_instances_count" {
 }
 
 variable "elasticsearch_master" {
-  description = "True of false value,If docker engine installed "
+  description = "True of false value,If docker engine installed"
   type        = bool
 }
 
 variable "elasticsearch_node" {
-  description = "True of false value,If docker engine installed "
+  description = "True of false value,If docker engine installed"
   type        = bool
 }
 
@@ -76,22 +71,12 @@ variable "prometheus_server_name" {
 }
 
 variable "prometheus_instances_count" {
-  description = "numbers of consul servers"
+  description = "numbers of prometheus servers"
 }
 
 variable "prometheus_instance_type" {
   description = "The type of the ec2, for example - t2.medium"
   type        = string
-}
-
-variable "docker_engine" {
-  description = "True of false value,If docker engine installed "
-  type        = bool
-}
-
-variable "node_exporter" {
-  description = "True of false value,If need to install node exporter "
-  type        = bool
 }
 
 #############  EBS ROOT Storage  #############
@@ -214,6 +199,21 @@ variable "default_s3_bucket" {
 }
 
 #############  Tags Related  #############
+variable "docker_engine" {
+  description = "True of false value,If docker engine installed "
+  type        = bool
+}
+
+variable "node_exporter" {
+  description = "True of false value,If need to install node exporter "
+  type        = bool
+}
+
+variable "consul_server" {
+  description = "The true of false value, if consul server need to be install value should be true"
+  type        = bool
+}
+
 variable "asset_owner" {
   description = "Email, preferably distribution list of the project"
   type        = string

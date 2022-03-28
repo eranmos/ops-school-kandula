@@ -21,6 +21,11 @@
     src: logstash_alb.conf
     dest: /etc/logstash/conf.d/logstash_alb.conf
 
+- name: Copy Logstash YAML file
+  copy:
+    src: logstash.yml
+    dest: /etc/logstash/logstash.yml
+
 - name: Add Logstash user to adm group (Debian).
   user:
     name: logstash

@@ -1,24 +1,28 @@
-## Start EKS cluster with Terraform
-This will start an EKS cluster with terraform
+## Create EKS cluster with Terraform
+This will create an EKS cluster with terraform
+
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Deploying Instructions](#deploying-instructions)
+- [Variables References Table](#variables-references-table)
+- [Data Flow Table](#data-flow-table)
+- [Optional](#optional)
 
 ## Prerequisites
-- Install [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli) on your workstation/server
-- Install [aws cli](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) on your workstation/server
-- Install [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) on your workstation/server
+To deploy all infrastructure you will need below application to be installed on your workstation/server
++ Install [GIT](https://github.com/git-guides/install-git) on your workstation/server
++ Install [Terraform v1.1.2](https://learn.hashicorp.com/tutorials/terraform/install-cli) on your workstation/server
++ Install [aws cli](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) on your workstation/server
++ Install [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) on your workstation/server
 
+## Deploying Instructions
 
-## Variables
-- Change the `aws_region` to your requested region (default: `us-east-1`)
-- Change `kubernetes_version` to the desired version (default: `1.18`)
-- Change `k8s_service_account_namespace` to the namespace for your application (default: `default`)
-- Change `k8s_service_account_name` to the service account name for your application (default: `k8s_service_account_name`)
-
-## Run
-Run the following to start your eks environment:
-```bash
-terraform init
-terraform apply --auto-approve
-```
+Run the following:
+   ```bash
+   terraform init
+   terraform apply --auto-approve
+   ```
 
 After the environement is up run the following to update your kubeconfig file (you can get the `cluster_name` value from the cluster_name output in terraform)
 ```bash
@@ -29,6 +33,53 @@ To test the environemet run the following:
 ``` bash
 kubectl get nodes -o wide
 ```
+
+## Variables References Table
+
+In below table you can see `variables.tf` file details:
+
+| Variable | Type | Description |
+| -------- | ----------- | ----------- |
+| aws_region | string | AWS working region |
+| aws_cli_profile | string | AWS cli profile name | 
+| account_id | string | Account id of AWS account | 
+| kubernetes_version | string | kubernetes version | 
+| cluster_irsa | bool | Enable IRSA for EKS cluster | 
+| instance_type | string | Kubernetes instance type for worker nodes | 
+| asg_min_size | number | Minimum worker capacity in the autoscaling group | 
+| asg_max_size | number | Maximum worker capacity in the autoscaling group | 
+| asg_size | number | Number of nodes for Kubernetes | 
+| ami | string | The AMI (ubuntu 18) that I would like to use |
+| root_encrypted | bool | Whether the worker volume should be encrypted or not | 
+| root_volume_size | number | Root volume size of workers instances| 
+| ebs_driver | bool | Indicate installation for AWS EBS Driver | 
+| aws_load_balancer_controller | bool | Indicate installation for AWS LB | 
+| ingress_namespace | string | Namespace name for Ingress Controller | 
+| logging_namespace | string | Namespace name for Logging Namespace | 
+| monitoring_namespace | string | Namespace name for Monitoring System | 
+| external_dns_namespace | string | Namespace name for External DNS | 
+| external_dns | bool | Indicate installation External-DNS solution | 
+| asset_owner | string  | tag - Email, preferably distribution list of the project |
+| environment | string | tag - Environment i.e DEV, QA, PPE, PROD |
+| asset_id | string | tag - Asset insight of the project |
+| environment_name | string | tag - The name of the Environment i.e |
+| owner | string |tag - Full Name of the owner |
+| project_name | string| tag - The Name of the Project |
+
+
+## Data Flow Table
+
+### EKS Nodes:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| EKS_Nodes to outside | EKS_Nodes | * | * | * | * |
+| Consul UI | * | * | EKS_Nodes | 443 | TCP |
+| Consul API | * | * | EKS_Nodes  | 8500 | TCP |
+| Consul LAN Serf | * | * | EKS_Nodes |  8301 | TCP,UDP |
+| Consul Wan Serf | * | * | EKS_Nodes |  8302 | TCP,UDP |
+| Consul RPC | * | * | EKS_Nodes |  8300 | TCP |
+| SSH | * | * | EKS_Nodes | 22 | TCP |
+
 
 ### Optional
 If you'd like to add more authrized users or roles to your eks cluster follow this:

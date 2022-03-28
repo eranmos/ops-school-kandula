@@ -1,7 +1,7 @@
 <h1 align="center">Kandula</h1>
 <h6 align="center">This Repo will aggregate my ops-school project</h6>
 
-<p align="center"><img width="250px" src="./kandula.jpg"></p>
+<p align="center"><img width="250px" src="./diagrams_&_pictures/kandula.jpg"></p>
 
 ## Table of Contents
 
@@ -12,22 +12,22 @@
 - [Prerequisites](#prerequisites)
 - [Deployment Instructions](#Deployment-Instructions)
 - [Application Connections](#Application-Connections)
-- [Vulnerability Check](#Vulnerability Check)
+- [Vulnerability Check](#Vulnerability-Check)
 - [Links to dockerhub related images](#Links-to-dockerhub-related-images)
 - [Links to GitHub related repository](#Links-to-GitHub-related-repository)
 - [Improvement Points For The Future](#Improvement-points-for-the-future)
 
 
 ## Infrastructure Architecture Diagram
-![architecture_diagram](./ops_school_project_architecture_diagram.png)
+![architecture_diagram](diagrams_&_pictures/ops_school_project_architecture_diagram.png)
 
 ## Application Diagram
-![app_diagram](./ops_school-project_app_diagram.png)
+![app_diagram](diagrams_&_pictures/ops_school-project_app_diagram.png)
 
 ## Deployment Process
-+ Infrastructure deployment via Terraform
-+ EC2 instances provisioning & Consul Application installation (Jenkins job that will run Ansible Playbooks)
-+ Kandula App deployment on EKS cluster (Jenkins Job)
++ Infrastructure deployment via Terraform & Jenkins
++ EC2 instances provisioning via Jenkins jobs that will run Ansible Playbooks)
++ EKS deployments via Jenkins Jobs
 
 ## Prerequisites
 To deploy all infrastructure you will need below application to be installed on your workstation/server
@@ -37,86 +37,175 @@ To deploy all infrastructure you will need below application to be installed on 
  + Install [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) on your workstation/server
 
 ## Deployment Instructions
-Infrastructure deployment will be performed via Terraform locally. 
-1. Terraform deployment is divided into five parts when the first execution must be VPC and the sequence of rest is not important
-   Run the following on each terrafom_XXX folder
+Infrastructure deployment will be performed via Terraform locally & Jenkins. 
+1. Terraform deployment is divided into eight parts.
+   Run the following on each terraform_XXX folder (Jenkins job can run only after Jenkins deployment)
    ```bash
    terraform init
    terraform apply --auto-approve
    ```
+   
++ [Terraform-s3](/terraform/terraform_s3_bucket) - Creating S3 Buckets
++ [Terraform-EBS](/terraform/terraform_ebs_jenkins) - Creating EBS Storage
 + [Terraform-VPC](/terraform/terraform_vpc) - Creating VPC
-+ [Terraform-Jenkins](/terraform/terraform_jenkins) - Creating Jenkins Master & Jenkins Slave (EC2 instance slave & cloud slaves)
-+ [Terraform-Consul](/terraform/terraform_servers) - Creating Consul cluster without application (application will be installed via ansible playbook)
-+ [Terraform-EKS](/terraform_eks_orig_bk) - Creating Kubernetes cluster with one worker group
++ [Terraform-Jenkins](/terraform/terraform_jenkins) - Creating Jenkins Master & Jenkins Slave
++ [Terraform-Servers](/terraform/terraform_servers) - Creating Consul cluster, Elasticsearch, Prometheus without application (application will be installed via ansible playbook)
++ [Terraform-EKS](/terraform/terraform_eks) - Creating Kubernetes cluster
++ [Terraform-RDS](/terraform/terraform_postgres) - Creating Postgres DB on AWS RDS
 + [Terraform Bastion Server](/terraform/terraform_bastion_server) - Creating Bastion server for debugging & maintenance
 > note: Bastion server - In order to avoid security issues we're recommending to destroy the machine or turn it off when not needed
 
-2. After deploying the infrastructure via terraform we will need to provision our servers via Ansible playbooks.
-All Ansible playbooks will be run via jenkins job ( Ansible installed on the Jenkins-slave).
-Jenkins UI : https://jenkins.eran.website/
+After deploying Jenkins Servers (Master & Slave) you can run rest of the deployments via Jenkins Job:
+Jenkins UI : https://jenkins.kandula.click/
++ [jenkins file location](/Jenkins/jenkins_jobs/jenkis_terraform_deployments/jenkins_terraform_build_kandula_env.groovy)
++ [jenkins job link](https://jenkins.kandula.click/view/Terraform%20Deployment/job/Terraform-Build-Kandula-Env/)
 
-3. Installing Consul-server on three ec2 instances & Consul-agent on Jenkins-master & Jenkins-slave.
+
+2. After deploying the infrastructure via Terraform & Jenkins we will need to provision our EC2 instances with below app:
++ Consul Cluster (3 servers)
++ Consul Agent
++ Consul Registrator
++ Elasticsearch
++ Kibana
++ Logstash
++ Filebeat
++ Prometheus
++ Node Exporter
+
+All Ansible playbooks will be run via jenkins job (Ansible installed on the Jenkins-slave docker image).
+
    + please run Jenkins job:
-   + [jenkins file location](/Jenkins/jenkins_jobs/jenkins_ansible_playbooks/consul_agent_ansible_playbook.groovy)
-   + [Ansible Playbooks & roles](/ansible)
-   + when done you can access consul GUI and see all consul servers, agents and services, link: https://consul.eran.website/
-
-4. Deploying Kandule Application via Jenkins job.
+   + [jenkins file location](/Jenkins/jenkins_jobs/jenkins_ansible_playbooks/jenkins_ansible_build_kandula.groovy)
+   + [jenkins job link](https://jenkins.kandula.click/view/Ansible-Playbooks/job/ansible-playbook-all-apps/)
+   
+   
+4. Deploying below applications on EKS cluster:
++ Kandula-Prometheus-Stack
++ Kandula App
++ Filebeat
+All EKS deployments will be run via Jenkins Job 
     + please run Jenkins Job: 
-    + [jenkins file location](Jenkins/jenkins_jobs/jenkins_kandula_deployment_eks/jenkins_kandula_deployment_eks.groovy)
-    + when done you can access Kandula GUI, Link to Kandula: 
+    + [jenkins file location](Jenkins/jenkins_jobs/kubernetes_deployment/jenkins_kube_all_deployment.groovy)
+    + [jenkins job link](https://jenkins.kandula.click/view/Kubernetes%20Deployment/job/Kandula-Deployment-All-EKS/)
 
 
 
 ## Application Connections
 
-### Jenkins Master :
-| Protocol | Port        | ingress/egress | Description                                                    |
-| -------  | ----------- |--------------- | -------------------------------------------------------------- |
-| HTTPS    | 443         | ingress        | Allow Jenkins UI                                               |
-| HTTP     | 8080        | ingress        | Allow Jenkins UI                                               |
-| tcp      | 4243        | ingress        | Allow Docker Remote API                                        |
-| tcp      | 32768-60999 | ingress        | Allow Docker Hostport Range                                    |
-| tcp      | 22          | ingress        | Allow ssh                                                      |
-| all      | all         | egress         | Allow all outgoing traffic                                     |
+### Jenkins Master:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| Jenkins to outside | Jenkins_Master | * | * | * | * |
+| Jenkins_UI | * | *  | Jenkins_Master | 443 | TCP |
+| Jenkins_UI | * | * | Jenkins_Master |  80 | TCP |
+| Jenkins_UI | * | * | Jenkins_Master | 8080  | TCP |
+| Docker_API | * | * | Jenkins_Master | 4243 | TCP |
+| Docker_Hostport | * | * | Jenkins_Master | 32768-60999 | TCP |
+| Node_Exporter | * | * | Jenkins_Master  | 9100 | TCP |
+| Consul | * | * | Jenkins_Master |  8301 | TCP,UDP |
+| Consul | * | * | Jenkins_Master |  8302 | TCP,UDP |
+| Consul | * | * | Jenkins_Master |  8300 | TCP |
+| SSH | * | * | Jenkins_Master | 22 | TCP |
 
-### Jenkins Slave :
-| Protocol | Port        | ingress/egress | Description                                                    |
-| -------  | ----------- |--------------- | -------------------------------------------------------------- |
-| tcp      | 4243        | ingress        | Allow Docker Remote API                                        |
-| tcp      | 32768-60999 | ingress        | Allow Docker Hostport Range                                    |
-| tcp      | 22          | ingress        | Allow ssh                                                      |
-| all      | all         | egress         | Allow all outgoing traffic                                     |
+### Jenkins Slave:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| Jenkins to outside | Jenkins_Slave | * | * | * | * |
+| Docker_API | * | * | Jenkins_Slave | 4243 | TCP |
+| Docker_Hostport | * | * | Jenkins_Slave | 32768-60999 | TCP |
+| Node_Exporter | * | * | Jenkins_Slave  | 9100 | TCP |
+| Consul | * | * | Jenkins_Slave |  8301 | TCP,UDP |
+| Consul | * | * | Jenkins_Slave |  8302 | TCP,UDP |
+| Consul | * | * | Jenkins_Slave |  8300 | TCP |
+| SSH | * | * | Jenkins_Slave | 22 | TCP |
 
-### Consul :
-| Protocol | Port        | ingress/egress | Description                                                    |
-| -------  | ----------- |--------------- | -------------------------------------------------------------- |
-| HTTPS    | 443         | ingress        | Allow consul  UI                                               |
-| HTTP     | 8500        | ingress        | Allow consul  UI                                               |
-| tcp      | 8600        | ingress        | Allow to resolve DNS queries                                   |
-| tcp, udp | 8301        | ingress        | Allow Serf LAN port                                            |
-| tcp, udp | 8302        | ingress        | Allow Serf WAN port                                            |
-| tcp      | 8300        | ingress        | Allow Server RPC address                                       |
-| tcp      | 21000-21255 | ingress        | Allow for automatically assigned sidecar service registrations |
-| tcp      | 22          | ingress        | Allow ssh                                                      |
+### Consul Server:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| Consul to outside | Consul | * | * | * | * |
+| Consul UI | * | * | Consul | 443 | TCP |
+| Consul UI | * | * | Consul | 80 | TCP |
+| Consul DNS Interface  | * | * | Consul | 8600 | TCP |
+| Consul API | * | * | Consul  | 8500 | TCP |
+| Consul LAN Serf | * | * | Consul |  8301 | TCP,UDP |
+| Consul Wan Serf | * | * | Consul |  8302 | TCP,UDP |
+| Consul RPC | * | * | Consul |  8300 | TCP |
+| Node_Exporter | * | * | Consul | 9100 | TCP |
+| SSH | * | * | Consul | 22 | TCP |
 
-### EKS :
-| Protocol | Port        | ingress/egress | Description                                                    |
-| -------  | ----------- |--------------- | -------------------------------------------------------------- |
-| tcp      | 22          | ingress        | Allow ssh                                                      |
+### Elasticsearch & Kibana:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| ElasticSearch to outside | Jenkins_Slave | * | * | * | * |
+| ElasticSearch_API | * | * | ElasticSearch | 9200 | TCP |
+| ElasticSearch_API | * | * | ElasticSearch | 9300 | TCP |
+| Kibana UI | * | * | ElasticSearch | 5601 | TCP |
+| Node_Exporter | * | * | ElasticSearch  | 9100 | TCP |
+| Consul | * | * | ElasticSearch |  8301 | TCP,UDP |
+| Consul | * | * | ElasticSearch |  8302 | TCP,UDP |
+| Consul | * | * | ElasticSearch |  8300 | TCP |
+| SSH | * | * | ElasticSearch | 22 | TCP |
 
-### Bastian Server :
-| Protocol | Port        | ingress/egress | Description                                                    |
-| -------  | ----------- |--------------- | -------------------------------------------------------------- |
-| tcp      | 22          | ingress        | Allow ssh                                                      |
-| all      | all         | egress         | Allow all outgoing traffic                                     |
+### Prometheus:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| Prometheus to outside | Prometheus | * | * | * | * |
+| Prometheus | * | * | Prometheus | 9090 | TCP |
+| Alert_Manager | * | * | Prometheus | 9093 | TCP |
+| Node_Exporter | * | * | Prometheus  | 9100 | TCP |
+| Consul | * | * | Prometheus |  8301 | TCP,UDP |
+| Consul | * | * | Prometheus |  8302 | TCP,UDP |
+| Consul | * | * | Prometheus |  8300 | TCP |
+| SSH | * | * | Prometheus | 22 | TCP |
+
+### PostgreSQL:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| PostgreSQL to outside | PostgreSQL | * | * | * | * |
+| PostgreSQL DB | * | * | PostgreSQL | 5432 | TCP |
+
+### EKS Nodes:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| EKS_Nodes to outside | EKS_Nodes | * | * | * | * |
+| Consul UI | * | * | EKS_Nodes | 443 | TCP |
+| Consul API | * | * | EKS_Nodes  | 8500 | TCP |
+| Consul LAN Serf | * | * | EKS_Nodes |  8301 | TCP,UDP |
+| Consul Wan Serf | * | * | EKS_Nodes |  8302 | TCP,UDP |
+| Consul RPC | * | * | EKS_Nodes |  8300 | TCP |
+| SSH | * | * | EKS_Nodes | 22 | TCP |
+
+### Bastion:
+| Description | Source | Source Port | Destination  | Destination Port | Protocol |
+| ----------- | ------ | ----------- | ------------ | -----------------| -------- |
+| bastion to outside | bastion | * | * | * | * |
+| OPEN_VPN | * | *  | bastion | 1194 | TCP,UDP |
+| SSH | * | * | bastion | 22 | TCP |
+
 
 ## Vulnerability Check
-### Terraform Vulnerability Check
-+ I need to update the vulnerabilities with Trivy
+In my Project I am using two vulnerability tools:
++ Trivy
++ Snyk
 
-### Docker Image Vulnerability Check
-+ I need to update the vulnerabilities with Trivy
+### Docker image Vulnerability Check via Trivy 
+I integrated Trivy in my Jenkins pipeline.
+When jenkins will create a docker trivy will scan it & will provide output report
+with vulnerability issues that he discovered
+
+#### Jenkins - Docker image creation pipeline with Trivy:
+![architecture_diagram](diagrams_&_pictures/jenkins_trivy_build.png)
+
+
+#### Trivy report on jenkins pipeline:
+![architecture_diagram](diagrams_&_pictures/jenkins_trivy_report.png)
+
+### Code scan vulnerability Check via Trivy & Snyk
+For the code scan I used two tools Trivy & Snyk.
+I integrated Trivy with my github & created workflow to scan my code when pull request created
+and will failed the build when discovered criticals issues.
+
+![architecture_diagram](diagrams_&_pictures/trivy_github_1.png)
 
 ### Links to dockerhub related images
 - [Kandula](https://hub.docker.com/repository/docker/erandocker/ops-school-kandula) - docker pull erandocker/ops-school-kandula:tagname
@@ -125,7 +214,7 @@ Jenkins UI : https://jenkins.eran.website/
 
 ### Links to GitHub related repository
 - [Terrafom VPC module](https://github.com/eranmos/ops-school-terraform-aws-vpc.git) - Terraform VPC module for AWS VPC, Subnets, Routing, NAT Gateway creation  
-- [Kandula Application](git@github.com:eranmos/ops-school-kandula-project-app.git) - Code for Kandule Application
+- [Kandula Application](https://github.com/eranmos/ops-school-kandula-project-app.git) - Code for Kandule Application
 
 ### Improvement Points For The Future
 + Creating Jenkins server & Slave AMI via packer
