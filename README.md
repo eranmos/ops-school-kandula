@@ -184,8 +184,23 @@ All EKS deployments will be run via Jenkins Job
 
 
 ## Vulnerability Check
-### Terraform Vulnerability Check
-+ I need to update the vulnerabilities with Trivy
+In my Project I am using two vulnerability tools:
++ Trivy
++ Snyk
+
+### Docker image Vulnerability Check via Trivy 
+I integrated Trivy in my Jenkins pipeline.
+When jenkins will create a docker trivy will scan it & will provide output report
+with vulnerability issues that he discovered
+
+#### Jenkins - Docker image creation pipeline with Trivy:
+![architecture_diagram](diagrams_&_pictures/jenkins_trivy_build.png)
+
+
+#### Jenkins - Trivy report:
+![architecture_diagram](diagrams_&_pictures/jenkins_trivy_report.png)
+
+
 
 ### Docker Image Vulnerability Check
 + I need to update the vulnerabilities with Trivy
