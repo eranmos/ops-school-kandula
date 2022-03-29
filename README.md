@@ -258,7 +258,7 @@ I am using below components for metric monitoring
 
 ![ES_monitroing_diagram](diagrams_&_pictures/) 
 
-![kibana_LB_diagram](diagrams_&_pictures/)
+![kibana_LB_diagram](diagrams_&_pictures/kibana_alb.png)
 
 ![kibana_APP_diagram](diagrams_&_pictures/)
 
