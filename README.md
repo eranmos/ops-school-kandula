@@ -249,10 +249,10 @@ I am using below components for metric monitoring
 ![grafana_ec2_diagram](diagrams_&_pictures/grafana_ec2.png)
 
 #### Grafana
-![grafana_eks_diagram2](diagrams_&_pictures/)
+![grafana_eks_diagram2](diagrams_&_pictures/grafana_node_eks.png)
 
 #### Grafana
-![grafana_eks_diagram3](diagrams_&_pictures/)
+![grafana_eks_diagram3](diagrams_&_pictures/grafana_k8s_ns.png)
 
 2. Loging Monitoring
    I am using below components for metric monitoring
@@ -264,8 +264,8 @@ I am using below components for metric monitoring
 #### Kibana ALB dashboards
 ![kibana_LB_diagram](diagrams_&_pictures/kibana_alb.png)
 
-#### Kibana Application dashboards
-![kibana_APP_diagram](diagrams_&_pictures/)
+#### EKS dashboards
+![kibana_APP_diagram](diagrams_&_pictures/kibana_eks.png)
 
 ### Links to dockerhub related images
 - [Kandula](https://hub.docker.com/repository/docker/erandocker/ops-school-kandula) - docker pull erandocker/ops-school-kandula:tagname
