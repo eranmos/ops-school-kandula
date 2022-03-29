@@ -7,6 +7,7 @@
 
 - [Infrastructure Architecture Diagram](#Infrastructure-Architecture-Diagram)
 - [Application Diagram](#Application-Diagram)
+- [EKS Diagram](#EKS-Diagram)
 - [IP Address Allocation](/network_address_design/network_adresses_design.md)
 - [Deployment Process](#Deployment-Process)
 - [Prerequisites](#prerequisites)
@@ -25,6 +26,9 @@
 
 ## Application Diagram
 ![app_diagram](diagrams_&_pictures/ops_school-project_app_diagram.png)
+
+## EKS Diagram
+![app_diagram](diagrams_&_pictures/kandula_eks_diagram.png)
 
 ## Deployment Process
 + Infrastructure deployment via Terraform & Jenkins
