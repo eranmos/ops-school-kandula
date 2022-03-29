@@ -189,7 +189,7 @@ All EKS deployments will be run via Jenkins Job
 | SSH | * | * | bastion | 22 | TCP |
 
 ## Application URLS
-To access applications that installed I created two AWS hostedzones for:
+To access applications I created two AWS hostedzones:
 1. Internal communication
 ![route53 private](diagrams_&_pictures/route53_private.png)
 
@@ -236,14 +236,14 @@ As I wanted to discover more tools I started to use Snyk & Integrated it with my
 ![architecture_diagram](diagrams_&_pictures/snyk.png)
 
 ## Monitoring
+![monitroing_diagram](diagrams_&_pictures/ops_school-project_monitoring_diagram.png)
+
 My monitoring sulition is devided for two parts :
 1. Metric monitoring
 I am using below components for metric monitoring
 + Prometheus
 + Grafana
 + Node Exporter
-
-![prometheus_monitroing_diagram](diagrams_&_pictures/)
 
 #### Grafana NodeExporter dashboards for EC2 Instance
 ![grafana_ec2_diagram](diagrams_&_pictures/grafana_ec2.png)
@@ -260,8 +260,6 @@ I am using below components for metric monitoring
 + Kibana
 + Logstash
 + Filebeat
-
-![ES_monitroing_diagram](diagrams_&_pictures/) 
 
 #### Kibana ALB dashboards
 ![kibana_LB_diagram](diagrams_&_pictures/kibana_alb.png)
