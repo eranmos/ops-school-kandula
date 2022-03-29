@@ -172,4 +172,28 @@ The job will deploy Prometheus, Alertmanager, Node exporter, Grafana via helm ch
 
 ![app_diagram](diagrams_&_pictures/jenkins_docker_jobs.png)
 
+**Job Name: Jenkins-Slave-Docker-clean :** <br />
+The job will clean jenkins server host from old docker images & continers that are not working(prune)
+Job have Scheduler that will run this job at midnight
++ [jenkins file location](/Jenkins/jenkins_jobs/docker-cleanup/docker_cleanup.groovy)
++ [jenkins job link](https://jenkins.kandula.click/view/Docker-Images/job/Jenkins-Slave-Docker-clean/)
+
+
+![app_diagram](diagrams_&_pictures/jenkins_docker_imge.png)
+
+
+![app_params](diagrams_&_pictures/jenkins_docker_oarams.png)
+
+**Job Name: Jenkins-Slave-Docker-Image-Creation :** <br />
+The job will create jenkins slave docker image
++ [jenkins file location](/Jenkins/jenkins_jobs/jenkins_slave_images/create-update-image.groovy)
++ [jenkins job link](https://jenkins.kandula.click/view/Docker-Images/job/Jenkins-Slave-Docker-Image-Creation/)
+
+**Job Name: Kandula-Docker-Image-Creation :** <br />
+The job will create Kandula App docker image
++ [jenkins file location](https://github.com/eranmos/ops-school-kandula-project-app/blob/master/jenkins_kandula_create_image.groovy)
++ [jenkins job link](https://jenkins.kandula.click/view/Docker-Images/job/Kandula-Docker-Image-Creation/)
+
+
+
 ## Jenkins Plugins
