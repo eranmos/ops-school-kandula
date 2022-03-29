@@ -178,16 +178,15 @@ Job have Scheduler that will run this job at midnight
 + [jenkins file location](/Jenkins/jenkins_jobs/docker-cleanup/docker_cleanup.groovy)
 + [jenkins job link](https://jenkins.kandula.click/view/Docker-Images/job/Jenkins-Slave-Docker-clean/)
 
+**Job Name: Jenkins-Slave-Docker-Image-Creation :** <br />
+The job will create jenkins slave docker image
++ [jenkins file location](/Jenkins/jenkins_jobs/jenkins_slave_images/create-update-image.groovy)
++ [jenkins job link](https://jenkins.kandula.click/view/Docker-Images/job/Jenkins-Slave-Docker-Image-Creation/)
 
 ![app_diagram](diagrams_&_pictures/jenkins_docker_imge.png)
 
 
 ![app_params](diagrams_&_pictures/jenkins_docker_oarams.png)
-
-**Job Name: Jenkins-Slave-Docker-Image-Creation :** <br />
-The job will create jenkins slave docker image
-+ [jenkins file location](/Jenkins/jenkins_jobs/jenkins_slave_images/create-update-image.groovy)
-+ [jenkins job link](https://jenkins.kandula.click/view/Docker-Images/job/Jenkins-Slave-Docker-Image-Creation/)
 
 **Job Name: Kandula-Docker-Image-Creation :** <br />
 The job will create Kandula App docker image
