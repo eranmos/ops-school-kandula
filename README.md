@@ -13,6 +13,7 @@
 - [Deployment Instructions](#Deployment-Instructions)
 - [Application Connections](#Application-Connections)
 - [Vulnerability Check](#Vulnerability-Check)
+- [Monitoring](#Monitoring)
 - [Links to dockerhub related images](#Links-to-dockerhub-related-images)
 - [Links to GitHub related repository](#Links-to-GitHub-related-repository)
 - [Improvement Points For The Future](#Improvement-points-for-the-future)
