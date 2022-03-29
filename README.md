@@ -241,12 +241,13 @@ I am using below components for metric monitoring
 
 ![prometheus_monitroing_diagram](diagrams_&_pictures/)
 
+#### Grafana NodeExporter dashboards for EC2 Instance
 ![grafana_ec2_diagram](diagrams_&_pictures/grafana_ec2.png)
 
-![grafana_eks_diagram1](diagrams_&_pictures/grafan_ec2_1.png)
-
+#### Grafana
 ![grafana_eks_diagram2](diagrams_&_pictures/)
 
+#### Grafana
 ![grafana_eks_diagram3](diagrams_&_pictures/)
 
 2. Loging Monitoring
@@ -261,6 +262,7 @@ I am using below components for metric monitoring
 #### Kibana ALB dashboards
 ![kibana_LB_diagram](diagrams_&_pictures/kibana_alb.png)
 
+#### Kibana Application dashboards
 ![kibana_APP_diagram](diagrams_&_pictures/)
 
 ### Links to dockerhub related images
