@@ -232,6 +232,35 @@ As I wanted to discover more tools I started to use Snyk & Integrated it with my
 ![architecture_diagram](diagrams_&_pictures/snyk.png)
 
 ## Monitoring
+My monitoring sulition is devided for two parts :
+1. Metric monitoring
+I am using below components for metric monitoring
++ Prometheus
++ Grafana
++ Node Exporter
+
+![prometheus_monitroing_diagram](diagrams_&_pictures/)
+
+![grafana_ec2_diagram](diagrams_&_pictures/grafana_ec2.png)
+
+![grafana_eks_diagram1](diagrams_&_pictures/grafan_ec2_1.png)
+
+![grafana_eks_diagram2](diagrams_&_pictures/)
+
+![grafana_eks_diagram3](diagrams_&_pictures/)
+
+2. Loging Monitoring
+   I am using below components for metric monitoring
++ Elasticsearch
++ Kibana
++ Logstash
++ Filebeat
+
+![ES_monitroing_diagram](diagrams_&_pictures/) 
+
+![kibana_LB_diagram](diagrams_&_pictures/)
+
+![kibana_APP_diagram](diagrams_&_pictures/)
 
 ### Links to dockerhub related images
 - [Kandula](https://hub.docker.com/repository/docker/erandocker/ops-school-kandula) - docker pull erandocker/ops-school-kandula:tagname
