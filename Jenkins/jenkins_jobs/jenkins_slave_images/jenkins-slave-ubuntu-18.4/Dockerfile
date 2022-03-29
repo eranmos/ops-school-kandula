@@ -47,7 +47,8 @@ RUN apt-get update && \
     wget https://github.com/aquasecurity/trivy/releases/download/v0.22.0/trivy_0.22.0_Linux-64bit.deb && \
     dpkg -i trivy_0.22.0_Linux-64bit.deb && \
 ## Install setuptools for kandula py tests
-    pip3 install pytest dependency-injector flask bootstrap-flask pygithub pytest-flask pytest-cov BeautifulSoup4 moto json-logging flake8 flake8-colors yamllint prometheus_client jsons && \
+    pip install --upgrade pip
+    pip3 install pytest dependency-injector flask bootstrap-flask pygithub pytest-flask pytest-cov BeautifulSoup4 moto json-logging flake8 flake8-colors yamllint jsons && \
 # Cleanup old packages
     apt-get -qy autoremove && \
 # Add user jenkins to the image
