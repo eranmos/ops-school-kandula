@@ -191,9 +191,17 @@ To access applications that installed I created two AWS hostedzones for:
 
 2. External communication
 ![route53 public](diagrams_&_pictures/router53_public.png)
-3. 
 >note: records on route53 created via terraform deployment
 
+Public URLs to access my apps: <br />
+- [Kandula](https://app.kandula.click/) - Kandula web application
+- [Consul](https://consul.kandula.click/) - Consul UI 
+- [Elasticsearch](https://es.kandula.click/) - DB to store logs
+- [Kibana](https://kibana.kandula.click/) - Kibana data visualization
+- [Prometheus EKS](https://prometheus.kandula.click/) -  Prometheus that monitoring EKS Cluster
+- [Prometheus EC2](https://prometheus-ec2.kandula.click/) - Prometheus that monitoring EC2 instances that not related to EKS
+- [Grafana](https://grafana.kandula.click/) - Grafana visualization (working with both Prometheus servers)
+- [Kibana](https://jenkins.kandula.click/) - Jenkins UI
 
 ## Vulnerability Check
 In my Project I am using two vulnerability tools:
