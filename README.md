@@ -16,6 +16,7 @@
 - [Application URLS](#Application-URLS)
 - [Vulnerability Check](#Vulnerability-Check)
 - [Monitoring](#Monitoring)
+- [Kandula](#Kandula)
 - [Links to dockerhub related images](#Links-to-dockerhub-related-images)
 - [Links to GitHub related repository](#Links-to-GitHub-related-repository)
 - [Improvement Points For The Future](#Improvement-points-for-the-future)
@@ -267,6 +268,12 @@ I am using below components for metric monitoring
 #### EKS dashboards
 ![kibana_APP_diagram](diagrams_&_pictures/kibana_eks.png)
 
+#### Kandula
+##### Kandula web site
+![kibana_APP_diagram](diagrams_&_pictures/kandula_app.png)
+
+![kibana_APP_diagram](diagrams_&_pictures/kandula_app1.png)
+
 ### Links to dockerhub related images
 - [Kandula](https://hub.docker.com/repository/docker/erandocker/ops-school-kandula) - docker pull erandocker/ops-school-kandula:tagname
 - [Jenkins Slave Ubuntu-18.04](https://hub.docker.com/repository/docker/erandocker/jenkins-slave-ubuntu-18.4) - docker pull erandocker/jenkins-slave-ubuntu-18.4:tagname
@@ -277,8 +284,10 @@ I am using below components for metric monitoring
 - [Kandula Application](https://github.com/eranmos/ops-school-kandula-project-app.git) - Code for Kandule Application
 
 ### Improvement Points For The Future
-+ Creating Jenkins server & Slave AMI via packer
-+ Creating helm chart for kandula app & filebeat
-+ Improving my Grafana & Kibana dashboards
++ Creating helm chart for kandula app & filebeat.
++ Improving my Grafana & Kibana dashboards.
++ Supporting the DB connection to application.
++ Adding more logs to Kandula application.
++ Creating Alertmanager & integrate it with slack to send msg for Critical issues.
 + using [Jenkins Fleet Plugin](https://plugins.jenkins.io/ec2-fleet/) to deploy Jenkins Slaves
 
