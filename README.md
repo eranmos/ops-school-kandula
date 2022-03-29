@@ -12,6 +12,7 @@
 - [Prerequisites](#prerequisites)
 - [Deployment Instructions](#Deployment-Instructions)
 - [Application Connections](#Application-Connections)
+- [Application URLS](#Application-URLS)
 - [Vulnerability Check](#Vulnerability-Check)
 - [Monitoring](#Monitoring)
 - [Links to dockerhub related images](#Links-to-dockerhub-related-images)
@@ -183,6 +184,16 @@ All EKS deployments will be run via Jenkins Job
 | OPEN_VPN | * | *  | bastion | 1194 | TCP,UDP |
 | SSH | * | * | bastion | 22 | TCP |
 
+## Application URLS
+To access applications that installed I created two AWS hostedzones for:
+1. Internal communication
+![route53 private](diagrams_&_pictures/route53_private.png)
+
+2. External communication
+![route53 public](diagrams_&_pictures/router53_public.png)
+3. 
+>note: records on route53 created via terraform deployment
+
 
 ## Vulnerability Check
 In my Project I am using two vulnerability tools:
@@ -211,6 +222,8 @@ and will failed the build when discovered critical issues.
 As I wanted to discover more tools I started to use Snyk & Integrated it with my GitHub as well:
 
 ![architecture_diagram](diagrams_&_pictures/snyk.png)
+
+## Monitoring
 
 ### Links to dockerhub related images
 - [Kandula](https://hub.docker.com/repository/docker/erandocker/ops-school-kandula) - docker pull erandocker/ops-school-kandula:tagname
