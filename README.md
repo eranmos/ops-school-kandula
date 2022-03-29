@@ -280,7 +280,7 @@ I am using below components for metric monitoring
 
 ### Improvement Points For The Future
 + Creating Jenkins server & Slave AMI via packer
-+ Creating EFS that will mount to Jenkins server & all Jenkins files will be stored on it
++ Creating helm chart for kandula app & filebeat
++ Improving my Grafana & Kibana dashboards
 + using [Jenkins Fleet Plugin](https://plugins.jenkins.io/ec2-fleet/) to deploy Jenkins Slaves
-+ Moving all terraform deployments to terraform cloud on the same organization and link it to github
-+ Creating DNS for Kandula (A record for) as https://kandule.eran.website that will be part of Kandula deployment
+
