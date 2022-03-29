@@ -21,27 +21,27 @@ pipeline {
     stages {
         stage('Creating VPC for Kandula') {
             steps {
-            build job:'terraform-vpc', parameters: [string(name: 'TERRAFORM', value: params.TERRAFORM)]
+            build job:'terraform-vpc', parameters: [string(name: '', value: params.)]
             }
         }
         stage('Creating Jenkins Servers') {
             steps {
-            build job:'terraform-jenkins', parameters: [string(name: 'TERRAFORM', value: params.TERRAFORM) ]
+            build job:'terraform-jenkins', parameters: [string(name: '', value: params.) ]
             }
         }
         stage('Creating servers') {
             steps {
-            build job:'terraform-servers', parameters: [string(name: 'TERRAFORM', value: params.TERRAFORM) ]
+            build job:'terraform-servers', parameters: [string(name: '', value: params.) ]
             }
         }
         stage('Creating Postgres DB') {
             steps {
-            build job:'terraform-postgres', parameters: [string(name: 'TERRAFORM', value: params.TERRAFORM) ]
+            build job:'terraform-postgres', parameters: [string(name: '', value: params.) ]
             }
         }
         stage('Creating K8S Cluster') {
             steps {
-            build job:'terraform-eks', parameters: [string(name: 'TERRAFORM', value: params.TERRAFORM) ]
+            build job:'terraform-eks', parameters: [string(name: '', value: params.) ]
             }
         }
     }

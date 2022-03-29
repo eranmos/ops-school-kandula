@@ -12,11 +12,11 @@ Jenkins Link : https://jenkins.kandula.click/
 
 - [Jenkins Terraform Deployment](#Jenkins-Terraform-Deployment)
 - [Jenkins Ansible Playbooks](#Jenkins-Ansible-Playbooks)
-- [Jenkins-Kubernetes Deployment](#Jenkins-Kubernetes-Deployment)
-- [Jenkins-Docker Images](#Jenkins-Docker-Images)
-- [Jenkins-plugins](#Jenkins-plugins)
+- [Jenkins Kubernetes Deployment](#Jenkins-Kubernetes-Deployment)
+- [Jenkins Docker Images](#Jenkins-Docker-Images)
+- [Jenkins plugins](#Jenkins-plugins)
 
-## Jenkins Terraform Deployments
+## Jenkins Terraform Deployment
 
 ![app_diagram](diagrams_&_pictures/jenkins_terraform_jobs.png)
 
@@ -74,14 +74,14 @@ The job will create VPC & private zone on Route53
 + [jenkins file location](/Jenkins/jenkins_jobs/jenkis_terraform_deployments/jenkins_terraform_vpc.groovy)
 + [jenkins job link](https://jenkins.kandula.click/view/Terraform_Deployment/job/terraform-vpc/)
 
-## Jenkins-Ansible Playbooks
+## Jenkins Ansible Playbooks
 
 ![app_diagram](diagrams_&_pictures/jenkins_ansible_jobs.png)
 
 **Job Name: ansible-playbook-all-apps:** <br />
 The job will provision all the EC2 Instances that we created via terraform
 + [jenkins file location](/Jenkins/jenkins_jobs/jenkins_ansible_playbooks/jenkins_ansible_build_kandula.groovy)
-+ [ansible role location](/ansible/roles/)
++ [ansible role location](/ansible/roles)
 + [jenkins job link](https://jenkins.kandula.click/view/Ansible-Playbooks/job/ansible-playbook-all-apps/)
 
 **Job Name: ansible-playbook-consul-agent:** <br />
@@ -132,11 +132,43 @@ The job will install prometheus
 + [ansible role location](/ansible/roles/prometheus)
 + [jenkins job link](https://jenkins.kandula.click/view/Ansible-Playbooks/job/ansible-playbook-prometheus/)
 
-## Jenkins-Kubernetes Deployment
+## Jenkins Kubernetes Deployment
 
 ![app_diagram](diagrams_&_pictures/jenkins_k8s_jobs.png)
 
-## Jenkins-Docker Images
+![Pipeline parameters example](diagrams_&_pictures/jenkins_k8s_params.png)
+
+**Job Name: Kandula-Deployment-All-EKS:** <br />
+The job will deploy all components on EKS cluter (will trigger all below jobs) 
++ [jenkins file location](/Jenkins/jenkins_jobs/kubernetes_deployment/jenkins_kube_all_deployment.groovy)
++ [kube Deployment file or helm](/Jenkins/jenkins_jobs/kubernetes_deployment)
++ [jenkins job link](https://jenkins.kandula.click/view/Kubernetes_Deployment/job/Kandula-Deployment-All-EKS/)
+
+**Job Name: Kandula-Application-Deployment:** <br />
+The job will deploy kandula application on EKS cluster
++ [jenkins file location](/Jenkins/jenkins_jobs/kubernetes_deployment/jenkinsfile_kandula_deployment.groovy)
++ [ansible role location](/Jenkins/jenkins_jobs/kubernetes_deployment/kalandula_app.yaml)
++ [jenkins job link](https://jenkins.kandula.click/view/Kubernetes_Deployment/job/Kandula-Application-Deployment/)
+
+**Job Name: Kandula-Consul-Helm-Deployment:** <br />
+The job will deploy consul via helm chart on EKS Cluster
++ [jenkins file location](/Jenkins/jenkins_jobs/kubernetes_deployment/jenkinsfile_kube_consul_helm.groovy)
++ [ansible role location](/helm-releases/consul)
++ [jenkins job link](https://jenkins.kandula.click/view/Kubernetes_Deployment/job/Kandula-Consul-Helm-Deployment/)
+
+**Job Name: Kandula-Filebeat-Deployment:** <br />
+The job will deploy filebeat on EKS Cluster
++ [jenkins file location](/Jenkins/jenkins_jobs/kubernetes_deployment/jenkinsfile_kube_filebeat_deployment.groovy)
++ [ansible role location](/Jenkins/jenkins_jobs/kubernetes_deployment/filebeat-k8s-config.yaml)
++ [jenkins job link](https://jenkins.kandula.click/view/Kubernetes_Deployment/job/Kandula-Filebeat-Deployment/)
+
+**Job Name: Kandula-Prometheus-Stack-Deployment:** <br />
+The job will deploy Prometheus, Alertmanager, Node exporter, Grafana via helm chart on EKS Cluster
++ [jenkins file location](/Jenkins/jenkins_jobs/kubernetes_deployment/jenkinsfile_kube_prometheus_stack.groovy)
++ [ansible role location](/helm-releases/kube-prometheus-stack)
++ [jenkins job link](https://jenkins.kandula.click/view/Kubernetes_Deployment/job/Kandula-Prometheus-Stack-Deployment/)
+
+## Jenkins Docker Images
 
 ![app_diagram](diagrams_&_pictures/jenkins_docker_jobs.png)
 
