@@ -20,9 +20,11 @@ Jenkins Link : https://jenkins.kandula.click/
 
 ![app_diagram](diagrams_&_pictures/jenkins_terraform_jobs.png)
 
-This view aggregat all terraform jenkins jobs
+This view aggregate all terraform jenkins jobs
 
 ![Pipeline example](diagrams_&_pictures/jenkins_terrafrom_bastion.png)
+
+![Pipeline parameters example](diagrams_&_pictures/terraform_parms.png)
 
 **Job Name: Terraform-Build-Kandula-Env:** <br />
 The job will create All Env (will trigger all below jobs with the right logic)
