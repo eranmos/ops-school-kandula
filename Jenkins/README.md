@@ -10,13 +10,13 @@ Jenkins Link : https://jenkins.kandula.click/
 
 ## Table of Contents
 
-- [Jenkins-Terraform Deployment](#Jenkins-Terraform-Deployment)
-- [Jenkins-Ansible Playbooks](#Jenkins-Ansible-Playbooks)
+- [Jenkins Terraform Deployment](#Jenkins-Terraform-Deployment)
+- [Jenkins Ansible Playbooks](#Jenkins-Ansible-Playbooks)
 - [Jenkins-Kubernetes Deployment](#Jenkins-Kubernetes-Deployment)
 - [Jenkins-Docker Images](#Jenkins-Docker-Images)
 - [Jenkins-plugins](#Jenkins-plugins)
 
-## Jenkins-Terraform Deployments
+## Jenkins Terraform Deployments
 
 ![app_diagram](diagrams_&_pictures/jenkins_terraform_jobs.png)
 
